@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express'
 const logger = require('./logger')
 
 const unknownEndpoint = (_request: Request, response: Response) => {
-  response.status(404).send({ error: 'unknown endpoint' })
+  response.status(404).send({ error: 'unknown endpoint', message: 'Check the documentation for the correct endpoint' })
 }
 
 const errorHandler = (error: Error, _request: Request, response: Response, next: NextFunction) => {
