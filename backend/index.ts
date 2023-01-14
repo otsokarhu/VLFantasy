@@ -4,24 +4,34 @@ import { PORT } from './utils/config'
 import connectToDb from './utils/database'
 import middleware from './utils/middleware'
 import userRouter from './controllers/userController'
-import http from 'http'
+
 
 
 
 
 const app = express()
+
+app.get('/api/testing', (_req, res) => {
+  res.send('This works')
+})
 app.use(express.json())
 app.use(cors())
+
+app.use('/api/VLusers', userRouter)
+
+app.get('/');
+
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
-app.use('/api/users', userRouter)
-const server = http.createServer(app)
+
+
+
 
 
 
 const start = async () => {
   await connectToDb()
-  server.listen(PORT, () => {
+  app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
   })
 }

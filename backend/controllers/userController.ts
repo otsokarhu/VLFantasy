@@ -1,9 +1,14 @@
 import { Request, Response } from 'express';
 import User from '../models/userModel';
 import bcrypt from 'bcrypt';
-const usersRouter = require('express').Router();
+import express from 'express';
+const userRouter = express.Router();
 
-usersRouter.post('/', async (request: Request, response: Response) => {
+userRouter.get('/', (_request: Request, response: Response) => {
+  response.send('This also works');
+});
+
+userRouter.post('/', async (request: Request, response: Response) => {
   const body = request.body;
 
   if (body.password.length < 3) {
@@ -43,4 +48,4 @@ usersRouter.post('/', async (request: Request, response: Response) => {
 
 
 
-export default usersRouter;
+export default userRouter;
