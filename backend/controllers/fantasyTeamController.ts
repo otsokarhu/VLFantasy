@@ -4,10 +4,12 @@ import express from 'express';
 const fantasyTeamRouter = express.Router();
 
 fantasyTeamRouter.get('/', (_request: Request, response: Response) => {
-  const fantasyTeams = FantasyTeam.find({}).then((fantasyTeams) => {
-    response.json(fantasyTeams);
-  }
-  );
+  const fantasyTeams = FantasyTeam.find({})
+    .populate('user', { username: 1, name: 1 })
+    .then((fantasyTeams) => {
+      response.json(fantasyTeams);
+    }
+    );
   return fantasyTeams;
 }
 );
