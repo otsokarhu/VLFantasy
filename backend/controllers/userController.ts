@@ -5,7 +5,11 @@ import express from 'express';
 const userRouter = express.Router();
 
 userRouter.get('/', (_request: Request, response: Response) => {
-  response.send('This also works');
+  const users = User.find({}).then((users) => {
+    response.json(users);
+  }
+  );
+  return users;
 });
 
 userRouter.post('/', async (request: Request, response: Response) => {
@@ -45,6 +49,8 @@ userRouter.post('/', async (request: Request, response: Response) => {
   return savedUser;
 
 });
+
+
 
 
 
