@@ -5,6 +5,7 @@ import connectToDb from './utils/database'
 import middleware from './utils/middleware'
 import userRouter from './controllers/userController'
 import loginRouter from './controllers/loginController'
+import runnerRouter from './controllers/runnerController'
 
 
 
@@ -20,6 +21,7 @@ app.use(cors())
 
 app.use('/api/VLusers', userRouter)
 app.use('/api/login', loginRouter)
+app.use('/api/runners', runnerRouter)
 
 app.get('/');
 
