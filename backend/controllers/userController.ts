@@ -50,6 +50,19 @@ userRouter.post('/', async (request: Request, response: Response) => {
 
 });
 
+userRouter.get('/:id', async (request: Request, response: Response) => {
+  const user = await User
+    .findById(request.params.id)
+    .populate('fantasyTeam', { name: 1, points: 1, runners: 1 });
+  response.json(user);
+  return user;
+});
+
+
+
+
+
+
 
 
 

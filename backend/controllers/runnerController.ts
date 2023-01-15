@@ -24,4 +24,11 @@ runnerRouter.post("/", async (request: Request, response: Response) => {
   return savedRunner;
 });
 
+runnerRouter.get("/:id", (request: Request, response: Response) => {
+  const runner = Runner.findById(request.params.id).then((runner) => {
+    response.json(runner);
+  });
+  return runner;
+});
+
 export default runnerRouter;

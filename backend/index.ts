@@ -6,6 +6,7 @@ import middleware from './utils/middleware'
 import userRouter from './controllers/userController'
 import loginRouter from './controllers/loginController'
 import runnerRouter from './controllers/runnerController'
+import fantasyTeamRouter from './controllers/fantasyTeamController'
 
 
 
@@ -22,6 +23,7 @@ app.use(cors())
 app.use('/api/VLusers', userRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/runners', runnerRouter)
+app.use('/api/fantasyTeams', fantasyTeamRouter)
 
 app.get('/');
 

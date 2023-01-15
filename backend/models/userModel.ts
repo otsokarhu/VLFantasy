@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { Runner } from './runnerModel';
 
 
 export interface User extends Document {
@@ -8,7 +7,7 @@ export interface User extends Document {
   email: string;
   passwordHash: string;
   id: string;
-  fantasyTeam: Runner[];
+  fantasyTeam: string
 }
 
 const userSchema: Schema = new Schema({
@@ -30,12 +29,10 @@ const userSchema: Schema = new Schema({
     type: String,
     required: true,
   },
-  fantasyTeam: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Runner',
-    },
-  ],
+  fantasyTeam: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'FantasyTeam',
+  },
 });
 
 userSchema.set('toJSON', {
