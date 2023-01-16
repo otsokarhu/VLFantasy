@@ -1,15 +1,14 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt, { JwtPayload } from 'jsonwebtoken'
-import User from '../models/userModel'
 import { SECRET } from '../utils/config'
+import logger from '../utils/logger'
 
 
-export interface tokenRequest extends Request {
-  token: string
-  user: any
+export interface CustomRequest extends Request {
+  token: string | JwtPayload;
 }
 
-const logger = require('./logger')
+
 
 const unknownEndpoint = (_request: Request, response: Response) => {
   response.status(404).send({ error: 'unknown endpoint', message: 'Check the documentation for the correct endpoint' })
@@ -28,22 +27,29 @@ const errorHandler = (error: Error, _request: Request, response: Response, next:
   return null
 }
 
-const tokenExtractor = (request: tokenRequest, _response: Response, next: NextFunction) => {
-  const authorization = request.get('authorization')
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    request.token = authorization.substring(7)
-  }
-  next()
-  return null
-}
+export const authorization = async (request: Request, response: Response, next: NextFunction) => {
+  try {
+    const token = request.header('Authorization')?.replace('bearer ', '');
 
-const userExtractor = async (request: tokenRequest, response: Response, next: NextFunction) => {
-  const decodedToken = jwt.verify(request.token, SECRET) as JwtPayload
-  if (!request.token || !decodedToken.id) {
-    return response.status(401).json({ error: 'token missing or invalid' })
+    if (!token) {
+      throw new Error();
+    }
+
+    const decoded = jwt.verify(token, SECRET);
+    (request as CustomRequest).token = decoded;
+
+    next();
+  } catch (err) {
+    response.status(401).send('Please authenticate');
   }
-  const user = await User.findById(decodedToken.id)
-  request.user = user
+};
+
+
+const requestLogger = (request: Request, _response: Response, next: NextFunction) => {
+  logger.info('Method:', request.method)
+  logger.info('Path:  ', request.path)
+  logger.info('Body:  ', request.body)
+  logger.info('---')
   next()
   return null
 }
@@ -52,6 +58,6 @@ const userExtractor = async (request: tokenRequest, response: Response, next: Ne
 export default {
   unknownEndpoint,
   errorHandler,
-  tokenExtractor,
-  userExtractor,
+  requestLogger,
+  authorization,
 }

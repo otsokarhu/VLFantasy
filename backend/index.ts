@@ -12,6 +12,7 @@ import fantasyTeamRouter from './controllers/fantasyTeamController'
 
 
 
+
 const app = express()
 
 app.get('/api/testing', (_req, res) => {
@@ -19,6 +20,9 @@ app.get('/api/testing', (_req, res) => {
 })
 app.use(express.json())
 app.use(cors())
+app.use(middleware.errorHandler)
+app.use(middleware.requestLogger)
+
 
 app.use('/api/VLusers', userRouter)
 app.use('/api/login', loginRouter)
@@ -28,7 +32,7 @@ app.use('/api/fantasyTeams', fantasyTeamRouter)
 app.get('/');
 
 app.use(middleware.unknownEndpoint)
-app.use(middleware.errorHandler)
+
 
 
 

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import User from '../models/userModel';
 import bcrypt from 'bcrypt';
 import express from 'express';
+import { authorization } from '../utils/middleware';
 const userRouter = express.Router();
 
 userRouter.get('/', async (_request: Request, response: Response) => {
@@ -71,7 +72,7 @@ userRouter.delete('/:id', async (request: Request, response: Response) => {
   response.status(204).end();
 });
 
-userRouter.put('/:id', async (request: Request, response: Response) => {
+userRouter.put('/:id', authorization, async (request: Request, response: Response) => {
   const body = request.body;
 
   const user = {

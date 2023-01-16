@@ -2,7 +2,9 @@ import { Request, Response } from 'express';
 import FantasyTeam from '../models/fantasyTeamModel';
 import express from 'express';
 import User from '../models/userModel';
+import { authorization } from '../utils/middleware';
 const fantasyTeamRouter = express.Router();
+
 
 fantasyTeamRouter.get('/', (_request: Request, response: Response) => {
   const fantasyTeams = FantasyTeam.find({})
@@ -16,7 +18,7 @@ fantasyTeamRouter.get('/', (_request: Request, response: Response) => {
 }
 );
 
-fantasyTeamRouter.post('/', async (request: Request, response: Response) => {
+fantasyTeamRouter.post('/', authorization, async (request: Request, response: Response) => {
   const body = request.body;
 
   const fantasyTeam = new FantasyTeam({
@@ -59,7 +61,7 @@ fantasyTeamRouter.delete('/:id', async (request: Request, response: Response) =>
   response.status(204).end();
 });
 
-fantasyTeamRouter.put('/:id', async (request: Request, response: Response) => {
+fantasyTeamRouter.put('/:id', authorization, async (request: Request, response: Response) => {
   const body = request.body;
 
   const fantasyTeamtoUpdate = await
