@@ -28,7 +28,11 @@ fantasyTeamRouter.post('/', authorization, async (request: Request, response: Re
     points: 0,
   });
 
-  const savedFantasyTeam = await fantasyTeam.save();
+  if (body.name === undefined) {
+    return response.status(400).json({
+      error: 'fantasy team name must be provided',
+    });
+  }
 
   const userToUpdate = await User.findById(body.user);
   if (!userToUpdate) {
@@ -36,6 +40,13 @@ fantasyTeamRouter.post('/', authorization, async (request: Request, response: Re
       error: 'user not found',
     });
   }
+
+  if (userToUpdate.fantasyTeam) {
+    return response.status(400).json({
+      error: 'user already has a fantasy team',
+    });
+  }
+  const savedFantasyTeam = await fantasyTeam.save();
   userToUpdate.fantasyTeam = savedFantasyTeam._id;
   await userToUpdate.save();
 
@@ -55,10 +66,29 @@ fantasyTeamRouter.get('/:id', (request: Request, response: Response) => {
   return fantasyTeam;
 });
 
-fantasyTeamRouter.delete('/:id', async (request: Request, response: Response) => {
-  await FantasyTeam
-    .findByIdAndRemove(request.params.id);
-  response.status(204).end();
+fantasyTeamRouter.delete('/:id', authorization, async (request: Request, response: Response) => {
+  const fantasyTeam = await FantasyTeam.findById(request.params.id);
+  const user = await User.findById(fantasyTeam?.user);
+  if (!user) {
+    return response.status(404).json({
+      error: 'user not found',
+    });
+  }
+  if (!user.fantasyTeam) {
+    return response.status(404).json({
+      error: 'fantasy team not found',
+    });
+  }
+  if (user.fantasyTeam.toString() !== request.params.id) {
+    return response.status(401).json({
+      error: 'unauthorized',
+    });
+  }
+  await FantasyTeam.findByIdAndRemove(request.params.id);
+  user.fantasyTeam = undefined;
+  await user.save();
+  response.status(204).json({ message: 'fantasy team deleted' });
+  return null
 });
 
 fantasyTeamRouter.put('/:id', authorization, async (request: Request, response: Response) => {

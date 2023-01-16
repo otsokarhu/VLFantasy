@@ -23,6 +23,31 @@ userRouter.get('/', async (_request: Request, response: Response) => {
 userRouter.post('/', async (request: Request, response: Response) => {
   const body = request.body;
 
+  if (body.username === undefined) {
+    return response.status(400).json({
+      error: 'username must be provided',
+    });
+  }
+
+
+  if (body.password === undefined) {
+    return response.status(400).json({
+      error: 'password must be provided',
+    });
+  }
+
+  if (body.name === undefined) {
+    return response.status(400).json({
+      error: 'name must be provided',
+    });
+  }
+
+  if (body.username.length < 3) {
+    return response.status(400).json({
+      error: 'username must be at least 3 characters long',
+    });
+  }
+
   if (body.password.length < 3) {
     return response.status(400).json({
       error: 'password must be at least 3 characters long',
@@ -41,6 +66,13 @@ userRouter.post('/', async (request: Request, response: Response) => {
     });
   }
 
+  const existingUser = await User.findOne({ username: body.username });
+  if (existingUser) {
+    return response.status(400).json({
+      error: 'username must be unique',
+    });
+  }
+
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(body.password, saltRounds);
 
@@ -49,7 +81,7 @@ userRouter.post('/', async (request: Request, response: Response) => {
     username: body.username,
     email: body.email,
     passwordHash,
-    fantasyTeam: " "
+    fantasyTeam: null
   });
 
   const savedUser = await user.save();

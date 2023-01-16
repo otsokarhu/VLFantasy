@@ -8,21 +8,14 @@ import loginRouter from './controllers/loginController'
 import runnerRouter from './controllers/runnerController'
 import fantasyTeamRouter from './controllers/fantasyTeamController'
 
-
-
-
-
-
-const app = express()
+export const app = express()
 
 app.get('/api/testing', (_req, res) => {
   res.send('This works')
 })
 app.use(express.json())
 app.use(cors())
-app.use(middleware.errorHandler)
 app.use(middleware.requestLogger)
-
 
 app.use('/api/VLusers', userRouter)
 app.use('/api/login', loginRouter)
@@ -32,11 +25,7 @@ app.use('/api/fantasyTeams', fantasyTeamRouter)
 app.get('/');
 
 app.use(middleware.unknownEndpoint)
-
-
-
-
-
+app.use(middleware.errorHandler)
 
 
 const start = async () => {
@@ -47,6 +36,9 @@ const start = async () => {
 }
 
 void start()
+
+
+export default app
 
 
 
