@@ -4,14 +4,20 @@ import bcrypt from 'bcrypt';
 import express from 'express';
 const userRouter = express.Router();
 
-userRouter.get('/', (_request: Request, response: Response) => {
-  const users = User.find({})
+userRouter.get('/', async (_request: Request, response: Response) => {
+  const users = await User.find({})
+    .populate({
+      path: 'fantasyTeam',
+      select: 'name points',
+      populate: { path: 'runners', select: 'name team points' }
+    })
     .then((users) => {
       response.json(users);
-    }
-    );
+    });
   return users;
 });
+
+
 
 userRouter.post('/', async (request: Request, response: Response) => {
   const body = request.body;
@@ -42,6 +48,7 @@ userRouter.post('/', async (request: Request, response: Response) => {
     username: body.username,
     email: body.email,
     passwordHash,
+    fantasyTeam: " "
   });
 
   const savedUser = await user.save();
@@ -58,13 +65,27 @@ userRouter.get('/:id', async (request: Request, response: Response) => {
   return user;
 });
 
+userRouter.delete('/:id', async (request: Request, response: Response) => {
+  await User
+    .findByIdAndRemove(request.params.id);
+  response.status(204).end();
+});
 
+userRouter.put('/:id', async (request: Request, response: Response) => {
+  const body = request.body;
 
+  const user = {
+    name: body.name,
+    username: body.username,
+    email: body.email,
+    passwordHash: body.passwordHash,
+    fantasyTeam: body.fantasyTeam,
+  };
 
-
-
-
-
-
+  const updatedUser = await User
+    .findByIdAndUpdate(request.params.id, user, { new: true });
+  response.json(updatedUser);
+  return updatedUser;
+});
 
 export default userRouter;

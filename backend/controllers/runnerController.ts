@@ -15,7 +15,8 @@ runnerRouter.post("/", async (request: Request, response: Response) => {
 
   const runner = new Runner({
     name: body.name,
-    team: body.team
+    team: body.team,
+    points: 0,
   });
 
   const savedRunner = await runner.save();

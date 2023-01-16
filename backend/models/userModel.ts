@@ -7,7 +7,7 @@ export interface User extends Document {
   email: string;
   passwordHash: string;
   id: string;
-  fantasyTeam: string
+  fantasyTeam?: string
 }
 
 const userSchema: Schema = new Schema({

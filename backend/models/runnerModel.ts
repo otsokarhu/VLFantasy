@@ -4,6 +4,7 @@ export interface Runner extends Document {
   name: string;
   team: string;
   id: string;
+  points: number;
 }
 
 const runnerSchema: Schema = new Schema({
@@ -13,6 +14,10 @@ const runnerSchema: Schema = new Schema({
   },
   team: {
     type: String,
+    required: true,
+  },
+  points: {
+    type: Number,
     required: true,
   },
 });
