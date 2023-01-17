@@ -2,11 +2,11 @@ import Runner, { NewRunner } from '../models/runnerModel';
 
 const createRunner = async (body: any): Promise<NewRunner> => {
   const runner = new Runner({
-    ...body
+    ...body,
   });
   const savedRunner = await runner.save();
   return savedRunner;
-}
+};
 
 const getRunners = async (): Promise<NewRunner[]> => {
   const runners = await Runner.find({});
@@ -34,16 +34,14 @@ const updateRunner = async (id: string, body: any): Promise<NewRunner> => {
   if (!runner) {
     throw new Error('Runner not found');
   }
-  runner.points += body
+  runner.points += body;
   return runner;
 };
-
-
 
 export default {
   createRunner,
   getRunners,
   getRunner,
   deleteRunner,
-  updateRunner
-}
+  updateRunner,
+};

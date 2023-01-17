@@ -11,7 +11,7 @@ userRouter.get('/', async (_request: Request, response: Response) => {
     .populate({
       path: 'fantasyTeam',
       select: 'name points',
-      populate: { path: 'runners', select: 'name team points' }
+      populate: { path: 'runners', select: 'name team points' },
     })
     .then((users) => {
       response.json(users);
@@ -19,15 +19,13 @@ userRouter.get('/', async (_request: Request, response: Response) => {
   return users;
 });
 
-
-
 userRouter.post('/', async (request: Request, response: Response) => {
   try {
     const body = utils.toNewUser(request.body);
     const user = await userService.createUser(body);
-    response.status(201).json(user)
+    response.status(201).json(user);
   } catch (error: any) {
-    response.status(400).json({ error: error.message })
+    response.status(400).json({ error: error.message });
   }
 });
 
@@ -36,24 +34,27 @@ userRouter.get('/:id', async (request: Request, response: Response) => {
     const user = await userService.getUser(request.params.id);
     response.json(user);
   } catch (error: any) {
-    response.status(400).json({ error: error.message })
+    response.status(400).json({ error: error.message });
   }
 });
 
 userRouter.delete('/:id', async (request: Request, response: Response) => {
-  await User
-    .findByIdAndRemove(request.params.id);
+  await User.findByIdAndRemove(request.params.id);
   response.status(204).end();
 });
 
-userRouter.put('/:id', authorization, async (request: Request, response: Response) => {
-  try {
-    const body = utils.toNewUser(request.body);
-    const user = await userService.editUser(request.params.id, body);
-    response.json(user);
-  } catch (error: any) {
-    response.status(400).json({ error: error.message })
+userRouter.put(
+  '/:id',
+  authorization,
+  async (request: Request, response: Response) => {
+    try {
+      const body = utils.toNewUser(request.body);
+      const user = await userService.editUser(request.params.id, body);
+      response.json(user);
+    } catch (error: any) {
+      response.status(400).json({ error: error.message });
+    }
   }
-});
+);
 
 export default userRouter;

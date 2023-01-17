@@ -2,8 +2,6 @@ import runnerModel from '../models/runnerModel';
 import fantasyTeamModel from '../models/fantasyTeamModel';
 import userModel from '../models/userModel';
 
-
-
 export const initialRunners = [
   {
     name: 'Timo Silakka',
@@ -55,13 +53,3 @@ export default async function initializeDatabase() {
   await userModel.deleteMany({});
   await runnerModel.insertMany(initialRunners);
 }
-
-
-
-
-
-
-
-
-
-

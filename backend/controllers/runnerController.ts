@@ -1,16 +1,16 @@
-import express from "express";
-import { Request, Response } from "express";
-import runnerService from "../services/runnerService";
-import utils from "../utils/utils";
+import express from 'express';
+import { Request, Response } from 'express';
+import runnerService from '../services/runnerService';
+import utils from '../utils/utils';
 const runnerRouter = express.Router();
 
-runnerRouter.get("/", (_request: Request, response: Response) => {
+runnerRouter.get('/', (_request: Request, response: Response) => {
   runnerService.getRunners().then((runners) => {
     response.json(runners);
   });
 });
 
-runnerRouter.post("/", async (request: Request, response: Response) => {
+runnerRouter.post('/', async (request: Request, response: Response) => {
   try {
     const runnerBody = utils.toNewRunner(request.body);
     const runner = await runnerService.createRunner(runnerBody);
@@ -20,23 +20,22 @@ runnerRouter.post("/", async (request: Request, response: Response) => {
   }
 });
 
-runnerRouter.get("/:id", (request: Request, response: Response) => {
+runnerRouter.get('/:id', (request: Request, response: Response) => {
   const runner = runnerService.getRunner(request.params.id);
   response.json(runner);
   return runner;
 });
 
-runnerRouter.delete("/:id", async (request: Request, response: Response) => {
+runnerRouter.delete('/:id', async (request: Request, response: Response) => {
   try {
     await runnerService.deleteRunner(request.params.id);
-    response.status(204).json({ message: "runner deleted" });
-  }
-  catch (error: any) {
+    response.status(204).json({ message: 'runner deleted' });
+  } catch (error: any) {
     response.status(400).json({ error: error.message });
   }
 });
 
-runnerRouter.put("/:id", async (request: Request, response: Response) => {
+runnerRouter.put('/:id', async (request: Request, response: Response) => {
   try {
     const points = utils.toValidateNumber(request.body.points);
     const runner = await runnerService.updateRunner(request.params.id, points);
@@ -45,6 +44,5 @@ runnerRouter.put("/:id", async (request: Request, response: Response) => {
     response.status(400).json({ error: error.message });
   }
 });
-
 
 export default runnerRouter;

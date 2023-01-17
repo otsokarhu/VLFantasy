@@ -1,5 +1,4 @@
-import mongoose, { Schema } from "mongoose";
-
+import mongoose, { Schema } from 'mongoose';
 
 export interface Runner {
   name: string;
@@ -8,7 +7,7 @@ export interface Runner {
   points: number;
 }
 
-export type NewRunner = Omit<Runner, "id">;
+export type NewRunner = Omit<Runner, 'id'>;
 
 const runnerSchema: Schema = new Schema({
   name: {
@@ -25,4 +24,4 @@ const runnerSchema: Schema = new Schema({
   },
 });
 
-export default mongoose.model<Runner>("Runner", runnerSchema);
+export default mongoose.model<Runner>('Runner', runnerSchema);

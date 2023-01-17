@@ -3,10 +3,6 @@ import { FantasyTeamPopulated } from '../models/fantasyTeamModel';
 import User from '../models/userModel';
 import Runner from '../models/runnerModel';
 
-
-
-
-
 const getFantasyTeams = async (): Promise<FantasyTeamPopulated[]> => {
   const fantasyTeams = await FantasyTeam.find({})
     .populate('user', { username: 1, name: 1 })
@@ -15,12 +11,11 @@ const getFantasyTeams = async (): Promise<FantasyTeamPopulated[]> => {
 };
 
 const getFantasyTeam = async (id: string): Promise<FantasyTeamPopulated> => {
-  const fantasyTeam = await FantasyTeam.findById(id)
+  const fantasyTeam = await FantasyTeam.findById(id);
   if (!fantasyTeam) {
     throw new Error('Fantasy team not found');
   }
   return fantasyTeam;
-
 };
 
 const deleteFantasyTeam = async (id: string): Promise<void> => {
@@ -40,7 +35,10 @@ const deleteFantasyTeam = async (id: string): Promise<void> => {
   await user.save();
 };
 
-const addRunnerToFantasyTeam = async (id: string, runnerId: string): Promise<FantasyTeamPopulated> => {
+const addRunnerToFantasyTeam = async (
+  id: string,
+  runnerId: string
+): Promise<FantasyTeamPopulated> => {
   const fantasyTeam = await getFantasyTeam(id);
   if (!fantasyTeam) {
     throw new Error('Fantasy team not found');
@@ -58,22 +56,28 @@ const addRunnerToFantasyTeam = async (id: string, runnerId: string): Promise<Fan
   return fantasyTeam;
 };
 
-const removeRunnerFromFantasyTeam = async (id: string, runnerId: string): Promise<FantasyTeamPopulated> => {
+const removeRunnerFromFantasyTeam = async (
+  id: string,
+  runnerId: string
+): Promise<FantasyTeamPopulated> => {
   const fantasyTeam = await getFantasyTeam(id);
   if (!fantasyTeam) {
     throw new Error('Fantasy team not found');
   }
-  const runnerToRemove = fantasyTeam.runners.find((runner) => runner.id === runnerId);
+  const runnerToRemove = fantasyTeam.runners.find(
+    (runner) => runner.id === runnerId
+  );
   if (!runnerToRemove) {
     throw new Error('Runner not found');
   }
-  fantasyTeam.runners = fantasyTeam.runners.filter((runner) => runner.id !== runnerId);
+  fantasyTeam.runners = fantasyTeam.runners.filter(
+    (runner) => runner.id !== runnerId
+  );
   fantasyTeam.points -= runnerToRemove.points;
   return fantasyTeam;
 };
 
 const createFantasyTeam = async (body: any): Promise<FantasyTeamPopulated> => {
-
   const fantasyTeam = new FantasyTeam({
     ...body,
     runners: [],
@@ -93,7 +97,6 @@ const createFantasyTeam = async (body: any): Promise<FantasyTeamPopulated> => {
   await userToUpdate.save();
   return savedFantasyTeam;
 };
-
 
 export default {
   getFantasyTeams,

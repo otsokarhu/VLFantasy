@@ -14,25 +14,24 @@ const createUser = async (body: any): Promise<NewUser> => {
     username: body.username,
     email: body.email,
     passwordHash,
-    fantasyTeam: null
+    fantasyTeam: null,
   });
   const savedUser = await user.save();
   return savedUser;
-}
+};
 
 const getUsers = async (): Promise<NewUser[]> => {
   const users = await User.find({});
   return users;
-}
+};
 
 const getUser = async (id: string): Promise<NewUser> => {
-  const user = await User
-    .findById(id)
+  const user = await User.findById(id);
   if (!user) {
     throw new Error('User not found');
   }
   return user;
-}
+};
 
 const deleteUser = async (id: string): Promise<void> => {
   const user = await getUser(id);
@@ -40,7 +39,7 @@ const deleteUser = async (id: string): Promise<void> => {
     throw new Error('User not found');
   }
   await User.findByIdAndRemove(id);
-}
+};
 
 const editUser = async (id: string, body: any): Promise<NewUser> => {
   const user = await getUser(id);
@@ -49,19 +48,19 @@ const editUser = async (id: string, body: any): Promise<NewUser> => {
   }
   const userToUpdate = {
     ...body,
-    fantasyTeam: user.fantasyTeam
-  }
+    fantasyTeam: user.fantasyTeam,
+  };
   const updated = await User.findByIdAndUpdate(id, userToUpdate, { new: true });
   if (!updated) {
     throw new Error('User not found');
   }
   return updated;
-}
+};
 
 export default {
   createUser,
   getUsers,
   getUser,
   deleteUser,
-  editUser
-}
+  editUser,
+};

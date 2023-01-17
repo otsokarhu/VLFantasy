@@ -1,13 +1,12 @@
 import mongoose, { Schema } from 'mongoose';
 
-
 export interface User {
   name: string;
   username: string;
   email: string;
   passwordHash: string;
   id: string;
-  fantasyTeam?: string
+  fantasyTeam?: string;
 }
 
 export type NewUser = Omit<User, 'id'>;
@@ -46,6 +45,5 @@ userSchema.set('toJSON', {
     delete returnedObject.passwordHash;
   },
 });
-
 
 export default mongoose.model<User>('User', userSchema);
