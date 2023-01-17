@@ -22,68 +22,70 @@ userRouter.get('/', async (_request: Request, response: Response) => {
 
 userRouter.post('/', async (request: Request, response: Response) => {
   const body = request.body;
-  let error = null;
+  let error;
 
   if (body.username === undefined ||
     body.password === undefined ||
     body.name === undefined ||
-    body.email === undefined) {
-    switch (body) {
-      case 'username':
-        error = 'username must be provided'
-        return error
-      case 'password':
-        error = 'password must be provided'
-        return error
-      case 'name':
-        error = 'name must be provided'
-        return error
-      case 'email':
-        error = 'email must be provided'
-        return error
-      default:
-        error = 'username, password, name and email must be provided'
-        return error
-    }
-  }
-  console.log(error);
-
-  if (body.username.length < 3 ||
+    body.email === undefined ||
+    body.username.length < 3 ||
     body.password.length < 3 ||
     body.name.length < 3 ||
     body.email.length < 3) {
-    switch (body) {
-      case 'username':
+    switch (undefined) {
+      case body.username:
+        error = 'username must be provided'
+        break
+      case body.password:
+        error = 'password must be provided'
+        break
+      case body.name:
+        error = 'name must be provided'
+        break
+      case body.email:
+        error = 'email must be provided'
+        break
+      default:
+        error = 'username, password, name and email must be provided'
+        break
+    }
+    if (error) {
+      return response.status(400).json({
+        error,
+      });
+    }
+    switch (true) {
+      case body.username.length < 3:
         error = 'username must be at least 3 characters long'
-        return error
-      case 'password':
+        break
+      case body.password.length < 3:
         error = 'password must be at least 3 characters long'
-        return error
-      case 'name':
+        break
+      case body.name.length < 3:
         error = 'name must be at least 3 characters long'
-        return error
-      case 'email':
+        break
+      case body.email.length < 3:
         error = 'email must be at least 3 characters long'
-        return error
+        break
       default:
         error = 'username, password, name and email must be at least 3 characters long'
-        return error
+        break
     }
-
+    if (error) {
+      return response.status(400).json({
+        error,
+      });
+    }
   }
-  console.log(error);
+
 
   const existingUser = await User.findOne({ username: body.username });
   if (existingUser) {
-    error = 'username must be unique'
-    return error
-  }
-  console.log(error);
-  if (error) {
     return response.status(400).json({
-      error,
+      error: 'username must be unique',
     });
   }
+
 
 
   const saltRounds = 10;
