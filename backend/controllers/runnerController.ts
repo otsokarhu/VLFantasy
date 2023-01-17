@@ -16,7 +16,6 @@ runnerRouter.post("/", async (request: Request, response: Response) => {
     const runner = await runnerService.createRunner(runnerBody);
     response.status(201).json(runner);
   } catch (error: any) {
-    console.log(error.message);
     response.status(400).json({ error: error.message });
   }
 });
@@ -40,7 +39,6 @@ runnerRouter.delete("/:id", async (request: Request, response: Response) => {
 runnerRouter.put("/:id", async (request: Request, response: Response) => {
   try {
     const points = utils.toValidateNumber(request.body.points);
-    console.log(points);
     const runner = await runnerService.updateRunner(request.params.id, points);
     response.json(runner);
   } catch (error: any) {

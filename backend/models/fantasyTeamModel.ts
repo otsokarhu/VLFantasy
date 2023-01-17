@@ -9,7 +9,7 @@ export interface FantasyTeam {
   id: string;
 }
 
-export type NewFantasyTeam = Omit<FantasyTeam, 'id'>;
+export type NewFantasyTeam = Omit<FantasyTeam, 'id' | 'points'>;
 
 export type FantasyTeamPopulated = FantasyTeam & {
   runners: Runner[];

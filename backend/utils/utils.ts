@@ -7,15 +7,15 @@ const RunnerZod = z.object({
 });
 
 const FantasyTeamZod = z.object({
-  name: z.string({ required_error: "Name is required" }).min(3),
-  user: z.string({ required_error: "User is required" }).min(3),
+  name: z.string({ required_error: "Name is required" }).min(3).max(20),
+  user: z.string({ required_error: "User is required" }).min(3).max(50),
 });
 
 const UserZod = z.object({
-  username: z.string({ required_error: "Username is required" }).min(3),
-  name: z.string({ required_error: "Name is required" }).min(3),
-  email: z.string({ required_error: "Email is required" }).email().min(5),
-  password: z.string({ required_error: "Password is required" }).min(3),
+  username: z.string({ required_error: "Username is required" }).min(3).max(20),
+  name: z.string({ required_error: "Name is required" }).min(3).max(50),
+  email: z.string({ required_error: "Email is required" }).email().min(5).max(50),
+  password: z.string({ required_error: "Password is required" }).min(3).max(50),
 });
 
 type UserZod = z.infer<typeof UserZod>;
@@ -30,6 +30,11 @@ const toNewRunner = ({ name, team, points }: RunnerFields): RunnerZod => {
 const toValidateNumber = (param: unknown): number => {
   z.number().parse(param);
   return param as number;
+};
+
+const toValidateString = (param: unknown): string => {
+  z.string().parse(param);
+  return param as string;
 };
 
 const toNewFantasyTeam = ({ name, user }: FantasyTeamFields): FantasyTeamZod => {
@@ -47,22 +52,10 @@ type RunnerFields = { name: unknown; team: unknown; points: unknown };
 type UserFields = { username: unknown; name: unknown; password: unknown; fantasyTeam: unknown; email: unknown };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 export default {
   toNewFantasyTeam,
   toNewRunner,
   toNewUser,
   toValidateNumber,
+  toValidateString,
 };

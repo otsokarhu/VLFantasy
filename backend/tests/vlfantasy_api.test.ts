@@ -13,6 +13,40 @@ beforeEach(async () => {
   await initializeDatabase()
 })
 
+describe('login tests', () => {
+  beforeEach(async () => {
+    const passwordHash = await bcrypt.hash('testpassword', 10)
+    const user = new userModel({
+      name: "Test User",
+      username: "testuser",
+      email: "testil@gmail.com",
+      passwordHash,
+    })
+    await user.save()
+  })
+  test('login with correct credentials', async () => {
+    const user = {
+      username: "testuser",
+      password: "testpassword"
+    }
+    await api
+      .post('/api/login')
+      .send(user)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  })
+  test('login with incorrect credentials', async () => {
+    const wrongUser = {
+      username: "testuser",
+      password: "wrongpassword"
+    }
+    await api
+      .post('/api/login')
+      .send(wrongUser)
+      .expect(401)
+      .expect('Content-Type', /application\/json/)
+  })
+})
 
 
 describe('runner tests', () => {
@@ -428,8 +462,10 @@ describe('user tests', () => {
     const usersAfterPost = await api.get('/api/VLusers')
     expect(usersAfterPost.body).toHaveLength(usersInBeginning.body.length + 1)
   })
-
 })
+
+
+
 
 afterAll(() => {
   mongoose.connection.close()
