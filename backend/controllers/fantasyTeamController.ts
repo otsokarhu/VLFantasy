@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import express from 'express';
 import { authorization } from '../utils/middleware';
 import fantasyteamService from '../services/fantasyteamService';
+import utils from '../utils/utils';
 const fantasyTeamRouter = express.Router();
 
 
@@ -13,12 +14,11 @@ fantasyTeamRouter.get('/', (_request: Request, response: Response) => {
 );
 
 fantasyTeamRouter.post('/', authorization, async (request: Request, response: Response) => {
-  const body = request.body;
   try {
-    const fantasyTeam = await fantasyteamService.createFantasyTeam(body.name, body.user);
+    const teamBody = utils.toNewFantasyTeam(request.body);
+    const fantasyTeam = await fantasyteamService.createFantasyTeam(teamBody);
     response.status(201).json(fantasyTeam);
-  }
-  catch (error: any) {
+  } catch (error: any) {
     response.status(400).json({ error: error.message });
   }
 });

@@ -1,13 +1,15 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import { Runner } from './runnerModel';
 
-export interface FantasyTeam extends Document {
+export interface FantasyTeam {
   name: string;
   runners: Runner[];
   points: number;
   user: string;
   id: string;
 }
+
+export type NewFantasyTeam = Omit<FantasyTeam, 'id'>;
 
 export type FantasyTeamPopulated = FantasyTeam & {
   runners: Runner[];

@@ -52,16 +52,17 @@ const parseIsNumber = (param: unknown): number => {
   }
   return param;
 };
+export interface NewFantasyTeam {
+  name: string;
+  user: string;
+}
 
-type FantasyTeamFields = { name: unknown; points: unknown; user: unknown };
+type FantasyTeamFields = { name: unknown; user: unknown };
 
-const toNewFantasyTeam = ({ name, points, user }: FantasyTeamFields): FantasyTeam => {
-  const newFantasyTeam: FantasyTeam = {
+const toNewFantasyTeam = ({ name, user }: FantasyTeamFields): NewFantasyTeam => {
+  const newFantasyTeam: NewFantasyTeam = {
     name: parseIsString(name),
-    points: parseIsNumber(points),
     user: parseIsString(user),
-    runners: [],
-    id: '',
   };
   return newFantasyTeam;
 }

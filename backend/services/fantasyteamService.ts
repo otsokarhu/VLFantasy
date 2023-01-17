@@ -6,6 +6,7 @@ import Runner from '../models/runnerModel';
 
 
 
+
 const getFantasyTeams = async (): Promise<FantasyTeamPopulated[]> => {
   const fantasyTeams = await FantasyTeam.find({})
     .populate('user', { username: 1, name: 1 })
@@ -53,7 +54,7 @@ const addRunnerToFantasyTeam = async (id: string, runnerId: string): Promise<Fan
   }
   fantasyTeam.runners = fantasyTeam.runners.concat(runnerToAdd);
   fantasyTeam.points += runnerToAdd.points;
-  await fantasyTeam.save();
+
   return fantasyTeam;
 };
 
@@ -68,21 +69,17 @@ const removeRunnerFromFantasyTeam = async (id: string, runnerId: string): Promis
   }
   fantasyTeam.runners = fantasyTeam.runners.filter((runner) => runner.id !== runnerId);
   fantasyTeam.points -= runnerToRemove.points;
-  await fantasyTeam.save();
   return fantasyTeam;
 };
 
-const createFantasyTeam = async (name: string, user: string): Promise<FantasyTeamPopulated> => {
+const createFantasyTeam = async (body: any): Promise<FantasyTeamPopulated> => {
 
   const fantasyTeam = new FantasyTeam({
-    name: name,
-    user: user,
+    ...body,
     runners: [],
     points: 0,
   });
-  if (name === undefined) {
-    throw new Error('fantasy team name must be provided');
-  }
+  const user = body.user;
   const userToUpdate = await User.findById(user);
   if (!userToUpdate) {
     throw new Error('User not found');
@@ -91,7 +88,8 @@ const createFantasyTeam = async (name: string, user: string): Promise<FantasyTea
     throw new Error('User already has a fantasy team');
   }
   const savedFantasyTeam = await fantasyTeam.save();
-  userToUpdate.fantasyTeam = savedFantasyTeam._id;
+  const idToString = savedFantasyTeam._id.toString();
+  userToUpdate.fantasyTeam = idToString;
   await userToUpdate.save();
   return savedFantasyTeam;
 };
