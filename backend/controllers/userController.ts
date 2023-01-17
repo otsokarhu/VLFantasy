@@ -3,6 +3,7 @@ import User from '../models/userModel';
 import bcrypt from 'bcrypt';
 import express from 'express';
 import { authorization } from '../utils/middleware';
+import { newUserValidation } from '../utils/validation';
 const userRouter = express.Router();
 
 userRouter.get('/', async (_request: Request, response: Response) => {
@@ -22,69 +23,13 @@ userRouter.get('/', async (_request: Request, response: Response) => {
 
 userRouter.post('/', async (request: Request, response: Response) => {
   const body = request.body;
-  let error;
+  const error = await newUserValidation(body);
 
-  if (body.username === undefined ||
-    body.password === undefined ||
-    body.name === undefined ||
-    body.email === undefined ||
-    body.username.length < 3 ||
-    body.password.length < 3 ||
-    body.name.length < 3 ||
-    body.email.length < 3) {
-    switch (undefined) {
-      case body.username:
-        error = 'username must be provided'
-        break
-      case body.password:
-        error = 'password must be provided'
-        break
-      case body.name:
-        error = 'name must be provided'
-        break
-      case body.email:
-        error = 'email must be provided'
-        break
-      default:
-        error = 'username, password, name and email must be provided'
-        break
-    }
-    if (error) {
-      return response.status(400).json({
-        error,
-      });
-    }
-    switch (true) {
-      case body.username.length < 3:
-        error = 'username must be at least 3 characters long'
-        break
-      case body.password.length < 3:
-        error = 'password must be at least 3 characters long'
-        break
-      case body.name.length < 3:
-        error = 'name must be at least 3 characters long'
-        break
-      case body.email.length < 3:
-        error = 'email must be at least 3 characters long'
-        break
-      default:
-        error = 'username, password, name and email must be at least 3 characters long'
-        break
-    }
-    if (error) {
-      return response.status(400).json({
-        error,
-      });
-    }
-  }
-
-  const existingUser = await User.findOne({ username: body.username });
-  if (existingUser) {
+  if (error) {
     return response.status(400).json({
-      error: 'username must be unique',
+      error: error,
     });
   }
-
 
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(body.password, saltRounds);
