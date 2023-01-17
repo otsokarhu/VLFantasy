@@ -1,11 +1,14 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-export interface Runner extends Document {
+
+export interface Runner {
   name: string;
   team: string;
   id: string;
   points: number;
 }
+
+export type NewRunner = Omit<Runner, "id">;
 
 const runnerSchema: Schema = new Schema({
   name: {

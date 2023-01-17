@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import User from '../models/userModel';
-import bcrypt from 'bcrypt';
 import express from 'express';
 import { authorization } from '../utils/middleware';
-import { newUserValidation } from '../utils/validation';
+import userService from '../services/userService';
+import utils from '../utils/utils';
 const userRouter = express.Router();
 
 userRouter.get('/', async (_request: Request, response: Response) => {
@@ -22,38 +22,22 @@ userRouter.get('/', async (_request: Request, response: Response) => {
 
 
 userRouter.post('/', async (request: Request, response: Response) => {
-  const body = request.body;
-  const error = await newUserValidation(body);
-
-  if (error) {
-    return response.status(400).json({
-      error: error,
-    });
+  try {
+    const body = utils.toNewUser(request.body);
+    const user = await userService.createUser(body);
+    response.status(201).json(user)
+  } catch (error: any) {
+    response.status(400).json({ error: error.message })
   }
-
-  const saltRounds = 10;
-  const passwordHash = await bcrypt.hash(body.password, saltRounds);
-
-  const user = new User({
-    name: body.name,
-    username: body.username,
-    email: body.email,
-    passwordHash,
-    fantasyTeam: null
-  });
-
-  const savedUser = await user.save();
-
-  response.status(201).json(savedUser);
-  return savedUser;
-
 });
 
 userRouter.get('/:id', async (request: Request, response: Response) => {
-  const user = await User
-    .findById(request.params.id)
-  response.json(user);
-  return user;
+  try {
+    const user = await userService.getUser(request.params.id);
+    response.json(user);
+  } catch (error: any) {
+    response.status(400).json({ error: error.message })
+  }
 });
 
 userRouter.delete('/:id', async (request: Request, response: Response) => {
@@ -63,20 +47,13 @@ userRouter.delete('/:id', async (request: Request, response: Response) => {
 });
 
 userRouter.put('/:id', authorization, async (request: Request, response: Response) => {
-  const body = request.body;
-
-  const user = {
-    name: body.name,
-    username: body.username,
-    email: body.email,
-    passwordHash: body.passwordHash,
-    fantasyTeam: body.fantasyTeam,
-  };
-
-  const updatedUser = await User
-    .findByIdAndUpdate(request.params.id, user, { new: true });
-  response.json(updatedUser);
-  return updatedUser;
+  try {
+    const body = utils.toNewUser(request.body);
+    const user = await userService.editUser(request.params.id, body);
+    response.json(user);
+  } catch (error: any) {
+    response.status(400).json({ error: error.message })
+  }
 });
 
 export default userRouter;

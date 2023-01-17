@@ -1,7 +1,7 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 
-export interface User extends Document {
+export interface User {
   name: string;
   username: string;
   email: string;
@@ -9,6 +9,8 @@ export interface User extends Document {
   id: string;
   fantasyTeam?: string
 }
+
+export type NewUser = Omit<User, 'id'>;
 
 const userSchema: Schema = new Schema({
   name: {

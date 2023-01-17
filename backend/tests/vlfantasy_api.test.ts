@@ -272,7 +272,7 @@ describe('user tests', () => {
     const newUser = {
       name: 'Test User2',
       username: 'testuser2',
-      email: 'test2',
+      email: 'oskarikakkori@hotmail.com',
       password: 'verisikret',
     }
 
@@ -293,7 +293,7 @@ describe('user tests', () => {
 
     const newUser = {
       name: 'Test User2',
-      email: 'test2',
+      email: 'test2@gmail.com',
       password: 'verisikret',
     }
 
@@ -312,7 +312,7 @@ describe('user tests', () => {
     const newUser = {
       name: 'Test User2',
       username: 'testuser2',
-      email: 'test2',
+      email: 'test2@gmail.com',
     }
 
     await api
@@ -346,7 +346,7 @@ describe('user tests', () => {
     const usersInBeginning = await api.get('/api/VLusers')
 
     const newUser = {
-      email: 'Test User2',
+      email: 'testi@gmail.com',
       username: 'testuser2',
       password: 'test2',
     }
@@ -366,7 +366,7 @@ describe('user tests', () => {
     const newUser = {
       name: 'Test User2',
       username: 'te',
-      email: 'test2',
+      email: 'test2@gmail.com',
       password: 'verisikret'
     }
 
@@ -385,7 +385,7 @@ describe('user tests', () => {
     const newUser = {
       name: 'Test User2',
       username: 'testuser2',
-      email: 'test2',
+      email: 'test2@gmail.com',
       password: 'te'
     }
 
@@ -404,7 +404,7 @@ describe('user tests', () => {
     const newUser = {
       name: 'Test User2',
       username: 'testuser2',
-      email: 'test2',
+      email: 'test2@gmail.com',
       password: 'sikret'
     }
 
@@ -416,7 +416,7 @@ describe('user tests', () => {
     const newUser2 = {
       name: 'Test User3',
       username: 'testuser2',
-      email: 'test3',
+      email: 'test3@gmail.com',
       password: 'sallainen'
     }
 

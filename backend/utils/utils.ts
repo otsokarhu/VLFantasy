@@ -1,101 +1,68 @@
-export interface FantasyTeam {
-  name: string;
-  runners: Runner[];
-  points: number;
-  user: string;
-  id: string;
-}
+import { z } from "zod";
 
-export interface Runner {
-  name: string;
-  team: string;
-  points: number;
-  id: string;
-}
+const RunnerZod = z.object({
+  name: z.string({ required_error: "Name is required" }),
+  team: z.string({ required_error: "Team is required" }),
+  points: z.number({ required_error: "Points is required" }),
+});
 
-export interface User {
-  username: string;
-  name: string;
-  passwordHash: string;
-  fantasyTeam?: string;
-  id: string;
-  email: string;
-}
+const FantasyTeamZod = z.object({
+  name: z.string({ required_error: "Name is required" }).min(3),
+  user: z.string({ required_error: "User is required" }).min(3),
+});
 
-export type FantasyTeamPopulated = FantasyTeam & {
-  runners: Runner[];
-  user: string;
+const UserZod = z.object({
+  username: z.string({ required_error: "Username is required" }).min(3),
+  name: z.string({ required_error: "Name is required" }).min(3),
+  email: z.string({ required_error: "Email is required" }).email().min(5),
+  password: z.string({ required_error: "Password is required" }).min(3),
+});
+
+type UserZod = z.infer<typeof UserZod>;
+type FantasyTeamZod = z.infer<typeof FantasyTeamZod>;
+type RunnerZod = z.infer<typeof RunnerZod>;
+
+const toNewRunner = ({ name, team, points }: RunnerFields): RunnerZod => {
+  const validatedBody = RunnerZod.parse({ name, team, points });
+  return validatedBody;
 };
 
-export type UserPopulated = User & {
-  fantasyTeam: FantasyTeam;
+const toValidateNumber = (param: unknown): number => {
+  z.number().parse(param);
+  return param as number;
 };
 
-const isString = (text: unknown): text is string => {
-  return typeof text === 'string' || text instanceof String;
-};
-
-const parseIsString = (param: unknown): string => {
-  if (!param || !isString(param)) {
-    throw new Error('Incorrect or missing input' + param);
-  }
-  return param;
-};
-
-const isNumber = (num: unknown): num is number => {
-  return typeof num === 'number' || num instanceof Number;
-};
-
-const parseIsNumber = (param: unknown): number => {
-  if (!param || !isNumber(param)) {
-    throw new Error('Incorrect or missing input' + param);
-  }
-  return param;
-};
-export interface NewFantasyTeam {
-  name: string;
-  user: string;
-}
-
-type FantasyTeamFields = { name: unknown; user: unknown };
-
-const toNewFantasyTeam = ({ name, user }: FantasyTeamFields): NewFantasyTeam => {
-  const newFantasyTeam: NewFantasyTeam = {
-    name: parseIsString(name),
-    user: parseIsString(user),
-  };
+const toNewFantasyTeam = ({ name, user }: FantasyTeamFields): FantasyTeamZod => {
+  const newFantasyTeam = FantasyTeamZod.parse({ name, user });
   return newFantasyTeam;
 }
 
-type RunnerFields = { name: unknown; team: unknown; points: unknown };
-
-const toNewRunner = ({ name, team, points }: RunnerFields): Runner => {
-  const newRunner: Runner = {
-    name: parseIsString(name),
-    team: parseIsString(team),
-    points: parseIsNumber(points),
-    id: '',
-  };
-  return newRunner;
-}
-
-type UserFields = { username: unknown; name: unknown; passwordHash: unknown; fantasyTeam: unknown; email: unknown };
-
-const toNewUser = ({ username, name, passwordHash, fantasyTeam, email }: UserFields): User => {
-  const newUser: User = {
-    username: parseIsString(username),
-    name: parseIsString(name),
-    passwordHash: parseIsString(passwordHash),
-    fantasyTeam: parseIsString(fantasyTeam),
-    email: parseIsString(email),
-    id: '',
-  };
+const toNewUser = ({ username, name, password, email }: UserFields): UserZod => {
+  const newUser = UserZod.parse({ username, name, password, email });
   return newUser;
 }
+
+type FantasyTeamFields = { name: unknown; user: unknown };
+type RunnerFields = { name: unknown; team: unknown; points: unknown };
+type UserFields = { username: unknown; name: unknown; password: unknown; fantasyTeam: unknown; email: unknown };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 export default {
   toNewFantasyTeam,
   toNewRunner,
   toNewUser,
+  toValidateNumber,
 };
