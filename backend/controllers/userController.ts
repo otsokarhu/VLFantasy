@@ -22,47 +22,57 @@ userRouter.get('/', async (_request: Request, response: Response) => {
 
 userRouter.post('/', async (request: Request, response: Response) => {
   const body = request.body;
+  let error
 
-  if (body.username === undefined) {
+  if (body.username === undefined ||
+    body.password === undefined ||
+    body.name === undefined ||
+    body.email === undefined) {
+    switch (body) {
+      case 'username':
+        error = 'username must be provided'
+        break
+      case 'password':
+        error = 'password must be provided'
+        break
+      case 'name':
+        error = 'name must be provided'
+        break
+      case 'email':
+        error = 'email must be provided'
+        break
+      default:
+        error = 'username, password, name and email must be provided'
+        break
+    }
     return response.status(400).json({
-      error: 'username must be provided',
+      error,
     });
   }
 
-
-  if (body.password === undefined) {
+  if (body.username.length < 3 ||
+    body.password.length < 3 ||
+    body.name.length < 3 ||
+    body.email.length < 3) {
+    switch (body) {
+      case 'username':
+        error = 'username must be at least 3 characters long'
+        break
+      case 'password':
+        error = 'password must be at least 3 characters long'
+        break
+      case 'name':
+        error = 'name must be at least 3 characters long'
+        break
+      case 'email':
+        error = 'email must be at least 3 characters long'
+        break
+      default:
+        error = 'username, password, name and email must be at least 3 characters long'
+        break
+    }
     return response.status(400).json({
-      error: 'password must be provided',
-    });
-  }
-
-  if (body.name === undefined) {
-    return response.status(400).json({
-      error: 'name must be provided',
-    });
-  }
-
-  if (body.username.length < 3) {
-    return response.status(400).json({
-      error: 'username must be at least 3 characters long',
-    });
-  }
-
-  if (body.password.length < 3) {
-    return response.status(400).json({
-      error: 'password must be at least 3 characters long',
-    });
-  }
-
-  if (body.email === undefined) {
-    return response.status(400).json({
-      error: 'email must be provided',
-    });
-  }
-
-  if (body.name < 3) {
-    return response.status(400).json({
-      error: 'name must be at least 3 characters long',
+      error,
     });
   }
 
@@ -72,6 +82,7 @@ userRouter.post('/', async (request: Request, response: Response) => {
       error: 'username must be unique',
     });
   }
+
 
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(body.password, saltRounds);

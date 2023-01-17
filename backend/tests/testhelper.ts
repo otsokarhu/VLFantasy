@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import runnerModel from '../models/runnerModel';
 import fantasyTeamModel from '../models/fantasyTeamModel';
 import userModel from '../models/userModel';
@@ -50,8 +49,7 @@ export const initialRunners = [
   },
 ];
 
-// @ts-ignore: Unreachable code error
-export default async function initializeDatabase({ api: api }) {
+export default async function initializeDatabase() {
   await runnerModel.deleteMany({});
   await fantasyTeamModel.deleteMany({});
   await userModel.deleteMany({});

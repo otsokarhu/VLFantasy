@@ -10,7 +10,7 @@ const api = supertest(app)
 
 
 beforeEach(async () => {
-  await initializeDatabase({ api: api })
+  await initializeDatabase()
 })
 
 
