@@ -22,7 +22,7 @@ userRouter.get('/', async (_request: Request, response: Response) => {
 
 userRouter.post('/', async (request: Request, response: Response) => {
   const body = request.body;
-  let error
+  let error = null;
 
   if (body.username === undefined ||
     body.password === undefined ||
@@ -31,24 +31,22 @@ userRouter.post('/', async (request: Request, response: Response) => {
     switch (body) {
       case 'username':
         error = 'username must be provided'
-        break
+        return error
       case 'password':
         error = 'password must be provided'
-        break
+        return error
       case 'name':
         error = 'name must be provided'
-        break
+        return error
       case 'email':
         error = 'email must be provided'
-        break
+        return error
       default:
         error = 'username, password, name and email must be provided'
-        break
+        return error
     }
-    return response.status(400).json({
-      error,
-    });
   }
+  console.log(error);
 
   if (body.username.length < 3 ||
     body.password.length < 3 ||
@@ -57,29 +55,33 @@ userRouter.post('/', async (request: Request, response: Response) => {
     switch (body) {
       case 'username':
         error = 'username must be at least 3 characters long'
-        break
+        return error
       case 'password':
         error = 'password must be at least 3 characters long'
-        break
+        return error
       case 'name':
         error = 'name must be at least 3 characters long'
-        break
+        return error
       case 'email':
         error = 'email must be at least 3 characters long'
-        break
+        return error
       default:
         error = 'username, password, name and email must be at least 3 characters long'
-        break
+        return error
     }
-    return response.status(400).json({
-      error,
-    });
+
   }
+  console.log(error);
 
   const existingUser = await User.findOne({ username: body.username });
   if (existingUser) {
+    error = 'username must be unique'
+    return error
+  }
+  console.log(error);
+  if (error) {
     return response.status(400).json({
-      error: 'username must be unique',
+      error,
     });
   }
 

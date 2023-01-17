@@ -69,17 +69,19 @@ fantasyTeamRouter.get('/:id', (request: Request, response: Response) => {
 fantasyTeamRouter.delete('/:id', authorization, async (request: Request, response: Response) => {
   const fantasyTeam = await FantasyTeam.findById(request.params.id);
   const user = await User.findById(fantasyTeam?.user);
+
+
   if (!user) {
     return response.status(404).json({
       error: 'user not found',
     });
   }
-  if (!user.fantasyTeam) {
+  if (!fantasyTeam) {
     return response.status(404).json({
       error: 'fantasy team not found',
     });
   }
-  if (user.fantasyTeam.toString() !== request.params.id) {
+  if (user.fantasyTeam?.toString() !== request.params.id) {
     return response.status(401).json({
       error: 'unauthorized',
     });
