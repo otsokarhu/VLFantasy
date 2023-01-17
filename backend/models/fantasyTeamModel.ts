@@ -9,6 +9,11 @@ export interface FantasyTeam extends Document {
   id: string;
 }
 
+export type FantasyTeamPopulated = FantasyTeam & {
+  runners: Runner[];
+  user: string;
+};
+
 const fantasyTeamSchema: Schema = new Schema({
   name: {
     type: String,
