@@ -78,14 +78,12 @@ userRouter.post('/', async (request: Request, response: Response) => {
     }
   }
 
-
   const existingUser = await User.findOne({ username: body.username });
   if (existingUser) {
     return response.status(400).json({
       error: 'username must be unique',
     });
   }
-
 
 
   const saltRounds = 10;
