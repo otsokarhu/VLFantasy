@@ -601,7 +601,7 @@ describe('user tests', () => {
         username: userToChange.username,
         email: userToChange.email,
         password: 'verisikret',
-        newpassword: 'veris'
+        newpassword: 'veris',
       })
       .expect(200);
 

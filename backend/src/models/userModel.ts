@@ -9,7 +9,6 @@ export interface User {
   fantasyTeam?: string;
 }
 
-
 const userSchema: Schema = new Schema({
   name: {
     type: String,

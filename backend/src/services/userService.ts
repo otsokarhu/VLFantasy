@@ -22,8 +22,11 @@ const createUser = async (body: any): Promise<UserZod> => {
 };
 
 const getAllUsers = async (): Promise<UserZod[]> => {
-  const users = await User.find({})
-    .populate('fantasyTeam', { name: 1, runners: 1, points: 1 })
+  const users = await User.find({}).populate('fantasyTeam', {
+    name: 1,
+    runners: 1,
+    points: 1,
+  });
   return users;
 };
 
@@ -56,9 +59,11 @@ const editUser = async (id: string, body: any): Promise<UserZod> => {
       username: body.username,
       email: body.email,
       fantasyTeam: user.fantasyTeam,
-      passwordHash
-    }
-    const updated = await User.findByIdAndUpdate(id, uPasswordToUpdate, { new: true });
+      passwordHash,
+    };
+    const updated = await User.findByIdAndUpdate(id, uPasswordToUpdate, {
+      new: true,
+    });
     if (!updated) {
       throw new Error('User not found');
     }
@@ -68,7 +73,9 @@ const editUser = async (id: string, body: any): Promise<UserZod> => {
       ...body,
       fantasyTeam: user.fantasyTeam,
     };
-    const updated = await User.findByIdAndUpdate(id, userToUpdate, { new: true });
+    const updated = await User.findByIdAndUpdate(id, userToUpdate, {
+      new: true,
+    });
     if (!updated) {
       throw new Error('User not found');
     }

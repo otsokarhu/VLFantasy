@@ -9,7 +9,6 @@ export interface FantasyTeam {
   id: string;
 }
 
-
 const fantasyTeamSchema: Schema = new Schema({
   name: {
     type: String,

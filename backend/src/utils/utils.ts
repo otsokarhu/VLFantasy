@@ -9,9 +9,9 @@ const RunnerZod = z.object({
 const FantasyTeamZod = z.object({
   name: z.string({ required_error: 'Name is required' }),
   user: z.string({ required_error: 'User is required' }),
-  runners: z.array(RunnerZod).optional(),
+  runners: z.array(RunnerZod),
   id: z.string().optional(),
-  points: z.number()
+  points: z.number(),
 });
 
 const UserZodSchema = z.object({
@@ -22,11 +22,13 @@ const UserZodSchema = z.object({
     .email()
     .min(5)
     .max(50),
-  passwordHash: z.string({ required_error: 'Password is required' }).min(3).max(50),
+  passwordHash: z
+    .string({ required_error: 'Password is required' })
+    .min(3)
+    .max(50),
   id: z.string().optional(),
   fantasyTeam: z.string().optional(),
 });
-
 
 const NewFantasyTeamZod = z.object({
   name: z.string({ required_error: 'Name is required' }).min(3).max(20),
@@ -42,7 +44,11 @@ const NewUserZod = z.object({
     .min(5)
     .max(50),
   password: z.string({ required_error: 'Password is required' }).min(3).max(50),
-  newpassword: z.string({ required_error: 'Password is required' }).min(3).max(50).optional(),
+  newpassword: z
+    .string({ required_error: 'Password is required' })
+    .min(3)
+    .max(50)
+    .optional(),
 });
 
 type NewUserZod = z.infer<typeof NewUserZod>;
@@ -88,9 +94,15 @@ const toNewUser = ({
   name,
   password,
   email,
-  newpassword
+  newpassword,
 }: UserFields): NewUserZod => {
-  const newUser = NewUserZod.parse({ username, name, password, email, newpassword });
+  const newUser = NewUserZod.parse({
+    username,
+    name,
+    password,
+    email,
+    newpassword,
+  });
   return newUser;
 };
 
@@ -113,5 +125,5 @@ export default {
   toValidateString,
   FantasyTeamZod,
   RunnerZod,
-  UserZodSchema
+  UserZodSchema,
 };

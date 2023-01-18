@@ -7,7 +7,6 @@ export interface Runner {
   points: number;
 }
 
-
 const runnerSchema: Schema = new Schema({
   name: {
     type: String,

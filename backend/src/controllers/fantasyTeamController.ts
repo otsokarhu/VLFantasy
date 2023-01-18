@@ -64,11 +64,11 @@ fantasyTeamRouter.put(
   async (request: Request, response: Response) => {
     const body = request.body;
     try {
-      await fantasyteamService.addRunnerToFantasyTeam(
+      const team = await fantasyteamService.addRunnerToFantasyTeam(
         request.params.id,
         body.runner
       );
-      response.status(200).json({ message: 'runner added to fantasy team' });
+      response.status(200).json(team);
     } catch (error: any) {
       response.status(400).json({ error: error.message });
     }

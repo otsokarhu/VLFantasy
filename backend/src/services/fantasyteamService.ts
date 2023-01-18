@@ -4,9 +4,8 @@ import runnerService from './runnerService';
 import Runner from '../models/runnerModel';
 import { FantasyTeamZod } from '../utils/utils';
 
-
 const getAllFantasyTeams = async (): Promise<FantasyTeamZod[]> => {
-  const fantasyTeams = await FantasyTeam.find({})
+  const fantasyTeams = await FantasyTeam.find()
     .populate('user', { username: 1, name: 1 })
     .populate('runners', { name: 1, team: 1, points: 1 });
   return fantasyTeams;
@@ -96,7 +95,7 @@ const removeRunnerFromFantasyTeam = async (
 
 const createFantasyTeam = async (body: any): Promise<FantasyTeamZod> => {
   const fantasyTeam = new FantasyTeam({
-    ...body
+    ...body,
   });
   const user = body.user;
   const userToUpdate = await User.findById(user);

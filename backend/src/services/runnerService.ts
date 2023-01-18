@@ -10,7 +10,6 @@ const createRunner = async (body: any): Promise<RunnerZod> => {
 
 const getAllRunners = async (): Promise<RunnerZod[]> => {
   return await Runner.find({});
-
 };
 
 const getRunner = async (id: string): Promise<RunnerZod> => {
@@ -30,11 +29,12 @@ const deleteRunner = async (id: string): Promise<void> => {
 };
 
 const updateRunner = async (id: string, body: any): Promise<RunnerZod> => {
-  const runner = await getRunner(id);
+  const runner = await Runner.findById(id);
   if (!runner) {
     throw new Error('Runner not found');
   }
   runner.points += body;
+  await runner.save();
   return runner;
 };
 
