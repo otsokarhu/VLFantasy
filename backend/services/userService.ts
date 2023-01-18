@@ -20,8 +20,12 @@ const createUser = async (body: any): Promise<NewUser> => {
   return savedUser;
 };
 
-const getUsers = async (): Promise<NewUser[]> => {
-  const users = await User.find({});
+const getAllUsers = async (): Promise<NewUser[]> => {
+  const users = await User.find({}).populate({
+    path: 'fantasyTeam',
+    select: 'name points',
+    populate: { path: 'runners', select: 'name team points' },
+  });
   return users;
 };
 
@@ -59,7 +63,7 @@ const editUser = async (id: string, body: any): Promise<NewUser> => {
 
 export default {
   createUser,
-  getUsers,
+  getAllUsers,
   getUser,
   deleteUser,
   editUser,

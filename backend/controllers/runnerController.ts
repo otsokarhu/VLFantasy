@@ -4,10 +4,13 @@ import runnerService from '../services/runnerService';
 import utils from '../utils/utils';
 const runnerRouter = express.Router();
 
-runnerRouter.get('/', (_request: Request, response: Response) => {
-  runnerService.getRunners().then((runners) => {
+runnerRouter.get('/', async (_request: Request, response: Response) => {
+  try {
+    const runners = await runnerService.getAllRunners();
     response.json(runners);
-  });
+  } catch (error: any) {
+    response.status(400).json({ error: error.message });
+  }
 });
 
 runnerRouter.post('/', async (request: Request, response: Response) => {
@@ -20,10 +23,13 @@ runnerRouter.post('/', async (request: Request, response: Response) => {
   }
 });
 
-runnerRouter.get('/:id', (request: Request, response: Response) => {
-  const runner = runnerService.getRunner(request.params.id);
-  response.json(runner);
-  return runner;
+runnerRouter.get('/:id', async (request: Request, response: Response) => {
+  try {
+    const runner = await runnerService.getRunner(request.params.id);
+    response.json(runner);
+  } catch (error: any) {
+    response.status(400).json({ error: error.message });
+  }
 });
 
 runnerRouter.delete('/:id', async (request: Request, response: Response) => {

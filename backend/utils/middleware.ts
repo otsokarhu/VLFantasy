@@ -8,12 +8,10 @@ export interface CustomRequest extends Request {
 }
 
 const unknownEndpoint = (_request: Request, response: Response) => {
-  response
-    .status(404)
-    .send({
-      error: 'unknown endpoint',
-      message: 'Check the documentation for the correct endpoint',
-    });
+  response.status(404).send({
+    error: 'unknown endpoint',
+    message: 'Check the documentation for the correct endpoint',
+  });
 };
 
 export const errorHandler = (

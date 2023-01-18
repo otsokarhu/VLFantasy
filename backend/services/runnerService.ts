@@ -8,7 +8,7 @@ const createRunner = async (body: any): Promise<NewRunner> => {
   return savedRunner;
 };
 
-const getRunners = async (): Promise<NewRunner[]> => {
+const getAllRunners = async (): Promise<NewRunner[]> => {
   const runners = await Runner.find({});
   return runners;
 };
@@ -40,7 +40,7 @@ const updateRunner = async (id: string, body: any): Promise<NewRunner> => {
 
 export default {
   createRunner,
-  getRunners,
+  getAllRunners,
   getRunner,
   deleteRunner,
   updateRunner,

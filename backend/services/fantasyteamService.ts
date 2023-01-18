@@ -3,7 +3,7 @@ import { FantasyTeamPopulated } from '../models/fantasyTeamModel';
 import User from '../models/userModel';
 import Runner from '../models/runnerModel';
 
-const getFantasyTeams = async (): Promise<FantasyTeamPopulated[]> => {
+const getAllFantasyTeams = async (): Promise<FantasyTeamPopulated[]> => {
   const fantasyTeams = await FantasyTeam.find({})
     .populate('user', { username: 1, name: 1 })
     .populate('runners', { name: 1, team: 1, points: 1 });
@@ -99,7 +99,7 @@ const createFantasyTeam = async (body: any): Promise<FantasyTeamPopulated> => {
 };
 
 export default {
-  getFantasyTeams,
+  getAllFantasyTeams,
   getFantasyTeam,
   deleteFantasyTeam,
   addRunnerToFantasyTeam,

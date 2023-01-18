@@ -31,14 +31,23 @@ const toNewRunner = ({ name, team, points }: RunnerFields): RunnerZod => {
   return validatedBody;
 };
 
-const toValidateNumber = (param: unknown): number => {
-  z.number().parse(param);
-  return param as number;
+const toValidateNumber = (param: number): number => {
+  return z
+    .number({
+      required_error: 'Value must be given',
+      invalid_type_error: 'Value must be number',
+    })
+    .parse(param);
 };
 
-const toValidateString = (param: unknown): string => {
-  z.string().parse(param);
-  return param as string;
+const toValidateString = (param: string): string => {
+  return z
+    .string({
+      required_error: 'Input must be given',
+      invalid_type_error: 'Input must be a number',
+    })
+    .max(50)
+    .parse(param);
 };
 
 const toNewFantasyTeam = ({

@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import User from '../models/userModel';
 import express from 'express';
 import { authorization } from '../utils/middleware';
 import userService from '../services/userService';
@@ -7,16 +6,12 @@ import utils from '../utils/utils';
 const userRouter = express.Router();
 
 userRouter.get('/', async (_request: Request, response: Response) => {
-  const users = await User.find({})
-    .populate({
-      path: 'fantasyTeam',
-      select: 'name points',
-      populate: { path: 'runners', select: 'name team points' },
-    })
-    .then((users) => {
-      response.json(users);
-    });
-  return users;
+  try {
+    const users = await userService.getAllUsers();
+    response.json(users);
+  } catch (error: any) {
+    response.status(400).json({ error: error.message });
+  }
 });
 
 userRouter.post('/', async (request: Request, response: Response) => {
@@ -39,8 +34,12 @@ userRouter.get('/:id', async (request: Request, response: Response) => {
 });
 
 userRouter.delete('/:id', async (request: Request, response: Response) => {
-  await User.findByIdAndRemove(request.params.id);
-  response.status(204).end();
+  try {
+    await userService.deleteUser(request.params.id);
+    response.status(204).end();
+  } catch (error: any) {
+    response.status(400).json({ error: error.message });
+  }
 });
 
 userRouter.put(
