@@ -21,11 +21,12 @@ const fantasyTeamSchema: Schema = new Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Runner',
+      default: [],
     },
   ],
   points: {
     type: Number,
-    required: true,
+    default: 0,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,

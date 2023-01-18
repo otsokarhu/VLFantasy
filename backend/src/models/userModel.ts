@@ -10,7 +10,6 @@ export interface User {
 }
 
 
-
 const userSchema: Schema = new Schema({
   name: {
     type: String,

@@ -15,18 +15,15 @@ const createUser = async (body: any): Promise<UserZod> => {
     username: body.username,
     email: body.email,
     passwordHash,
-    fantasyTeam: null,
+    fantasyTeam: undefined,
   });
   const savedUser = await user.save();
   return savedUser;
 };
 
 const getAllUsers = async (): Promise<UserZod[]> => {
-  const users = await User.find({}).populate({
-    path: 'fantasyTeam',
-    select: 'name points',
-    populate: { path: 'runners', select: 'name team points' },
-  });
+  const users = await User.find({})
+    .populate('fantasyTeam', { name: 1, runners: 1, points: 1 })
   return users;
 };
 

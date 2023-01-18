@@ -96,9 +96,7 @@ const removeRunnerFromFantasyTeam = async (
 
 const createFantasyTeam = async (body: any): Promise<FantasyTeamZod> => {
   const fantasyTeam = new FantasyTeam({
-    ...body,
-    runners: [],
-    points: 0,
+    ...body
   });
   const user = body.user;
   const userToUpdate = await User.findById(user);
