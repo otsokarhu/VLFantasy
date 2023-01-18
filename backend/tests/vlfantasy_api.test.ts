@@ -436,6 +436,181 @@ describe('user tests', () => {
     expect(usernames).toContain(newUser.username);
   });
 
+  test('username can be changed', async () => {
+    const newUser = {
+      name: 'Test User2',
+      username: 'testuser2',
+      email: 'oskarikakkori@hotmail.com',
+      password: 'verisikret',
+    };
+
+    await api.post('/api/VLusers').send(newUser).expect(201);
+
+    const token = await api
+      .post('/api/login')
+      .send({ username: 'testuser2', password: 'verisikret' });
+
+    const usersAfterPost = await api.get('/api/VLusers');
+    const userToChange = usersAfterPost.body[0];
+
+    await api
+      .put(`/api/VLusers/${userToChange.id}`)
+      .set('Authorization', `bearer ${token.body.token}`)
+      .send({
+        name: userToChange.name,
+        username: 'testuser3',
+        email: userToChange.email,
+        password: 'verisikret',
+      })
+      .expect(200);
+
+    const usersAfterChange = await api.get('/api/VLusers');
+    const usernames = usersAfterChange.body.map((user: any) => user.username);
+    expect(usernames).toContain('testuser3');
+  });
+
+  test('name can be changed', async () => {
+    const newUser = {
+      name: 'Test User2',
+      username: 'testuser2',
+      email: 'oskarikakkori@hotmail.com',
+      password: 'verisikret',
+    };
+
+    await api.post('/api/VLusers').send(newUser).expect(201);
+
+    const token = await api
+      .post('/api/login')
+      .send({ username: 'testuser2', password: 'verisikret' });
+
+    const usersAfterPost = await api.get('/api/VLusers');
+    const userToChange = usersAfterPost.body[0];
+
+    await api
+      .put(`/api/VLusers/${userToChange.id}`)
+      .set('Authorization', `bearer ${token.body.token}`)
+      .send({
+        name: 'Muutettu',
+        username: userToChange.username,
+        email: userToChange.email,
+        password: 'verisikret',
+      })
+      .expect(200);
+
+    const usersAfterChange = await api.get('/api/VLusers');
+    const names = usersAfterChange.body.map((user: any) => user.name);
+    expect(names).toContain('Muutettu');
+  });
+
+  test('username can be changed', async () => {
+    const newUser = {
+      name: 'Test User2',
+      username: 'testuser2',
+      email: 'oskarikakkori@hotmail.com',
+      password: 'verisikret',
+    };
+
+    await api.post('/api/VLusers').send(newUser).expect(201);
+
+    const token = await api
+      .post('/api/login')
+      .send({ username: 'testuser2', password: 'verisikret' });
+
+    const usersAfterPost = await api.get('/api/VLusers');
+    const userToChange = usersAfterPost.body[0];
+
+    await api
+      .put(`/api/VLusers/${userToChange.id}`)
+      .set('Authorization', `bearer ${token.body.token}`)
+      .send({
+        name: userToChange.name,
+        username: userToChange.username,
+        email: 'eriposti@msn.com',
+        password: 'verisikret',
+      })
+      .expect(200);
+
+    const usersAfterChange = await api.get('/api/VLusers');
+    const emails = usersAfterChange.body.map((user: any) => user.email);
+    expect(emails).toContain('eriposti@msn.com');
+  });
+
+  test('multiple things can be changed at once', async () => {
+    const newUser = {
+      name: 'Test User2',
+      username: 'testuser2',
+      email: 'oskarikakkori@hotmail.com',
+      password: 'verisikret',
+    };
+
+    await api.post('/api/VLusers').send(newUser).expect(201);
+
+    const token = await api
+      .post('/api/login')
+      .send({ username: 'testuser2', password: 'verisikret' });
+
+    const usersAfterPost = await api.get('/api/VLusers');
+    const userToChange = usersAfterPost.body[0];
+
+    await api
+      .put(`/api/VLusers/${userToChange.id}`)
+      .set('Authorization', `bearer ${token.body.token}`)
+      .send({
+        name: 'Oskari',
+        username: 'testuser3',
+        email: 'oskarinposti@gmail.com',
+        password: 'verisikret',
+      })
+      .expect(200);
+    await api
+      .post('/api/login')
+      .send({ username: 'testuser3', password: 'verisikret' })
+      .expect(200);
+
+    const usersAfterChange = await api.get('/api/VLusers');
+    const usernames = usersAfterChange.body.map((user: any) => user.username);
+    const names = usersAfterChange.body.map((user: any) => user.name);
+    const emails = usersAfterChange.body.map((user: any) => user.email);
+    expect(usernames).toContain('testuser3');
+    expect(names).toContain('Oskari');
+    expect(emails).toContain('oskarinposti@gmail.com');
+  });
+
+  test('password can be changed', async () => {
+    const newUser = {
+      name: 'Test User2',
+      username: 'testuser2',
+      email: 'oskarikakkori@hotmail.com',
+      password: 'verisikret',
+    };
+
+    await api.post('/api/VLusers').send(newUser).expect(201);
+
+    const token = await api
+      .post('/api/login')
+      .send({ username: 'testuser2', password: 'verisikret' });
+
+    const usersAfterPost = await api.get('/api/VLusers');
+    const userToChange = usersAfterPost.body[0];
+
+    await api
+      .put(`/api/VLusers/${userToChange.id}`)
+      .set('Authorization', `bearer ${token.body.token}`)
+      .send({
+        name: userToChange.name,
+        username: userToChange.username,
+        email: userToChange.email,
+        password: 'verisikret',
+        newpassword: 'veris'
+      })
+      .expect(200);
+
+    await api
+      .post('/api/login')
+      .send({ username: 'testuser2', password: 'veris' })
+      .expect(200);
+  });
+
   test('user can be deleted', async () => {
     const newUser = {
       name: 'Test User2',

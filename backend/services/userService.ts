@@ -50,15 +50,32 @@ const editUser = async (id: string, body: any): Promise<NewUser> => {
   if (!user) {
     throw new Error('User not found');
   }
-  const userToUpdate = {
-    ...body,
-    fantasyTeam: user.fantasyTeam,
-  };
-  const updated = await User.findByIdAndUpdate(id, userToUpdate, { new: true });
-  if (!updated) {
-    throw new Error('User not found');
+  if (body.newpassword) {
+    const saltRounds = 10;
+    const passwordHash = await bcrypt.hash(body.newpassword, saltRounds);
+    const uPasswordToUpdate = {
+      name: body.name,
+      username: body.username,
+      email: body.email,
+      fantasyTeam: user.fantasyTeam,
+      passwordHash
+    }
+    const updated = await User.findByIdAndUpdate(id, uPasswordToUpdate, { new: true });
+    if (!updated) {
+      throw new Error('User not found');
+    }
+    return updated;
+  } else {
+    const userToUpdate = {
+      ...body,
+      fantasyTeam: user.fantasyTeam,
+    };
+    const updated = await User.findByIdAndUpdate(id, userToUpdate, { new: true });
+    if (!updated) {
+      throw new Error('User not found');
+    }
+    return updated;
   }
-  return updated;
 };
 
 export default {

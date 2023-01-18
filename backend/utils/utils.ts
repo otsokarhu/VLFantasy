@@ -20,6 +20,7 @@ const UserZod = z.object({
     .min(5)
     .max(50),
   password: z.string({ required_error: 'Password is required' }).min(3).max(50),
+  newpassword: z.string({ required_error: 'Password is required' }).min(3).max(50).optional(),
 });
 
 type UserZod = z.infer<typeof UserZod>;
@@ -63,8 +64,9 @@ const toNewUser = ({
   name,
   password,
   email,
+  newpassword
 }: UserFields): UserZod => {
-  const newUser = UserZod.parse({ username, name, password, email });
+  const newUser = UserZod.parse({ username, name, password, email, newpassword });
   return newUser;
 };
 
@@ -76,6 +78,7 @@ type UserFields = {
   password: unknown;
   fantasyTeam: unknown;
   email: unknown;
+  newpassword?: unknown;
 };
 
 export default {
