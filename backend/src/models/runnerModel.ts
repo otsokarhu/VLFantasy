@@ -7,7 +7,6 @@ export interface Runner {
   points: number;
 }
 
-export type NewRunner = Omit<Runner, 'id'>;
 
 const runnerSchema: Schema = new Schema({
   name: {

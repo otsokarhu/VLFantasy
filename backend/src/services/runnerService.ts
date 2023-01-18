@@ -1,6 +1,7 @@
-import Runner, { NewRunner } from '../models/runnerModel';
+import Runner from '../models/runnerModel';
+import { RunnerZod } from '../utils/utils';
 
-const createRunner = async (body: any): Promise<NewRunner> => {
+const createRunner = async (body: any): Promise<RunnerZod> => {
   const runner = new Runner({
     ...body,
   });
@@ -8,12 +9,12 @@ const createRunner = async (body: any): Promise<NewRunner> => {
   return savedRunner;
 };
 
-const getAllRunners = async (): Promise<NewRunner[]> => {
+const getAllRunners = async (): Promise<RunnerZod[]> => {
   const runners = await Runner.find({});
   return runners;
 };
 
-const getRunner = async (id: string): Promise<NewRunner> => {
+const getRunner = async (id: string): Promise<RunnerZod> => {
   const runner = await Runner.findById(id);
   if (!runner) {
     throw new Error('Runner not found');
@@ -29,7 +30,7 @@ const deleteRunner = async (id: string): Promise<void> => {
   await Runner.findByIdAndRemove(id);
 };
 
-const updateRunner = async (id: string, body: any): Promise<NewRunner> => {
+const updateRunner = async (id: string, body: any): Promise<RunnerZod> => {
   const runner = await getRunner(id);
   if (!runner) {
     throw new Error('Runner not found');

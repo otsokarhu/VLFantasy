@@ -4,6 +4,7 @@ import User from '../models/userModel';
 import runnerService from './runnerService';
 import Runner from '../models/runnerModel';
 
+
 const getAllFantasyTeams = async (): Promise<FantasyTeamPopulated[]> => {
   const fantasyTeams = await FantasyTeam.find({})
     .populate('user', { username: 1, name: 1 })

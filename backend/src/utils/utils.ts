@@ -14,12 +14,26 @@ const FantasyTeamZod = z.object({
   points: z.number()
 });
 
+const UserZodSchema = z.object({
+  username: z.string({ required_error: 'Username is required' }).min(3).max(20),
+  name: z.string({ required_error: 'Name is required' }).min(3).max(50),
+  email: z
+    .string({ required_error: 'Email is required' })
+    .email()
+    .min(5)
+    .max(50),
+  passwordHash: z.string({ required_error: 'Password is required' }).min(3).max(50),
+  id: z.string().optional(),
+  fantasyTeam: FantasyTeamZod.optional(),
+});
+
+
 const NewFantasyTeamZod = z.object({
   name: z.string({ required_error: 'Name is required' }).min(3).max(20),
   user: z.string({ required_error: 'User is required' }).min(3).max(50),
 });
 
-const UserZod = z.object({
+const NewUserZod = z.object({
   username: z.string({ required_error: 'Username is required' }).min(3).max(20),
   name: z.string({ required_error: 'Name is required' }).min(3).max(50),
   email: z
@@ -31,10 +45,11 @@ const UserZod = z.object({
   newpassword: z.string({ required_error: 'Password is required' }).min(3).max(50).optional(),
 });
 
-type UserZod = z.infer<typeof UserZod>;
+type NewUserZod = z.infer<typeof NewUserZod>;
 type NewFantasyTeamZod = z.infer<typeof NewFantasyTeamZod>;
-type RunnerZod = z.infer<typeof RunnerZod>;
-type FantasyTeamZod = z.infer<typeof FantasyTeamZod>;
+export type RunnerZod = z.infer<typeof RunnerZod>;
+export type FantasyTeamZod = z.infer<typeof FantasyTeamZod>;
+export type UserZod = z.infer<typeof UserZodSchema>;
 
 const toNewRunner = ({ name, team, points }: RunnerFields): RunnerZod => {
   const validatedBody = RunnerZod.parse({ name, team, points });
@@ -74,8 +89,8 @@ const toNewUser = ({
   password,
   email,
   newpassword
-}: UserFields): UserZod => {
-  const newUser = UserZod.parse({ username, name, password, email, newpassword });
+}: UserFields): NewUserZod => {
+  const newUser = NewUserZod.parse({ username, name, password, email, newpassword });
   return newUser;
 };
 
@@ -96,5 +111,7 @@ export default {
   toNewUser,
   toValidateNumber,
   toValidateString,
-  FantasyTeamZod
+  FantasyTeamZod,
+  RunnerZod,
+  UserZodSchema
 };
