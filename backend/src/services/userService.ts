@@ -1,7 +1,8 @@
-import User, { NewUser } from '../models/userModel';
+import User from '../models/userModel';
+import { UserZod } from '../utils/utils';
 import bcrypt from 'bcrypt';
 
-const createUser = async (body: any): Promise<NewUser> => {
+const createUser = async (body: any): Promise<UserZod> => {
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(body.password, saltRounds);
   const existingUser = await User.findOne({ username: body.username });
@@ -20,7 +21,7 @@ const createUser = async (body: any): Promise<NewUser> => {
   return savedUser;
 };
 
-const getAllUsers = async (): Promise<NewUser[]> => {
+const getAllUsers = async (): Promise<UserZod[]> => {
   const users = await User.find({}).populate({
     path: 'fantasyTeam',
     select: 'name points',
@@ -29,7 +30,7 @@ const getAllUsers = async (): Promise<NewUser[]> => {
   return users;
 };
 
-const getUser = async (id: string): Promise<NewUser> => {
+const getUser = async (id: string): Promise<UserZod> => {
   const user = await User.findById(id);
   if (!user) {
     throw new Error('User not found');
@@ -45,7 +46,7 @@ const deleteUser = async (id: string): Promise<void> => {
   }
 };
 
-const editUser = async (id: string, body: any): Promise<NewUser> => {
+const editUser = async (id: string, body: any): Promise<UserZod> => {
   const user = await getUser(id);
   if (!user) {
     throw new Error('User not found');

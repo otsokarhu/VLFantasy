@@ -24,7 +24,7 @@ const UserZodSchema = z.object({
     .max(50),
   passwordHash: z.string({ required_error: 'Password is required' }).min(3).max(50),
   id: z.string().optional(),
-  fantasyTeam: FantasyTeamZod.optional(),
+  fantasyTeam: z.string().optional(),
 });
 
 
