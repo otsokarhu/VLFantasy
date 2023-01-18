@@ -6,7 +6,7 @@
   "scripts": {
     "test": "NODE_ENV=test jest --verbose --runInBand --detectOpenHandles --forceExit",
     "tsc": "tsc",
-    "dev": "NODE_ENV=development ts-node-dev index.ts",
+    "dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "lint": "eslint --ext .ts .",
     "start": "node build/index.js"
   },
