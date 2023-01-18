@@ -1,18 +1,18 @@
 import FantasyTeam from '../models/fantasyTeamModel';
-import { FantasyTeamPopulated } from '../models/fantasyTeamModel';
 import User from '../models/userModel';
 import runnerService from './runnerService';
 import Runner from '../models/runnerModel';
+import { FantasyTeamZod } from '../utils/utils';
 
 
-const getAllFantasyTeams = async (): Promise<FantasyTeamPopulated[]> => {
+const getAllFantasyTeams = async (): Promise<FantasyTeamZod[]> => {
   const fantasyTeams = await FantasyTeam.find({})
     .populate('user', { username: 1, name: 1 })
     .populate('runners', { name: 1, team: 1, points: 1 });
   return fantasyTeams;
 };
 
-const getFantasyTeam = async (id: string): Promise<FantasyTeamPopulated> => {
+const getFantasyTeam = async (id: string): Promise<FantasyTeamZod> => {
   const fantasyTeam = await FantasyTeam.findById(id);
   if (!fantasyTeam) {
     throw new Error('Fantasy team not found');
@@ -40,7 +40,7 @@ const deleteFantasyTeam = async (id: string): Promise<void> => {
 const addRunnerToFantasyTeam = async (
   id: string,
   runnerId: string
-): Promise<FantasyTeamPopulated> => {
+): Promise<FantasyTeamZod> => {
   const fantasyTeam = await FantasyTeam.findById(id);
   if (!fantasyTeam) {
     throw new Error('Fantasy team not found');
@@ -67,7 +67,7 @@ const addRunnerToFantasyTeam = async (
 const removeRunnerFromFantasyTeam = async (
   id: string,
   runnerId: string
-): Promise<FantasyTeamPopulated> => {
+): Promise<FantasyTeamZod> => {
   const fantasyTeam = await FantasyTeam.findById(id);
 
   if (!fantasyTeam) {
@@ -94,7 +94,7 @@ const removeRunnerFromFantasyTeam = async (
   return fantasyTeam;
 };
 
-const createFantasyTeam = async (body: any): Promise<FantasyTeamPopulated> => {
+const createFantasyTeam = async (body: any): Promise<FantasyTeamZod> => {
   const fantasyTeam = new FantasyTeam({
     ...body,
     runners: [],

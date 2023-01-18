@@ -9,12 +9,6 @@ export interface FantasyTeam {
   id: string;
 }
 
-export type NewFantasyTeam = Omit<FantasyTeam, 'id' | 'points'>;
-
-export type FantasyTeamPopulated = FantasyTeam & {
-  runners: Runner[];
-  user: string;
-};
 
 const fantasyTeamSchema: Schema = new Schema({
   name: {

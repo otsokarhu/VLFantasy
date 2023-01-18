@@ -9,7 +9,7 @@ export interface User {
   fantasyTeam?: string;
 }
 
-export type NewUser = Omit<User, 'id'>;
+
 
 const userSchema: Schema = new Schema({
   name: {
