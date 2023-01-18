@@ -3,7 +3,7 @@ import { z } from 'zod';
 const RunnerZod = z.object({
   name: z.string({ required_error: 'Name is required' }),
   team: z.string({ required_error: 'Team is required' }),
-  points: z.number({ required_error: 'Points is required' }),
+  points: z.number({ required_error: 'Points are required' }),
 });
 
 const FantasyTeamZod = z.object({

@@ -38,11 +38,11 @@ const getUser = async (id: string): Promise<NewUser> => {
 };
 
 const deleteUser = async (id: string): Promise<void> => {
-  const user = await getUser(id);
-  if (!user) {
+  try {
+    await User.findByIdAndRemove(id);
+  } catch (error: any) {
     throw new Error('User not found');
   }
-  await User.findByIdAndRemove(id);
 };
 
 const editUser = async (id: string, body: any): Promise<NewUser> => {

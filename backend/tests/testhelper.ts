@@ -6,7 +6,7 @@ export const initialRunners = [
   {
     name: 'Timo Silakka',
     team: 'Tampereen Poliisivoimien Urheilijat',
-    points: 0,
+    points: 3,
     _id: '5f9f1b9b9c9d440000a1b0f1',
     __v: 0,
   },

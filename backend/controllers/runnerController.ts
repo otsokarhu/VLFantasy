@@ -15,11 +15,15 @@ runnerRouter.get('/', async (_request: Request, response: Response) => {
 
 runnerRouter.post('/', async (request: Request, response: Response) => {
   try {
-    const runnerBody = utils.toNewRunner(request.body);
-    const runner = await runnerService.createRunner(runnerBody);
+    const validatedBody = utils.toNewRunner(request.body);
+    const runner = await runnerService.createRunner(validatedBody);
     response.status(201).json(runner);
   } catch (error: any) {
-    response.status(400).json({ error: error.message });
+    if (error.issues) {
+      response.status(400).json({ error: error.issues[0].message });
+    } else {
+      response.status(400).json({ error: error.message });
+    }
   }
 });
 
@@ -43,8 +47,11 @@ runnerRouter.delete('/:id', async (request: Request, response: Response) => {
 
 runnerRouter.put('/:id', async (request: Request, response: Response) => {
   try {
-    const points = utils.toValidateNumber(request.body.points);
-    const runner = await runnerService.updateRunner(request.params.id, points);
+    const validatedPoints = utils.toValidateNumber(request.body.points);
+    const runner = await runnerService.updateRunner(
+      request.params.id,
+      validatedPoints
+    );
     response.json(runner);
   } catch (error: any) {
     response.status(400).json({ error: error.message });

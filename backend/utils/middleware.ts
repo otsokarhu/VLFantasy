@@ -49,7 +49,7 @@ export const authorization = async (
 
     next();
   } catch (err) {
-    response.status(401).send('Please authenticate');
+    response.status(401).send({ error: 'Please authenticate' });
   }
 };
 

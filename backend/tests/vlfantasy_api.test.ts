@@ -34,7 +34,7 @@ describe('login tests', () => {
       .expect(200)
       .expect('Content-Type', /application\/json/);
   });
-  test('login with incorrect credentials', async () => {
+  test('login with incorrect credentials returns right error', async () => {
     const wrongUser = {
       username: 'testuser',
       password: 'wrongpassword',
@@ -43,7 +43,9 @@ describe('login tests', () => {
       .post('/api/login')
       .send(wrongUser)
       .expect(401)
-      .expect('Content-Type', /application\/json/);
+      .expect((response) => {
+        expect(response.body.error).toBe('invalid username or password');
+      });
   });
 });
 
@@ -63,7 +65,7 @@ describe('runner tests', () => {
   test('every runner has an id', async () => {
     const response = await api.get('/api/runners');
     response.body.forEach((runner: any) => {
-      expect(runner._id).toBeDefined();
+      expect(runner.id).toBeDefined();
     });
   });
 
@@ -85,7 +87,7 @@ describe('runner tests', () => {
   test('runner can be deleted', async () => {
     const response = await api.get('/api/runners');
     const runnerToDelete = response.body[0];
-    await api.delete(`/api/runners/${runnerToDelete._id}`).expect(204);
+    await api.delete(`/api/runners/${runnerToDelete.id}`).expect(204);
     const responseAfterDelete = await api.get('/api/runners');
     expect(responseAfterDelete.body).toHaveLength(initialRunners.length - 1);
     expect(responseAfterDelete.body).not.toContainEqual(runnerToDelete);
@@ -96,8 +98,8 @@ describe('runner tests', () => {
     const runnerToUpdate = response.body[0];
     const newPoints = 10;
     const updateRunner = await api
-      .put(`/api/runners/${runnerToUpdate._id}`)
-      .send({ points: runnerToUpdate.points + newPoints })
+      .put(`/api/runners/${runnerToUpdate.id}`)
+      .send({ points: newPoints })
       .expect(200);
 
     expect(updateRunner.body.points).toBe(runnerToUpdate.points + newPoints);
@@ -117,7 +119,13 @@ describe('fantasy team tests', () => {
       name: 'Test Team',
       runners: [],
     };
-    await api.post('/api/fantasyTeams').send(newTeam).expect(401);
+    await api
+      .post('/api/fantasyTeams')
+      .send(newTeam)
+      .expect(401)
+      .expect((response) => {
+        expect(response.body.error).toBe('Please authenticate');
+      });
   });
 
   test('fantasy team can be added with auth', async () => {
@@ -131,8 +139,7 @@ describe('fantasy team tests', () => {
     await user.save();
     const token = await api
       .post('/api/login')
-      .send({ username: 'testuser', password: 'sikret' })
-      .then((response) => response.body.token);
+      .send({ username: 'testuser', password: 'sikret' });
 
     const newTeam = {
       name: 'Test Team',
@@ -140,7 +147,7 @@ describe('fantasy team tests', () => {
     };
     await api
       .post('/api/fantasyTeams')
-      .set('Authorization', `bearer ${token}`)
+      .set('Authorization', `bearer ${token.body.token}`)
       .send(newTeam)
       .expect(201);
 
@@ -160,17 +167,19 @@ describe('fantasy team tests', () => {
     await user.save();
     const token = await api
       .post('/api/login')
-      .send({ username: 'testuser', password: 'sikret' })
-      .then((response) => response.body.token);
+      .send({ username: 'testuser', password: 'sikret' });
 
     const newTeam = {
       user: user._id,
     };
     await api
       .post('/api/fantasyTeams')
-      .set('Authorization', `bearer ${token}`)
+      .set('Authorization', `bearer ${token.body.token}`)
       .send(newTeam)
-      .expect(400);
+      .expect(400)
+      .expect((response) => {
+        expect(response.body.error).toContain('Name is required');
+      });
 
     const response = await api.get('/api/fantasyTeams');
     expect(response.body).not.toContainEqual(newTeam);
@@ -187,8 +196,7 @@ describe('fantasy team tests', () => {
     await user.save();
     const token = await api
       .post('/api/login')
-      .send({ username: 'testuser', password: 'sikret' })
-      .then((response) => response.body.token);
+      .send({ username: 'testuser', password: 'sikret' });
 
     const newTeam = {
       name: 'Test Team',
@@ -197,7 +205,7 @@ describe('fantasy team tests', () => {
 
     await api
       .post('/api/fantasyTeams')
-      .set('Authorization', `bearer ${token}`)
+      .set('Authorization', `bearer ${token.body.token}`)
       .send(newTeam);
 
     const response = await api.get('/api/fantasyTeams');
@@ -205,12 +213,44 @@ describe('fantasy team tests', () => {
 
     await api
       .delete(`/api/fantasyTeams/${teamToDelete.id}`)
-      .set('Authorization', `bearer ${token}`)
+      .set('Authorization', `bearer ${token.body.token}`)
       .expect(204);
 
     const responseAfterDelete = await api.get('/api/fantasyTeams');
     expect(responseAfterDelete.body).toHaveLength(0);
     expect(user.fantasyTeam === null);
+  });
+
+  test('fantasy team can not be deleted without auth', async () => {
+    const passwordHash = await bcrypt.hash('sikret', 10);
+    const user = new userModel({
+      name: 'Test User',
+      username: 'testuser',
+      email: 'test',
+      passwordHash,
+    });
+    await user.save();
+    const token = await api
+      .post('/api/login')
+      .send({ username: 'testuser', password: 'sikret' });
+
+    const newTeam = {
+      name: 'Test Team',
+      user: user._id,
+    };
+
+    await api
+      .post('/api/fantasyTeams')
+      .set('Authorization', `bearer ${token.body.token}`)
+      .send(newTeam);
+
+    const response = await api.get('/api/fantasyTeams');
+    const teamToDelete = response.body[0];
+
+    await api.delete(`/api/fantasyTeams/${teamToDelete.id}`).expect(401);
+
+    const responseAfterDelete = await api.get('/api/fantasyTeams');
+    expect(responseAfterDelete.body).toHaveLength(1);
   });
 
   test('user can have only one fantasy team', async () => {
@@ -224,8 +264,7 @@ describe('fantasy team tests', () => {
     await user.save();
     const token = await api
       .post('/api/login')
-      .send({ username: 'testuser', password: 'sikret' })
-      .then((response) => response.body.token);
+      .send({ username: 'testuser', password: 'sikret' });
 
     const newTeam = {
       name: 'Test Team',
@@ -233,7 +272,7 @@ describe('fantasy team tests', () => {
     };
     await api
       .post('/api/fantasyTeams')
-      .set('Authorization', `bearer ${token}`)
+      .set('Authorization', `bearer ${token.body.token}`)
       .send(newTeam)
       .expect(201);
 
@@ -243,7 +282,7 @@ describe('fantasy team tests', () => {
     };
     await api
       .post('/api/fantasyTeams')
-      .set('Authorization', `bearer ${token}`)
+      .set('Authorization', `bearer ${token.body.token}`)
       .send(newTeam2)
       .expect(400);
   });
@@ -259,8 +298,7 @@ describe('fantasy team tests', () => {
     await user.save();
     const token = await api
       .post('/api/login')
-      .send({ username: 'testuser', password: 'sikret' })
-      .then((response) => response.body.token);
+      .send({ username: 'testuser', password: 'sikret' });
 
     const newTeam = {
       name: 'Test Team',
@@ -268,7 +306,7 @@ describe('fantasy team tests', () => {
     };
     await api
       .post('/api/fantasyTeams')
-      .set('Authorization', `bearer ${token}`)
+      .set('Authorization', `bearer ${token.body.token}`)
       .send(newTeam)
       .expect(201);
 
@@ -279,9 +317,97 @@ describe('fantasy team tests', () => {
 
     await api
       .put(`/api/fantasyTeams/${team.id}`)
-      .set('Authorization', `bearer ${token}`)
-      .send({ runner: runnerToAdd._id })
+      .set('Authorization', `bearer ${token.body.token}`)
+      .send({ runner: runnerToAdd.id })
       .expect(200);
+  });
+  test('runner can be removed from fantasy team', async () => {
+    const passwordHash = await bcrypt.hash('sikret', 10);
+    const user = new userModel({
+      name: 'Test User',
+      username: 'testuser',
+      email: 'test',
+      passwordHash,
+    });
+    await user.save();
+    const token = await api
+      .post('/api/login')
+      .send({ username: 'testuser', password: 'sikret' });
+
+    const newTeam = {
+      name: 'Test Team',
+      user: user._id,
+    };
+    await api
+      .post('/api/fantasyTeams')
+      .set('Authorization', `bearer ${token.body.token}`)
+      .send(newTeam)
+      .expect(201);
+
+    const teams = await api.get('/api/fantasyTeams');
+    const team = teams.body[0];
+    const runners = await api.get('/api/runners');
+    const runnerToAdd = runners.body[0];
+
+    await api
+      .put(`/api/fantasyTeams/${team.id}`)
+      .set('Authorization', `bearer ${token.body.token}`)
+      .send({ runner: runnerToAdd.id })
+      .expect(200);
+
+    await api
+      .delete(`/api/fantasyTeams/${team.id}/${runnerToAdd.id}`)
+      .set('Authorization', `bearer ${token.body.token}`)
+      .expect(204);
+
+    const response = await api.get(`/api/fantasyTeams/${team.id}`);
+    expect(response.body.runners).toHaveLength(0);
+  });
+
+  test('runner can not be added to fantasy team twice', async () => {
+    const passwordHash = await bcrypt.hash('sikret', 10);
+    const user = new userModel({
+      name: 'Test User',
+      username: 'testuser',
+      email: 'test',
+      passwordHash,
+    });
+    await user.save();
+    const token = await api
+      .post('/api/login')
+      .send({ username: 'testuser', password: 'sikret' });
+
+    const newTeam = {
+      name: 'Test Team',
+      user: user.id,
+    };
+    await api
+      .post('/api/fantasyTeams')
+      .set('Authorization', `bearer ${token.body.token}`)
+      .send(newTeam)
+      .expect(201);
+
+    const teams = await api.get('/api/fantasyTeams');
+    const team = teams.body[0];
+    const runners = await api.get('/api/runners');
+    const runnerToAdd = runners.body[0];
+
+    await api
+      .put(`/api/fantasyTeams/${team.id}`)
+      .set('Authorization', `bearer ${token.body.token}`)
+      .send({ runner: runnerToAdd.id })
+      .expect(200);
+
+    //const afterTeam = await api.get(`/api/fantasyTeams/${team.id}`);
+
+    await api
+      .put(`/api/fantasyTeams/${team.id}`)
+      .set('Authorization', `bearer ${token.body.token}`)
+      .send({ runner: runnerToAdd.id });
+    //.expect(400);
+
+    const response = await api.get(`/api/fantasyTeams/${team.id}`);
+    expect(response.body.runners).toHaveLength(1);
   });
 });
 
@@ -308,6 +434,79 @@ describe('user tests', () => {
 
     const usernames = usersAfterPost.body.map((user: any) => user.username);
     expect(usernames).toContain(newUser.username);
+  });
+
+  test('user can be deleted', async () => {
+    const newUser = {
+      name: 'Test User2',
+      username: 'testuser2',
+      email: 'oskarikakkori@hotmail.com',
+      password: 'verisikret',
+    };
+
+    await api.post('/api/VLusers').send(newUser).expect(201);
+
+    const token = await api
+      .post('/api/login')
+      .send({ username: 'testuser2', password: 'verisikret' });
+
+    const usersInBeginning = await api.get('/api/VLusers');
+    const userToDelete = usersInBeginning.body[0];
+
+    await api
+      .delete(`/api/VLusers/${userToDelete.id}`)
+      .set('Authorization', `bearer ${token.body.token}`)
+      .expect(204);
+    const usersNow = await api.get('/api/VLusers');
+    expect(usersNow.body).toHaveLength(usersInBeginning.body.length - 1);
+  });
+
+  test('non existing user can not be deleted', async () => {
+    const newUser = {
+      name: 'Test User2',
+      username: 'testuser2',
+      email: 'oskarikakkori@hotmail.com',
+      password: 'verisikret',
+    };
+
+    await api.post('/api/VLusers').send(newUser).expect(201);
+
+    const token = await api
+      .post('/api/login')
+      .send({ username: 'testuser2', password: 'verisikret' });
+
+    const usersInBeginning = await api.get('/api/VLusers');
+    const userToDelete = usersInBeginning.body[0];
+
+    await api
+      .delete(`/api/VLusers/${userToDelete.id + '1'}`)
+      .set('Authorization', `bearer ${token.body.token}`)
+      .expect(400);
+    const usersNow = await api.get('/api/VLusers');
+    expect(usersNow.body).toHaveLength(usersInBeginning.body.length);
+  });
+
+  test('user can not be deleted without auth', async () => {
+    const newUser = {
+      name: 'Test User2',
+      username: 'testuser2',
+      email: 'oskarikakkori@hotmail.com',
+      password: 'verisikret',
+    };
+
+    await api.post('/api/VLusers').send(newUser).expect(201);
+
+    const usersInBeginning = await api.get('/api/VLusers');
+    const userToDelete = usersInBeginning.body[0];
+
+    await api
+      .delete(`/api/VLusers/${userToDelete.id}`)
+      .expect(401)
+      .expect((response) => {
+        expect(response.body.error).toBe('Please authenticate');
+      });
+    const usersNow = await api.get('/api/VLusers');
+    expect(usersNow.body).toHaveLength(usersInBeginning.body.length);
   });
 
   test('user can not be added without username', async () => {

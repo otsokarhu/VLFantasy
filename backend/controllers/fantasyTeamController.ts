@@ -6,8 +6,12 @@ import utils from '../utils/utils';
 const fantasyTeamRouter = express.Router();
 
 fantasyTeamRouter.get('/', async (_request: Request, response: Response) => {
-  const fantasyTeams = await fantasyteamService.getAllFantasyTeams();
-  response.json(fantasyTeams);
+  try {
+    const fantasyTeams = await fantasyteamService.getAllFantasyTeams();
+    response.json(fantasyTeams);
+  } catch (error: any) {
+    response.status(400).json({ error: error.message });
+  }
 });
 
 fantasyTeamRouter.post(
@@ -15,11 +19,17 @@ fantasyTeamRouter.post(
   authorization,
   async (request: Request, response: Response) => {
     try {
-      const teamBody = utils.toNewFantasyTeam(request.body);
-      const fantasyTeam = await fantasyteamService.createFantasyTeam(teamBody);
+      const validatedBody = utils.toNewFantasyTeam(request.body);
+      const fantasyTeam = await fantasyteamService.createFantasyTeam(
+        validatedBody
+      );
       response.status(201).json(fantasyTeam);
     } catch (error: any) {
-      response.status(400).json({ error: error.message });
+      if (!error.issues) {
+        response.status(400).json({ error: error.message });
+      } else {
+        response.status(400).json({ error: error.issues[0].message });
+      }
     }
   }
 );

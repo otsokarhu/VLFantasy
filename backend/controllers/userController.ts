@@ -16,8 +16,8 @@ userRouter.get('/', async (_request: Request, response: Response) => {
 
 userRouter.post('/', async (request: Request, response: Response) => {
   try {
-    const body = utils.toNewUser(request.body);
-    const user = await userService.createUser(body);
+    const valitadedBody = utils.toNewUser(request.body);
+    const user = await userService.createUser(valitadedBody);
     response.status(201).json(user);
   } catch (error: any) {
     response.status(400).json({ error: error.message });
@@ -33,22 +33,26 @@ userRouter.get('/:id', async (request: Request, response: Response) => {
   }
 });
 
-userRouter.delete('/:id', async (request: Request, response: Response) => {
-  try {
-    await userService.deleteUser(request.params.id);
-    response.status(204).end();
-  } catch (error: any) {
-    response.status(400).json({ error: error.message });
+userRouter.delete(
+  '/:id',
+  authorization,
+  async (request: Request, response: Response) => {
+    try {
+      await userService.deleteUser(request.params.id);
+      response.status(204).end();
+    } catch (error: any) {
+      response.status(400).json({ error: error.message });
+    }
   }
-});
+);
 
 userRouter.put(
   '/:id',
   authorization,
   async (request: Request, response: Response) => {
     try {
-      const body = utils.toNewUser(request.body);
-      const user = await userService.editUser(request.params.id, body);
+      const valitadedBody = utils.toNewUser(request.body);
+      const user = await userService.editUser(request.params.id, valitadedBody);
       response.json(user);
     } catch (error: any) {
       response.status(400).json({ error: error.message });

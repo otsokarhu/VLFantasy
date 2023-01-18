@@ -1,6 +1,7 @@
 import FantasyTeam from '../models/fantasyTeamModel';
 import { FantasyTeamPopulated } from '../models/fantasyTeamModel';
 import User from '../models/userModel';
+import runnerService from './runnerService';
 import Runner from '../models/runnerModel';
 
 const getAllFantasyTeams = async (): Promise<FantasyTeamPopulated[]> => {
@@ -39,19 +40,25 @@ const addRunnerToFantasyTeam = async (
   id: string,
   runnerId: string
 ): Promise<FantasyTeamPopulated> => {
-  const fantasyTeam = await getFantasyTeam(id);
+  const fantasyTeam = await FantasyTeam.findById(id);
   if (!fantasyTeam) {
     throw new Error('Fantasy team not found');
   }
-  if (fantasyTeam.runners.find((runner) => runner.id === runnerId)) {
+  if (fantasyTeam.runners.length >= 5) {
+    throw new Error('Fantasy team already has 5 runners');
+  }
+
+  if (fantasyTeam.runners.find((runner) => runner.toString() === runnerId)) {
     throw new Error('Runner already added to fantasy team');
   }
+
   const runnerToAdd = await Runner.findById(runnerId);
   if (!runnerToAdd) {
     throw new Error('Runner not found');
   }
   fantasyTeam.runners = fantasyTeam.runners.concat(runnerToAdd);
   fantasyTeam.points += runnerToAdd.points;
+  await fantasyTeam.save();
 
   return fantasyTeam;
 };
@@ -60,20 +67,29 @@ const removeRunnerFromFantasyTeam = async (
   id: string,
   runnerId: string
 ): Promise<FantasyTeamPopulated> => {
-  const fantasyTeam = await getFantasyTeam(id);
+  const fantasyTeam = await FantasyTeam.findById(id);
+
   if (!fantasyTeam) {
     throw new Error('Fantasy team not found');
   }
   const runnerToRemove = fantasyTeam.runners.find(
-    (runner) => runner.id === runnerId
+    (runner) => runner.toString() === runnerId
   );
   if (!runnerToRemove) {
     throw new Error('Runner not found');
   }
-  fantasyTeam.runners = fantasyTeam.runners.filter(
-    (runner) => runner.id !== runnerId
-  );
-  fantasyTeam.points -= runnerToRemove.points;
+
+  const findRunner = await runnerService.getRunner(runnerToRemove.toString());
+
+  const index = fantasyTeam.runners
+    .map((runner) => runner.toString())
+    .indexOf(runnerId);
+
+  fantasyTeam.runners.splice(index, 1);
+
+  fantasyTeam.points -= findRunner.points;
+
+  await fantasyTeam.save();
   return fantasyTeam;
 };
 
