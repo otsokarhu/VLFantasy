@@ -5,13 +5,12 @@ const createRunner = async (body: any): Promise<RunnerZod> => {
   const runner = new Runner({
     ...body,
   });
-  const savedRunner = await runner.save();
-  return savedRunner;
+  return await runner.save();
 };
 
 const getAllRunners = async (): Promise<RunnerZod[]> => {
-  const runners = await Runner.find({});
-  return runners;
+  return await Runner.find({});
+
 };
 
 const getRunner = async (id: string): Promise<RunnerZod> => {
