@@ -7,6 +7,14 @@ const RunnerZod = z.object({
 });
 
 const FantasyTeamZod = z.object({
+  name: z.string({ required_error: 'Name is required' }),
+  user: z.string({ required_error: 'User is required' }),
+  runners: z.array(RunnerZod).optional(),
+  id: z.string().optional(),
+  points: z.number()
+});
+
+const NewFantasyTeamZod = z.object({
   name: z.string({ required_error: 'Name is required' }).min(3).max(20),
   user: z.string({ required_error: 'User is required' }).min(3).max(50),
 });
@@ -24,8 +32,9 @@ const UserZod = z.object({
 });
 
 type UserZod = z.infer<typeof UserZod>;
-type FantasyTeamZod = z.infer<typeof FantasyTeamZod>;
+type NewFantasyTeamZod = z.infer<typeof NewFantasyTeamZod>;
 type RunnerZod = z.infer<typeof RunnerZod>;
+type FantasyTeamZod = z.infer<typeof FantasyTeamZod>;
 
 const toNewRunner = ({ name, team, points }: RunnerFields): RunnerZod => {
   const validatedBody = RunnerZod.parse({ name, team, points });
@@ -54,8 +63,8 @@ const toValidateString = (param: string): string => {
 const toNewFantasyTeam = ({
   name,
   user,
-}: FantasyTeamFields): FantasyTeamZod => {
-  const newFantasyTeam = FantasyTeamZod.parse({ name, user });
+}: FantasyTeamFields): NewFantasyTeamZod => {
+  const newFantasyTeam = NewFantasyTeamZod.parse({ name, user });
   return newFantasyTeam;
 };
 
@@ -87,4 +96,5 @@ export default {
   toNewUser,
   toValidateNumber,
   toValidateString,
+  FantasyTeamZod
 };

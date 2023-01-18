@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 import supertest from 'supertest';
-import app from '../index';
+import app from '../src/index';
 import initializeDatabase, { initialRunners } from './testhelper';
 import bcrypt from 'bcrypt';
-import userModel from '../models/userModel';
-import fantasyTeamModel from '../models/fantasyTeamModel';
+import userModel from '../src/models/userModel';
+import fantasyTeamModel from '../src/models/fantasyTeamModel';
 
 const api = supertest(app);
 

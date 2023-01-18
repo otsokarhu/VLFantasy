@@ -1,6 +1,6 @@
-import runnerModel from '../models/runnerModel';
-import fantasyTeamModel from '../models/fantasyTeamModel';
-import userModel from '../models/userModel';
+import runnerModel from '../src/models/runnerModel';
+import fantasyTeamModel from '../src/models/fantasyTeamModel';
+import userModel from '../src/models/userModel';
 
 export const initialRunners = [
   {
