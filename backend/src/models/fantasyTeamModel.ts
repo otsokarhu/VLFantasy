@@ -1,13 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { Runner } from './runnerModel';
-
-export interface FantasyTeam {
-  name: string;
-  runners: Runner[];
-  points: number;
-  user: string;
-  id: string;
-}
+import { FantasyTeamZod } from '../utils/utils';
 
 const fantasyTeamSchema: Schema = new Schema({
   name: {
@@ -41,4 +33,4 @@ fantasyTeamSchema.set('toJSON', {
   },
 });
 
-export default mongoose.model<FantasyTeam>('FantasyTeam', fantasyTeamSchema);
+export default mongoose.model<FantasyTeamZod>('FantasyTeam', fantasyTeamSchema);

@@ -1,13 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-
-export interface User {
-  name: string;
-  username: string;
-  email: string;
-  passwordHash: string;
-  id: string;
-  fantasyTeam?: string;
-}
+import { UserZod } from '../utils/utils';
 
 const userSchema: Schema = new Schema({
   name: {
@@ -44,4 +36,4 @@ userSchema.set('toJSON', {
   },
 });
 
-export default mongoose.model<User>('User', userSchema);
+export default mongoose.model<UserZod>('User', userSchema);

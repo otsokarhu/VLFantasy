@@ -1,11 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-
-export interface Runner {
-  name: string;
-  team: string;
-  id: string;
-  points: number;
-}
+import { RunnerZod } from '../utils/utils';
 
 const runnerSchema: Schema = new Schema({
   name: {
@@ -30,4 +24,4 @@ runnerSchema.set('toJSON', {
   },
 });
 
-export default mongoose.model<Runner>('Runner', runnerSchema);
+export default mongoose.model<RunnerZod>('Runner', runnerSchema);
