@@ -803,5 +803,5 @@ describe('user tests', () => {
 });
 
 afterAll(() => {
-  mongoose.connection.close();
+  void mongoose.connection.close();
 });

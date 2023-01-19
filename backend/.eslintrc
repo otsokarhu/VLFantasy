@@ -9,7 +9,7 @@
   ],
   "env": {
     "browser": true,
-    "ES2022": true,
+    "es6": true,
     "node": true
   },
   "rules": {
@@ -24,10 +24,18 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
+    //"@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": "/home/webotso/VLFantasy/backend"
   }
 }

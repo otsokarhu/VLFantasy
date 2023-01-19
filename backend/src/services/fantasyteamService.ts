@@ -20,6 +20,24 @@ const getFantasyTeam = async (
   }
   return fantasyTeam;
 };
+const createFantasyTeam = async (body: any): Promise<FantasyTeamZod> => {
+  const fantasyTeam = new FantasyTeam({
+    ...body,
+  });
+  const user = body.user;
+  const userToUpdate = await userService.getUser(user);
+  if (!userToUpdate) {
+    throw new Error('User not found');
+  }
+  if (userToUpdate.fantasyTeam) {
+    throw new Error('User already has a fantasy team');
+  }
+  const savedFantasyTeam = await fantasyTeam.save();
+  const idToString = savedFantasyTeam._id.toString();
+  userToUpdate.fantasyTeam = idToString;
+  await userToUpdate.save();
+  return savedFantasyTeam;
+};
 
 const deleteFantasyTeam = async (id: string): Promise<void> => {
   const fantasyTeam = await getFantasyTeam(id);
@@ -95,24 +113,7 @@ const removeRunnerFromFantasyTeam = async (
   return fantasyTeam;
 };
 
-const createFantasyTeam = async (body: any): Promise<FantasyTeamZod> => {
-  const fantasyTeam = new FantasyTeam({
-    ...body,
-  });
-  const user = body.user;
-  const userToUpdate = await userService.getUser(user);
-  if (!userToUpdate) {
-    throw new Error('User not found');
-  }
-  if (userToUpdate.fantasyTeam) {
-    throw new Error('User already has a fantasy team');
-  }
-  const savedFantasyTeam = await fantasyTeam.save();
-  const idToString = savedFantasyTeam._id.toString();
-  userToUpdate.fantasyTeam = idToString;
-  await userToUpdate.save();
-  return savedFantasyTeam;
-};
+
 
 export default {
   getAllFantasyTeams,

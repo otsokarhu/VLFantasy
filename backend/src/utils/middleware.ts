@@ -32,7 +32,7 @@ export const errorHandler = (
   return null;
 };
 
-export const authorization = async (
+export const authorization = (
   request: Request,
   response: Response,
   next: NextFunction
