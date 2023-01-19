@@ -1,8 +1,8 @@
 import FantasyTeam from '../models/fantasyTeamModel';
-import User from '../models/userModel';
 import runnerService from './runnerService';
-import Runner from '../models/runnerModel';
 import { FantasyTeamZod } from '../utils/utils';
+import { HydratedDocument } from 'mongoose';
+import userService from './userService';
 
 const getAllFantasyTeams = async (): Promise<FantasyTeamZod[]> => {
   const fantasyTeams = await FantasyTeam.find()
@@ -11,7 +11,9 @@ const getAllFantasyTeams = async (): Promise<FantasyTeamZod[]> => {
   return fantasyTeams;
 };
 
-const getFantasyTeam = async (id: string): Promise<FantasyTeamZod> => {
+const getFantasyTeam = async (
+  id: string
+): Promise<HydratedDocument<FantasyTeamZod>> => {
   const fantasyTeam = await FantasyTeam.findById(id);
   if (!fantasyTeam) {
     throw new Error('Fantasy team not found');
@@ -21,7 +23,7 @@ const getFantasyTeam = async (id: string): Promise<FantasyTeamZod> => {
 
 const deleteFantasyTeam = async (id: string): Promise<void> => {
   const fantasyTeam = await getFantasyTeam(id);
-  const user = await User.findById(fantasyTeam.user);
+  const user = await userService.getUser(fantasyTeam.user);
   if (!user) {
     throw new Error('User not found');
   }
@@ -40,7 +42,7 @@ const addRunnerToFantasyTeam = async (
   id: string,
   runnerId: string
 ): Promise<FantasyTeamZod> => {
-  const fantasyTeam = await FantasyTeam.findById(id);
+  const fantasyTeam = await getFantasyTeam(id);
   if (!fantasyTeam) {
     throw new Error('Fantasy team not found');
   }
@@ -52,7 +54,7 @@ const addRunnerToFantasyTeam = async (
     throw new Error('Runner already added to fantasy team');
   }
 
-  const runnerToAdd = await Runner.findById(runnerId);
+  const runnerToAdd = await runnerService.getRunner(runnerId);
   if (!runnerToAdd) {
     throw new Error('Runner not found');
   }
@@ -67,7 +69,7 @@ const removeRunnerFromFantasyTeam = async (
   id: string,
   runnerId: string
 ): Promise<FantasyTeamZod> => {
-  const fantasyTeam = await FantasyTeam.findById(id);
+  const fantasyTeam = await getFantasyTeam(id);
 
   if (!fantasyTeam) {
     throw new Error('Fantasy team not found');
@@ -98,7 +100,7 @@ const createFantasyTeam = async (body: any): Promise<FantasyTeamZod> => {
     ...body,
   });
   const user = body.user;
-  const userToUpdate = await User.findById(user);
+  const userToUpdate = await userService.getUser(user);
   if (!userToUpdate) {
     throw new Error('User not found');
   }

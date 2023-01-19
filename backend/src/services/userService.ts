@@ -1,6 +1,7 @@
 import User from '../models/userModel';
 import { UserZod } from '../utils/utils';
 import bcrypt from 'bcrypt';
+import { HydratedDocument } from 'mongoose';
 
 const createUser = async (body: any): Promise<UserZod> => {
   const saltRounds = 10;
@@ -30,7 +31,7 @@ const getAllUsers = async (): Promise<UserZod[]> => {
   return users;
 };
 
-const getUser = async (id: string): Promise<UserZod> => {
+const getUser = async (id: string): Promise<HydratedDocument<UserZod>> => {
   const user = await User.findById(id);
   if (!user) {
     throw new Error('User not found');
