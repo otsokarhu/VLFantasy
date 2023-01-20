@@ -9,12 +9,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.17",
     "@chakra-ui/react": "^2.4.9",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@types/react-router-dom": "^5.3.3",
     "framer-motion": "^8.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.7.0",
     "recoil": "^0.7.6"
   },
   "devDependencies": {
@@ -25,7 +29,7 @@
     "@vitejs/plugin-react-swc": "^3.0.0",
     "eslint": "^8.32.0",
     "prettier": "2.8.3",
-    "typescript": "^4.9.3",
+    "typescript": "^4.9.4",
     "vite": "^4.0.0"
   }
 }
