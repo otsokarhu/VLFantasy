@@ -23,6 +23,7 @@ const RunnerCard = (props: RunnerProps) => {
         boxShadow={'2xl'}
         rounded={'md'}
         overflow={'hidden'}
+        h={'full'}
       >
         <Image h={'120px'} w={'full'} src={teamPhoto} objectFit={'cover'} />
         <Flex justify={'center'} mt={-12}>
@@ -36,8 +37,13 @@ const RunnerCard = (props: RunnerProps) => {
         </Flex>
 
         <Box p={6}>
-          <Stack spacing={0} align={'center'} mb={5}>
-            <Heading fontSize={'2xl'} fontWeight={500} fontFamily={'body'}>
+          <Stack spacing={0} align={'center'} mb={8}>
+            <Heading
+              textAlign={'center'}
+              fontSize={'1.75rem'}
+              fontWeight={500}
+              fontFamily={'body'}
+            >
               {runner}
             </Heading>
             <Text color={useColorModeValue('gray.500', 'whitesmoke')}>
@@ -45,40 +51,41 @@ const RunnerCard = (props: RunnerProps) => {
             </Text>
           </Stack>
 
-          <Stack direction={'row'} justify={'center'} spacing={6}>
-            <Stack spacing={0} align={'center'}>
-              <Text fontWeight={600}>{points}</Text>
-              <Text
-                fontSize={'sm'}
-                color={useColorModeValue('gray.500', 'whitesmoke')}
-              >
-                Kerätyt pisteet
-              </Text>
+          <Box bottom={'0px'} p={'absolute'}>
+            <Stack direction={'row'} justify={'center'} spacing={6}>
+              <Stack spacing={0} align={'center'}>
+                <Text fontWeight={600}>{points}</Text>
+                <Text
+                  fontSize={'sm'}
+                  color={useColorModeValue('gray.500', 'whitesmoke')}
+                >
+                  Kerätyt pisteet
+                </Text>
+              </Stack>
+              <Stack spacing={0} align={'center'}>
+                <Text fontWeight={600}>{price}</Text>
+                <Text
+                  fontSize={'sm'}
+                  color={useColorModeValue('gray.500', 'whitesmoke')}
+                >
+                  Hinta
+                </Text>
+              </Stack>
             </Stack>
-            <Stack spacing={0} align={'center'}>
-              <Text fontWeight={600}>{price}</Text>
-              <Text
-                fontSize={'sm'}
-                color={useColorModeValue('gray.500', 'whitesmoke')}
-              >
-                Hinta
-              </Text>
-            </Stack>
-          </Stack>
-
-          <Button
-            w={'full'}
-            mt={8}
-            bg={useColorModeValue('#151f21', 'gray.900')}
-            color={'white'}
-            rounded={'md'}
-            _hover={{
-              transform: 'translateY(-2px)',
-              boxShadow: 'lg',
-            }}
-          >
-            Lisää joukkueeseen
-          </Button>
+            <Button
+              w={'full'}
+              mt={8}
+              bg={useColorModeValue('#151f21', 'gray.900')}
+              color={'white'}
+              rounded={'md'}
+              _hover={{
+                transform: 'translateY(-2px)',
+                boxShadow: 'lg',
+              }}
+            >
+              Lisää joukkueeseen
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Center>

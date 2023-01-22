@@ -1,8 +1,10 @@
 import React from 'react';
-import { Box, ChakraProvider, useColorModeValue } from '@chakra-ui/react';
+import { Box, ChakraProvider } from '@chakra-ui/react';
 import customTheme from './themes';
 import NavigationBar from './components/navigationbar';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './components/home';
+import TeamPage from './components/teamPage';
 
 const App = () => {
   return (
@@ -11,14 +13,15 @@ const App = () => {
         <Box
           pos="relative"
           h="100vh"
-          bg={useColorModeValue(
-            'rgba(43, 44, 30, 0,01)',
-            'rgba(43, 44, 30, 1)'
-          )}
           bgImg="url(VLfantasyBG.jpg)"
           bgSize={'cover'}
         >
           <NavigationBar />
+
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/teamPage" element={<TeamPage />} />
+          </Routes>
         </Box>
       </Router>
     </ChakraProvider>

@@ -3,7 +3,7 @@ import { Grid } from '@chakra-ui/react';
 
 const RunnerPage = () => {
   return (
-    <Grid templateColumns="repeat(5, 1fr)" gap={6}>
+    <Grid templateColumns="repeat(10, 1fr)" gap={6}>
       <RunnerCard
         team="Koovee"
         runnerPhoto="https://eventor.orienteering.org/MyPages/ProfilePhoto/16281"
