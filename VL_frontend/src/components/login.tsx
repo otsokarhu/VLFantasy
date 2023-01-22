@@ -11,6 +11,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
+import ToHome from './helpers';
 
 const Loginform = () => {
   return (
@@ -23,6 +24,7 @@ const Loginform = () => {
       }
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
+      <ToHome />
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading
@@ -42,11 +44,11 @@ const Loginform = () => {
         >
           <Stack spacing={4}>
             <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
+              <FormLabel>Sähköpostiosoite</FormLabel>
               <Input type="email" />
             </FormControl>
             <FormControl id="password">
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Salasana</FormLabel>
               <Input type="password" />
             </FormControl>
             <Stack spacing={10}>

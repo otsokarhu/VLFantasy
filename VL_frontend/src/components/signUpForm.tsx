@@ -17,6 +17,7 @@ import {
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Link as RouterLink } from 'react-router-dom';
+import ToHome from './helpers';
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,6 +32,7 @@ const Signup = () => {
         'Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace'
       }
     >
+      <ToHome />
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading
