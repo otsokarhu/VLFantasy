@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 
+
 const IMAGE =
   'https://img.freepik.com/free-photo/outdoor-team-orienteering-activity_53876-48899.jpg';
 

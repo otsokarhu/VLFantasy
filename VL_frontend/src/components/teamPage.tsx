@@ -1,6 +1,7 @@
 import { Heading, Box, Center, useColorModeValue } from '@chakra-ui/react';
 import RunnerPage from './runnerpage';
 
+
 const TeamPage = () => {
   return (
     <Box alignContent={'center'}>
