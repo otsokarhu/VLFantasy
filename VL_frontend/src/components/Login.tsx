@@ -1,8 +1,6 @@
 import {
   Flex,
   Box,
-  FormControl,
-  FormLabel,
   Input,
   Stack,
   Link,
@@ -12,9 +10,44 @@ import {
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import ToHome from './helpers';
+import { Field, Formik, Form } from "formik";
 
-const Loginform = () => {
+type LoginFormValues = {
+  username: string;
+  password: string;
+};
+
+
+
+interface Props {
+  onSubmit: (values: LoginFormValues) => void;
+}
+
+
+const Loginform = ({onSubmit}: Props) => {
+
   return (
+    <Formik
+      initialValues={{
+        username: '',
+        password: '',
+      }}
+      onSubmit={onSubmit}
+    validate={(values) => {
+      const requiredError = "Field is required";
+      const errors: { username?: string; password?: string } = {};
+      if (!values.username) {
+        errors.username = requiredError;
+      }
+      if (!values.password) {
+        errors.password = requiredError;
+      }
+      return errors;
+    }}
+    >
+  {({ isValid }) => {
+  return (
+    <Form>
     <Flex
       minH={'100vh'}
       align={'center'}
@@ -43,14 +76,18 @@ const Loginform = () => {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Sähköpostiosoite</FormLabel>
-              <Input type="email" />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Salasana</FormLabel>
-              <Input type="password" />
-            </FormControl>
+            <Field 
+            label="Username" 
+            placeholder="Käyttäjätunnus"
+            name="username"
+            component={Input} 
+              />
+            <Field
+              label="Password"
+              placeholder="Salasana"
+              name="password"
+              component={Input}
+            />
             <Stack spacing={10}>
               <Stack
                 direction={{ base: 'column' }}
@@ -67,20 +104,29 @@ const Loginform = () => {
                 </Link>
               </Stack>
               <Button
+                type='submit'
                 bg={'blue.400'}
                 color={'white'}
                 _hover={{
                   bg: 'blue.500',
                 }}
+                variant={'contained'}
+                disabled={!isValid}
               >
                 Kirjaudu sisään
               </Button>
+              
             </Stack>
           </Stack>
         </Box>
       </Stack>
     </Flex>
+    </Form>
+  );
+  }}
+  </Formik>
   );
 };
+ 
 
 export default Loginform;

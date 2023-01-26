@@ -1,7 +1,7 @@
 import { Center, Stack } from '@chakra-ui/react';
 import React from 'react';
-import CreateTeamCard from './createTeamCard';
-import ViestiLiigaCard from './viestiLiigaCard';
+import CreateTeamCard from './CreateTeamCard';
+import ViestiLiigaCard from './ViestiLiigaCard';
 
 const Home = () => {
   return (

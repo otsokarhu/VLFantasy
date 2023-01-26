@@ -1,5 +1,5 @@
 import { Heading, Box, Center, useColorModeValue } from '@chakra-ui/react';
-import RunnerPage from './runnerpage';
+import RunnerPage from './RunnerPage';
 
 
 const TeamPage = () => {

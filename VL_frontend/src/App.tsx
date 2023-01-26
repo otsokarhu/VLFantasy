@@ -1,18 +1,15 @@
 import React from 'react';
 import {
   RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-} from 'recoil';
+  } from 'recoil';
 import { Box, ChakraProvider } from '@chakra-ui/react';
 import customTheme from './themes';
-import NavigationBar from './components/navigationbar';
+import NavigationBar from './components/NavigationBar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './components/home';
-import TeamPage from './components/teamPage';
+import Home from './components/Home';
+import TeamPage from './components/TeamPage';
 import { getAllUsers } from './services/userService';
+
 
 
 
@@ -20,8 +17,10 @@ import { getAllUsers } from './services/userService';
 const App = () => {
 
   const { users, isError } = getAllUsers();
+
   
   
+
   
 
   return (

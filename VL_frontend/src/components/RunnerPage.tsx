@@ -1,4 +1,4 @@
-import RunnerCard from './runnercard';
+import RunnerCard from './RunnerCard';
 import { Grid } from '@chakra-ui/react';
 
 const RunnerPage = () => {

@@ -34,3 +34,18 @@ const RunnerZod = z.object({
 export type Runner = z.infer<typeof RunnerZod>;
 
 export type User = z.infer<typeof UserZodSchema>;
+
+export const LoginZod = z.object({
+  username: z.string({ required_error: 'Username is required' }).min(3).max(20),
+  password: z.string({ required_error: 'Password is required' }).min(3).max(50),
+});
+
+export type Login = z.infer<typeof LoginZod>;
+
+const LoginResponseZod = z.object({
+  token: z.string({ required_error: 'Token is required' }),
+  username: z.string({ required_error: 'Username is required' }),
+  name: z.string({ required_error: 'Name is required' }),
+});
+
+export type LoginResponse = z.infer<typeof LoginResponseZod>;
