@@ -15,44 +15,19 @@ import { HomeRounded } from '@mui/icons-material';
 import { Route, Link, Routes } from 'react-router-dom';
 import Loginform from './Login';
 import Signup from './SignUpForm';
-import { useState } from 'react';
-import { atom, useRecoilState } from 'recoil';
-import axios from 'axios';
-import { apiBaseUrl } from '../constants';
 
 
-const NavigationBar = () => {
- 
+type LoginFormValues = {
+  username: string;
+  password: string;
+};
 
-  const [user, setUser] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  interface LoginFormValues {
-    username: string;
-    password: string;
-  }
-  interface LoginResponse {
-    token: string;
-    username: string;
-    name: string;
-  }
+interface Props {
+  onSubmit: (values: LoginFormValues) => Promise<void>;
+}
 
-  const handleLogin = async (values: LoginFormValues) => {
-    console.log('tekeeks tää vittu mitään');
-    try { 
-      const user = await axios.post<LoginResponse>(
-        `${apiBaseUrl}/login`,
-        values
-      );
-      setUser(user.data.username);
-      console.log(user);
-      console.log(user.data.username);
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  };
 
+const NavigationBar = ({onSubmit}: Props) => {
 
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -104,7 +79,7 @@ const NavigationBar = () => {
         </Button>
       </Center>
       <Routes>
-        <Route path="/login" element={<Loginform onSubmit={handleLogin}/>} />
+        <Route path="/login" element={<Loginform onSubmit={onSubmit}/>} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={''} />
       </Routes>

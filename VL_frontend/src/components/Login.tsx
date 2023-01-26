@@ -20,7 +20,7 @@ type LoginFormValues = {
 
 
 interface Props {
-  onSubmit: (values: LoginFormValues) => void;
+  onSubmit: (values: LoginFormValues) => Promise<void>;
 }
 
 
