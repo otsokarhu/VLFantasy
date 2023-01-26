@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import {
-  RecoilRoot,
-  } from 'recoil';
+import { RecoilRoot } from 'recoil';
 import { Box, ChakraProvider } from '@chakra-ui/react';
 import customTheme from './themes';
 import NavigationBar from './components/NavigationBar';
@@ -12,16 +10,10 @@ import { getAllUsers } from './services/userService';
 import Loginform from './components/Login';
 import { login } from './services/login';
 
-
-
-
-
 const App = () => {
-
   const { users, isError } = getAllUsers();
   const [user, setUser] = useState('');
 
-  
   interface LoginFormValues {
     username: string;
     password: string;
@@ -38,28 +30,27 @@ const App = () => {
     }
   };
 
-  
-
   return (
     <RecoilRoot>
-    <ChakraProvider theme={customTheme}>
-      <Router>
-        <Box
-          pos="relative"
-          h="100vh"
-          bgImg="url(VLfantasyBG.jpg)"
-          bgSize={'cover'}
-        >
-          <NavigationBar onSubmit={handleLogin} />
+      <ChakraProvider theme={customTheme}>
+        <Router>
+          <Box
+            pos="relative"
+            h="100vh"
+            bgImg="url(VLfantasyBG.jpg)"
+            bgSize={'cover'}
+          >
+            <NavigationBar onSubmit={handleLogin} />
 
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/teamPage" element={<TeamPage />} />
-            <Route path="/login" element={''} />
-          </Routes>
-        </Box>
-      </Router>
-    </ChakraProvider>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/teamPage" element={<TeamPage />} />
+              <Route path="/login" element={''} />
+              <Route path="/signup" element={''} />
+            </Routes>
+          </Box>
+        </Router>
+      </ChakraProvider>
     </RecoilRoot>
   );
 };

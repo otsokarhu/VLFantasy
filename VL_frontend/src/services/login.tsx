@@ -1,13 +1,11 @@
 import axios from 'axios';
 import { apiBaseUrl } from '../constants';
 
-
 interface LoginResponse {
   token: string;
   username: string;
   name: string;
 }
-
 
 export const login = async (username: string, password: string) => {
   try {
@@ -21,10 +19,3 @@ export const login = async (username: string, password: string) => {
     throw error;
   }
 };
-
-  
-  
-
-
-
-

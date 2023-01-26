@@ -16,7 +16,6 @@ import { Route, Link, Routes } from 'react-router-dom';
 import Loginform from './Login';
 import Signup from './SignUpForm';
 
-
 type LoginFormValues = {
   username: string;
   password: string;
@@ -26,12 +25,8 @@ interface Props {
   onSubmit: (values: LoginFormValues) => Promise<void>;
 }
 
-
-const NavigationBar = ({onSubmit}: Props) => {
-
+const NavigationBar = ({ onSubmit }: Props) => {
   const { colorMode, toggleColorMode } = useColorMode();
-
-
 
   return (
     <Flex
@@ -79,7 +74,7 @@ const NavigationBar = ({onSubmit}: Props) => {
         </Button>
       </Center>
       <Routes>
-        <Route path="/login" element={<Loginform onSubmit={onSubmit}/>} />
+        <Route path="/login" element={<Loginform onSubmit={onSubmit} />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={''} />
       </Routes>
@@ -88,5 +83,3 @@ const NavigationBar = ({onSubmit}: Props) => {
 };
 
 export default NavigationBar;
-
-
