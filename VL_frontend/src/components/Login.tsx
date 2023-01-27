@@ -7,10 +7,16 @@ import {
   Button,
   Heading,
   useColorModeValue,
+  InputGroup,
+  InputRightElement,
+  FormControl,
+  FormLabel,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import ToHome from './helpers';
 import { Field, Formik, Form } from 'formik';
+import { useState } from 'react';
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 type LoginFormValues = {
   username: string;
@@ -22,6 +28,25 @@ interface Props {
 }
 
 const Loginform = ({ onSubmit }: Props) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const passwordInput = (
+    <FormControl id="password" isRequired>
+      <FormLabel>Salasana</FormLabel>
+      <InputGroup>
+        <Input type={showPassword ? 'text' : 'password'} />
+        <InputRightElement h={'full'}>
+          <Button
+            variant={'ghost'}
+            onClick={() => setShowPassword((showPassword) => !showPassword)}
+          >
+            {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+          </Button>
+        </InputRightElement>
+      </InputGroup>
+    </FormControl>
+  );
+
   return (
     <Formik
       initialValues={{
@@ -30,7 +55,7 @@ const Loginform = ({ onSubmit }: Props) => {
       }}
       onSubmit={onSubmit}
       validate={(values) => {
-        const requiredError = 'Field is required';
+        const requiredError = 'Tämä kenttä on pakollinen';
         const errors: { username?: string; password?: string } = {};
         if (!values.username) {
           errors.username = requiredError;
@@ -76,13 +101,13 @@ const Loginform = ({ onSubmit }: Props) => {
                       label="Username"
                       placeholder="Käyttäjätunnus"
                       name="username"
-                      component={Input}
+                      as={Input}
                     />
                     <Field
-                      label="Password"
-                      placeholder="Salasana"
                       name="password"
-                      component={Input}
+                      placeholder="Salasana"
+                      label="Password"
+                      as={Input}
                     />
                     <Stack spacing={10}>
                       <Stack
