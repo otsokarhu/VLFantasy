@@ -17,13 +17,14 @@ import {
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Formik, Form } from 'formik';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, Navigate } from 'react-router-dom';
 import ToHome from './helpers';
 import { RegisterFormValues } from '../types';
 import { createUser } from '../services/userService';
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [registered, setRegistered] = useState(false);
 
   const handleRegister = async (values: RegisterFormValues): Promise<void> => {
     console.log('registering with', values);
@@ -35,6 +36,7 @@ const Signup = () => {
         values.email,
         values.password
       );
+      setRegistered(true);
     } catch (error) {
       console.log(error);
     }
@@ -74,6 +76,7 @@ const Signup = () => {
       {({ values, isSubmitting, isValid, handleChange }) => {
         return (
           <Form>
+            {registered && <Navigate to="/" />}
             <Flex
               minH={'100vh'}
               align={'center'}
