@@ -18,13 +18,24 @@ import { Formik, Form } from 'formik';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { LoginFormValues } from '../types';
+import { useSetRecoilState } from 'recoil';
+import { login } from '../services/login';
+import { userState } from '../App';
 
-interface Props {
-  onSubmit: (values: LoginFormValues) => Promise<void>;
-}
-
-const Loginform = ({ onSubmit }: Props) => {
+const Loginform = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const setUser = useSetRecoilState(userState);
+
+  const handleLogin = async (values: LoginFormValues): Promise<void> => {
+    console.log('logging in with', values);
+    try {
+      const loggingIn = await login(values.username, values.password);
+      window.localStorage.setItem('loggedVLUser', JSON.stringify(loggingIn));
+      setUser(loggingIn.username);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Formik
@@ -32,7 +43,7 @@ const Loginform = ({ onSubmit }: Props) => {
         username: '',
         password: '',
       }}
-      onSubmit={onSubmit}
+      onSubmit={handleLogin}
       validate={(values) => {
         const requiredError = 'Tämä kenttä on pakollinen';
         const errors: { username?: string; password?: string } = {};

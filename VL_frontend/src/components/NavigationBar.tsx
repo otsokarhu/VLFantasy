@@ -15,14 +15,8 @@ import { HomeRounded } from '@mui/icons-material';
 import { Route, Link, Routes } from 'react-router-dom';
 import Loginform from './Login';
 import Signup from './SignUpForm';
-import { LoginFormValues, RegisterFormValues } from '../types';
 
-interface Props {
-  onLoginSubmit: (values: LoginFormValues) => Promise<void>;
-  onSignupSubmit: (values: RegisterFormValues) => Promise<void>;
-}
-
-const NavigationBar = ({ onLoginSubmit, onSignupSubmit }: Props) => {
+const NavigationBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
@@ -71,8 +65,8 @@ const NavigationBar = ({ onLoginSubmit, onSignupSubmit }: Props) => {
         </Button>
       </Center>
       <Routes>
-        <Route path="/login" element={<Loginform onSubmit={onLoginSubmit} />} />
-        <Route path="/signup" element={<Signup onSubmit={onSignupSubmit} />} />
+        <Route path="/login" element={<Loginform />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/" element={''} />
       </Routes>
     </Flex>

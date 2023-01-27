@@ -1,26 +1,21 @@
 import { useEffect } from 'react';
-import { atom, useRecoilState } from 'recoil';
+import { atom, useSetRecoilState } from 'recoil';
 import { Box } from '@chakra-ui/react';
 import NavigationBar from './components/NavigationBar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import TeamPage from './components/TeamPage';
-import { getAllUsers, createUser } from './services/userService';
-import { login } from './services/login';
-import {
-  LoginFormValues,
-  RegisterFormValues,
-  UserFromLocalStorage,
-} from './types';
+import { getAllUsers } from './services/userService';
 
+import { UserFromLocalStorage } from './types';
+
+export const userState = atom({
+  key: 'userState',
+  default: '',
+});
 const App = () => {
-  const userState = atom({
-    key: 'userState',
-    default: '',
-  });
-
   const { users, isError } = getAllUsers();
-  const [user, setUser] = useRecoilState(userState);
+  const setUser = useSetRecoilState(userState);
 
   let token;
 
@@ -37,32 +32,6 @@ const App = () => {
     }
   }, []);
 
-  const handleLogin = async (values: LoginFormValues): Promise<void> => {
-    console.log('logging in with', values);
-    try {
-      const loggingIn = await login(values.username, values.password);
-      window.localStorage.setItem('loggedVLUser', JSON.stringify(loggingIn));
-      setUser(loggingIn.username);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleRegister = async (values: RegisterFormValues): Promise<void> => {
-    console.log('registering with', values);
-    try {
-      await createUser(
-        values.username,
-        values.firstName,
-        values.lastName,
-        values.email,
-        values.password
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <Router>
       <Box
@@ -71,10 +40,7 @@ const App = () => {
         bgImg="url(VLfantasyBG.jpg)"
         bgSize={'cover'}
       >
-        <NavigationBar
-          onLoginSubmit={handleLogin}
-          onSignupSubmit={handleRegister}
-        />
+        <NavigationBar />
 
         <Routes>
           <Route path="/" element={<Home />} />

@@ -20,12 +20,25 @@ import { Formik, Form } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
 import ToHome from './helpers';
 import { RegisterFormValues } from '../types';
+import { createUser } from '../services/userService';
 
-interface Props {
-  onSubmit: (values: RegisterFormValues) => Promise<void>;
-}
-const Signup = ({ onSubmit }: Props) => {
+const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleRegister = async (values: RegisterFormValues): Promise<void> => {
+    console.log('registering with', values);
+    try {
+      await createUser(
+        values.username,
+        values.firstName,
+        values.lastName,
+        values.email,
+        values.password
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Formik
@@ -36,7 +49,7 @@ const Signup = ({ onSubmit }: Props) => {
         lastName: '',
         username: '',
       }}
-      onSubmit={onSubmit}
+      onSubmit={handleRegister}
       validate={(values) => {
         const requiredError = 'Tämä kenttä on pakollinen';
         const errors: { [field: string]: string } = {};
