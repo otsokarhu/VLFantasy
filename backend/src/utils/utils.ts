@@ -4,6 +4,8 @@ const RunnerZod = z.object({
   name: z.string({ required_error: 'Name is required' }),
   team: z.string({ required_error: 'Team is required' }),
   points: z.number({ required_error: 'Points are required' }),
+  price: z.number({ required_error: 'Price is required' }),
+  runnerPhoto: z.string({ required_error: 'Runner photo is required' }),
 });
 
 const FantasyTeamZod = z.object({
@@ -57,8 +59,20 @@ export type RunnerZod = z.infer<typeof RunnerZod>;
 export type FantasyTeamZod = z.infer<typeof FantasyTeamZod>;
 export type UserZod = z.infer<typeof UserZodSchema>;
 
-const toNewRunner = ({ name, team, points }: RunnerFields): RunnerZod => {
-  const validatedBody = RunnerZod.parse({ name, team, points });
+const toNewRunner = ({
+  name,
+  team,
+  points,
+  price,
+  runnerPhoto,
+}: RunnerFields): RunnerZod => {
+  const validatedBody = RunnerZod.parse({
+    name,
+    team,
+    points,
+    price,
+    runnerPhoto,
+  });
   return validatedBody;
 };
 
@@ -107,7 +121,13 @@ const toNewUser = ({
 };
 
 type FantasyTeamFields = { name: unknown; user: unknown };
-type RunnerFields = { name: unknown; team: unknown; points: unknown };
+type RunnerFields = {
+  name: unknown;
+  team: unknown;
+  points: unknown;
+  price: unknown;
+  runnerPhoto: unknown;
+};
 type UserFields = {
   username: unknown;
   name: unknown;

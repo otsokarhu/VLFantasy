@@ -8,7 +8,7 @@ const RunnerPage = () => {
         team="Koovee"
         runnerPhoto="https://eventor.orienteering.org/MyPages/ProfilePhoto/16281"
         runner="Lauri Sild"
-        teamPhoto="https://tampereenkoovee.fi/wp-content/uploads/2022/06/cropped-koovee_logo_pk_mustat_reunat_iso-768x685-2-1-300x300.png"
+        teamPhoto="https://koovee.fi/wp-content/uploads/2021/11/Koovee_nykyinen_logo.png"
         price={56}
         points={34}
       />

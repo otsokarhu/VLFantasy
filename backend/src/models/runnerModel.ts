@@ -14,6 +14,14 @@ const runnerSchema: Schema = new Schema({
     type: Number,
     required: true,
   },
+  runnerPhoto: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
 });
 
 runnerSchema.set('toJSON', {

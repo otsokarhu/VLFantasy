@@ -74,6 +74,8 @@ describe('runner tests', () => {
       name: 'Test Runner',
       team: 'Test Team',
       points: 0,
+      price: 0,
+      runnerPhoto: 'testphoto',
     };
     await api
       .post('/api/runners')
