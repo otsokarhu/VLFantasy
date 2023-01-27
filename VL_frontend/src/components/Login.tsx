@@ -12,19 +12,19 @@ import {
   FormControl,
   FormLabel,
 } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, Navigate } from 'react-router-dom';
 import ToHome from './helpers';
 import { Formik, Form } from 'formik';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { LoginFormValues } from '../types';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { login } from '../services/login';
-import { userState } from '../App';
+import { userState } from '../state/user';
 
 const Loginform = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const setUser = useSetRecoilState(userState);
+  const [user, setUser] = useRecoilState(userState);
 
   const handleLogin = async (values: LoginFormValues): Promise<void> => {
     console.log('logging in with', values);
@@ -59,6 +59,7 @@ const Loginform = () => {
       {({ isValid, values, handleChange }) => {
         return (
           <Form>
+            {user && <Navigate to="/" />}
             <Flex
               minH={'100vh'}
               align={'center'}
