@@ -14,14 +14,10 @@ import {
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import ToHome from './helpers';
-import { Field, Formik, Form } from 'formik';
+import { Formik, Form } from 'formik';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-
-type LoginFormValues = {
-  username: string;
-  password: string;
-};
+import { LoginFormValues } from '../types';
 
 interface Props {
   onSubmit: (values: LoginFormValues) => Promise<void>;
@@ -29,23 +25,6 @@ interface Props {
 
 const Loginform = ({ onSubmit }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
-
-  const passwordInput = (
-    <FormControl id="password" isRequired>
-      <FormLabel>Salasana</FormLabel>
-      <InputGroup>
-        <Input type={showPassword ? 'text' : 'password'} />
-        <InputRightElement h={'full'}>
-          <Button
-            variant={'ghost'}
-            onClick={() => setShowPassword((showPassword) => !showPassword)}
-          >
-            {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-          </Button>
-        </InputRightElement>
-      </InputGroup>
-    </FormControl>
-  );
 
   return (
     <Formik
@@ -66,7 +45,7 @@ const Loginform = ({ onSubmit }: Props) => {
         return errors;
       }}
     >
-      {({ isValid }) => {
+      {({ isValid, values, handleChange }) => {
         return (
           <Form>
             <Flex
@@ -97,18 +76,36 @@ const Loginform = ({ onSubmit }: Props) => {
                   p={8}
                 >
                   <Stack spacing={4}>
-                    <Field
-                      label="Username"
-                      placeholder="Käyttäjätunnus"
-                      name="username"
-                      as={Input}
-                    />
-                    <Field
-                      name="password"
-                      placeholder="Salasana"
-                      label="Password"
-                      as={Input}
-                    />
+                    <FormControl id="username">
+                      <FormLabel>Käyttäjätunnus</FormLabel>
+                      <Input
+                        type="username"
+                        name="username"
+                        value={values.username}
+                        onChange={handleChange}
+                      />
+                    </FormControl>
+                    <FormControl id="password">
+                      <FormLabel>Salasana</FormLabel>
+                      <InputGroup>
+                        <Input
+                          type={showPassword ? 'text' : 'password'}
+                          name="password"
+                          value={values.password}
+                          onChange={handleChange}
+                        />
+                        <InputRightElement h={'full'}>
+                          <Button
+                            variant={'ghost'}
+                            onClick={() =>
+                              setShowPassword((showPassword) => !showPassword)
+                            }
+                          >
+                            {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                          </Button>
+                        </InputRightElement>
+                      </InputGroup>
+                    </FormControl>
                     <Stack spacing={10}>
                       <Stack
                         direction={{ base: 'column' }}
@@ -125,14 +122,13 @@ const Loginform = ({ onSubmit }: Props) => {
                         </Link>
                       </Stack>
                       <Button
+                        type="submit"
+                        disabled={!isValid}
                         bg={'blue.400'}
                         color={'white'}
-                        style={{
-                          float: 'right',
+                        _hover={{
+                          bg: 'blue.500',
                         }}
-                        type="submit"
-                        variant="contained"
-                        disabled={!isValid}
                       >
                         Kirjaudu sisään
                       </Button>

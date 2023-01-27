@@ -1,5 +1,3 @@
-import { z } from 'zod';
-
 export interface RunnerProps {
   team: string;
   runnerPhoto: string;
@@ -9,43 +7,53 @@ export interface RunnerProps {
   points: number;
 }
 
-const UserZodSchema = z.object({
-  username: z.string({ required_error: 'Username is required' }).min(3).max(20),
-  name: z.string({ required_error: 'Name is required' }).min(3).max(50),
-  email: z
-    .string({ required_error: 'Email is required' })
-    .email()
-    .min(5)
-    .max(50),
-  passwordHash: z
-    .string({ required_error: 'Password is required' })
-    .min(3)
-    .max(50),
-  id: z.string().optional(),
-  fantasyTeam: z.string().optional(),
-});
+export type Runner = {
+  name: string;
+  team: string;
+  points: number;
+};
 
-const RunnerZod = z.object({
-  name: z.string({ required_error: 'Name is required' }),
-  team: z.string({ required_error: 'Team is required' }),
-  points: z.number({ required_error: 'Points are required' }),
-});
+export type User = {
+  username: string;
+  name: string;
+  email: string;
+  passwordHash: string;
+  id?: string;
+  fantasyTeam?: string;
+};
 
-export type Runner = z.infer<typeof RunnerZod>;
+export type Login = {
+  username: string;
+  password: string;
+};
 
-export type User = z.infer<typeof UserZodSchema>;
+export type LoginResponse = {
+  token: string;
+  username: string;
+  name: string;
+};
 
-export const LoginZod = z.object({
-  username: z.string({ required_error: 'Username is required' }).min(3).max(20),
-  password: z.string({ required_error: 'Password is required' }).min(3).max(50),
-});
+export interface LoginFormValues {
+  username: string;
+  password: string;
+}
 
-export type Login = z.infer<typeof LoginZod>;
+export type RegisterFormValues = {
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+};
 
-const LoginResponseZod = z.object({
-  token: z.string({ required_error: 'Token is required' }),
-  username: z.string({ required_error: 'Username is required' }),
-  name: z.string({ required_error: 'Name is required' }),
-});
+export interface RegistrationResponse {
+  name: string;
+  email: string;
+  username: string;
+  id: number;
+}
 
-export type LoginResponse = z.infer<typeof LoginResponseZod>;
+export type UserFromLocalStorage = {
+  username: string;
+  token: string;
+};

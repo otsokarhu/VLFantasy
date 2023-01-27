@@ -1,11 +1,6 @@
 import axios from 'axios';
 import { apiBaseUrl } from '../constants';
-
-interface LoginResponse {
-  token: string;
-  username: string;
-  name: string;
-}
+import { LoginResponse } from '../types';
 
 export const login = async (username: string, password: string) => {
   try {

@@ -16,16 +16,10 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { Field, Formik, Form } from 'formik';
+import { Formik, Form } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
 import ToHome from './helpers';
-
-interface RegisterFormValues {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-}
+import { RegisterFormValues } from '../types';
 
 interface Props {
   onSubmit: (values: RegisterFormValues) => Promise<void>;
@@ -40,6 +34,7 @@ const Signup = ({ onSubmit }: Props) => {
         password: '',
         firstName: '',
         lastName: '',
+        username: '',
       }}
       onSubmit={onSubmit}
       validate={(values) => {
@@ -57,10 +52,13 @@ const Signup = ({ onSubmit }: Props) => {
         if (!values.lastName) {
           errors.lastName = requiredError;
         }
+        if (!values.username) {
+          errors.username = requiredError;
+        }
         return errors;
       }}
     >
-      {({ isValid, isSubmitting }) => {
+      {({ values, isSubmitting, isValid, handleChange }) => {
         return (
           <Form>
             <Flex
@@ -96,24 +94,54 @@ const Signup = ({ onSubmit }: Props) => {
                       <Box>
                         <FormControl id="firstName" isRequired>
                           <FormLabel>Etunimi</FormLabel>
-                          <Input type="text" />
+                          <Input
+                            type="text"
+                            name="firstName"
+                            value={values.firstName}
+                            onChange={handleChange}
+                          />
                         </FormControl>
                       </Box>
                       <Box>
                         <FormControl id="lastName" isRequired>
                           <FormLabel>Sukunimi</FormLabel>
-                          <Input type="text" />
+                          <Input
+                            type="text"
+                            name="lastName"
+                            value={values.lastName}
+                            onChange={handleChange}
+                          />
                         </FormControl>
                       </Box>
                     </HStack>
+
+                    <FormControl id="username" isRequired>
+                      <FormLabel>Käyttäjätunnus</FormLabel>
+                      <Input
+                        type="text"
+                        name="username"
+                        value={values.username}
+                        onChange={handleChange}
+                      />
+                    </FormControl>
                     <FormControl id="email" isRequired>
                       <FormLabel>Sähköpostiosoite</FormLabel>
-                      <Input type="email" />
+                      <Input
+                        type="email"
+                        name="email"
+                        value={values.email}
+                        onChange={handleChange}
+                      />
                     </FormControl>
                     <FormControl id="password" isRequired>
                       <FormLabel>Salasana</FormLabel>
                       <InputGroup>
-                        <Input type={showPassword ? 'text' : 'password'} />
+                        <Input
+                          type={showPassword ? 'text' : 'password'}
+                          name="password"
+                          value={values.password}
+                          onChange={handleChange}
+                        />
                         <InputRightElement h={'full'}>
                           <Button
                             variant={'ghost'}
@@ -165,4 +193,5 @@ const Signup = ({ onSubmit }: Props) => {
     </Formik>
   );
 };
+
 export default Signup;
