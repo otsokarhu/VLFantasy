@@ -11,6 +11,8 @@ export type Runner = {
   name: string;
   team: string;
   points: number;
+  price: number;
+  runnerPhoto: string;
 };
 
 export type User = {
