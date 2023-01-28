@@ -7,6 +7,20 @@ export interface RunnerProps {
   points: number;
 }
 
+export interface FantasyTeam {
+  id?: string | undefined;
+  name: string;
+  user: string;
+  runners: {
+    name: string;
+    team: string;
+    points: number;
+    price: number;
+    runnerPhoto: string;
+  }[];
+  points: number;
+}
+
 export type Runner = {
   name: string;
   team: string;
@@ -33,6 +47,7 @@ export type LoginResponse = {
   token: string;
   username: string;
   name: string;
+  id: string;
 };
 
 export interface LoginFormValues {
@@ -58,4 +73,5 @@ export interface RegistrationResponse {
 export type UserFromLocalStorage = {
   username: string;
   token: string;
+  id: string;
 };

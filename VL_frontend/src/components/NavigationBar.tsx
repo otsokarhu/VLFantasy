@@ -14,22 +14,24 @@ import { HomeRounded } from '@mui/icons-material';
 import { Route, Link, Routes } from 'react-router-dom';
 import Loginform from './Login';
 import Signup from './SignUpForm';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { userState } from '../state/user';
 import { useEffect } from 'react';
 import { UserFromLocalStorage } from '../types';
 import { setToken } from '../services/userService';
+import { teamState } from '../state/fantasyTeam';
 
 const NavigationBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const [user, setUser] = useRecoilState(userState);
+  const setTeam = useSetRecoilState(teamState);
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedVLUser');
     if (loggedUserJSON) {
       const localStorageUser = JSON.parse(
         loggedUserJSON
       ) as UserFromLocalStorage;
-      setUser(localStorageUser.username);
       setToken(localStorageUser.token);
     }
   }, []);
@@ -37,6 +39,11 @@ const NavigationBar = () => {
   const handleLogOut = () => {
     window.localStorage.removeItem('loggedVLUser');
     setUser('');
+    setTeam({
+      teamName: '',
+      runners: [],
+      points: 0,
+    });
   };
 
   if (user === '') {

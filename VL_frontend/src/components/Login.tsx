@@ -19,8 +19,9 @@ import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { LoginFormValues } from '../types';
 import { useRecoilState } from 'recoil';
-import { login } from '../services/login';
+import { login } from '../services/loginService';
 import { userState } from '../state/user';
+import { setToken } from '../services/userService';
 
 const Loginform = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,7 +32,8 @@ const Loginform = () => {
     try {
       const loggingIn = await login(values.username, values.password);
       window.localStorage.setItem('loggedVLUser', JSON.stringify(loggingIn));
-      setUser(loggingIn.username);
+      setUser(loggingIn.id);
+      setToken(loggingIn.token);
     } catch (error) {
       console.log(error);
     }

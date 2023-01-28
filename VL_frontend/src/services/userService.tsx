@@ -14,6 +14,23 @@ export const getAllUsers = () => {
   };
 };
 
+export const getUser = (id: string) => {
+  if (!id) {
+    return {
+      user: null,
+      isError: false,
+    };
+  }
+  const { data, error } = useSWR<User, Error>(
+    `${apiBaseUrl}/VLusers/${id}`,
+    fetcher
+  );
+  return {
+    user: data,
+    isError: error,
+  };
+};
+
 export const createUser = async (
   username: string,
   firstName: string,
@@ -22,10 +39,7 @@ export const createUser = async (
   password: string
 ) => {
   const name = `${firstName} ${lastName}`;
-  console.log('name', name);
-  console.log('username', username);
-  console.log('password', password);
-  console.log('email', email);
+
   try {
     const response = await axios.post<RegistrationResponse>(
       `${apiBaseUrl}/VLusers`,

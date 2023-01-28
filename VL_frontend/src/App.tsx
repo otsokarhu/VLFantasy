@@ -4,9 +4,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import TeamPage from './components/TeamPage';
 import { getAllUsers } from './services/userService';
+import { useRecoilState } from 'recoil';
+import { userState } from './state/user';
 
 const App = () => {
   const { users, isError } = getAllUsers();
+  const [user, setUser] = useRecoilState(userState);
 
   return (
     <Router>
