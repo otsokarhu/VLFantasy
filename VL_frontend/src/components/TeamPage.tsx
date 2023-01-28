@@ -15,15 +15,18 @@ import { userState } from '../state/user';
 import { teamState } from '../state/fantasyTeam';
 import { Formik, Form } from 'formik';
 import { createFantasyTeam } from '../services/fantasyTeamService';
+import { tokenState } from '../state/user';
 
 const TeamPage = () => {
   const [user] = useRecoilState(userState);
   const [team, setTeam] = useRecoilState(teamState);
+  const [token] = useRecoilState(tokenState);
+
   const handleTeamCreation = async (values: {
     teamName: string;
   }): Promise<void> => {
     try {
-      await createFantasyTeam(values.teamName, user);
+      await createFantasyTeam(values.teamName, user, token);
       setTeam((prev) => ({ ...prev, teamName: values.teamName }));
     } catch (error) {
       console.log(error);

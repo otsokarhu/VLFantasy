@@ -18,14 +18,15 @@ import { Formik, Form } from 'formik';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { LoginFormValues } from '../types';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { login } from '../services/loginService';
 import { userState } from '../state/user';
-import { setToken } from '../services/userService';
+import { tokenState } from '../state/user';
 
 const Loginform = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useRecoilState(userState);
+  const setToken = useSetRecoilState(tokenState);
 
   const handleLogin = async (values: LoginFormValues): Promise<void> => {
     console.log('logging in with', values);
