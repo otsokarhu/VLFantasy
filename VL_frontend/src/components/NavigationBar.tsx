@@ -17,6 +17,7 @@ import Signup from './SignUpForm';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userState } from '../state/user';
 import { teamState } from '../state/fantasyTeam';
+import InfoPage from './InfoPage';
 
 const NavigationBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -55,7 +56,9 @@ const NavigationBar = () => {
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <BreadcrumbLink href="#">Tietoja</BreadcrumbLink>
+              <BreadcrumbLink as={Link} href="/info" to="/info">
+                Tietoja
+              </BreadcrumbLink>
             </BreadcrumbItem>
 
             <BreadcrumbItem>
@@ -74,6 +77,7 @@ const NavigationBar = () => {
           <Route path="/login" element={<Loginform />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={''} />
+          <Route path="/info" element={<InfoPage />} />
         </Routes>
       </Flex>
     );
@@ -103,7 +107,9 @@ const NavigationBar = () => {
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <BreadcrumbLink href="#">Tietoja</BreadcrumbLink>
+              <BreadcrumbLink as={Link} href="/info" to="/info">
+                Tietoja
+              </BreadcrumbLink>
             </BreadcrumbItem>
 
             <BreadcrumbItem>
@@ -127,6 +133,7 @@ const NavigationBar = () => {
           <Route path="/login" element={<Loginform />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={''} />
+          <Route path="/info" element={<InfoPage />} />
         </Routes>
       </Flex>
     );

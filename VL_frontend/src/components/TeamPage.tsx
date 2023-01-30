@@ -22,7 +22,6 @@ const TeamPage = () => {
   const user = useRecoilValue(userState);
   const [team, setTeam] = useRecoilState(teamState);
   const token = useRecoilValue(tokenState);
-  console.log(team);
 
   const handleTeamCreation = async (values: {
     teamName: string;

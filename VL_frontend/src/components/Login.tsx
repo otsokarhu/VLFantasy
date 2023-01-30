@@ -81,9 +81,6 @@ const Loginform = () => {
               minH={'100vh'}
               align={'center'}
               justify={'center'}
-              fontFamily={
-                'Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace'
-              }
               bg={useColorModeValue('gray.50', 'gray.800')}
             >
               <ToHome />
