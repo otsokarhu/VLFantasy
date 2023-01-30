@@ -19,7 +19,14 @@ const login = async (username: string, password: string) => {
 
   const token = jwt.sign(userForToken, SECRET, { expiresIn: 60 * 60 });
 
-  return { token, username: user.username, name: user.name, id: user._id };
+  return {
+    token,
+    username: user.username,
+    name: user.name,
+    id: user._id,
+    fantasyTeam: user.fantasyTeam || '',
+    email: user.email,
+  };
 };
 
 export default { login };

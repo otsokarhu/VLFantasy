@@ -26,7 +26,7 @@ export const getUser = (id: string) => {
     fetcher
   );
   return {
-    user: data,
+    user: data as User,
     isError: error,
   };
 };

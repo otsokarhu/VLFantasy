@@ -14,7 +14,7 @@ import { HomeRounded } from '@mui/icons-material';
 import { Route, Link, Routes } from 'react-router-dom';
 import Loginform from './Login';
 import Signup from './SignUpForm';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userState } from '../state/user';
 import { useEffect } from 'react';
 import { UserFromLocalStorage } from '../types';
@@ -24,7 +24,6 @@ import { teamState } from '../state/fantasyTeam';
 const NavigationBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const [user, setUser] = useRecoilState(userState);
-  const setTeam = useSetRecoilState(teamState);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedVLUser');
@@ -33,20 +32,20 @@ const NavigationBar = () => {
         loggedUserJSON
       ) as UserFromLocalStorage;
       setToken(localStorageUser.token);
+      setUser((prev) => ({
+        ...prev,
+        id: localStorageUser.id,
+      }));
     }
   }, []);
 
   const handleLogOut = () => {
     window.localStorage.removeItem('loggedVLUser');
-    setUser('');
-    setTeam({
-      teamName: '',
-      runners: [],
-      points: 0,
-    });
+    useResetRecoilState(userState);
+    useResetRecoilState(teamState);
   };
 
-  if (user === '') {
+  if (user.id !== '') {
     return (
       <Flex
         pos="sticky"
@@ -76,13 +75,8 @@ const NavigationBar = () => {
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <BreadcrumbLink as={Link} href="/signup" to="/signup">
-                Rekisteröidy
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbItem>
-              <BreadcrumbLink as={Link} href="/login" to="/login">
-                Kirjaudu
+              <BreadcrumbLink onClick={handleLogOut} as={Link} href="/" to="/">
+                Kirjaudu ulos
               </BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
@@ -129,8 +123,13 @@ const NavigationBar = () => {
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <BreadcrumbLink onClick={handleLogOut} as={Link} href="/" to="/">
-                Kirjaudu Ulos
+              <BreadcrumbLink as={Link} href="/signup" to="/signup">
+                Rekisteröidy
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbItem>
+              <BreadcrumbLink as={Link} href="/login" to="/login">
+                Kirjaudu sisään
               </BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>

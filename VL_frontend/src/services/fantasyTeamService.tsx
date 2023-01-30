@@ -1,6 +1,5 @@
 import axios from 'axios';
-import useSWR from 'swr';
-import { apiBaseUrl, fetcher } from '../constants';
+import { apiBaseUrl } from '../constants';
 import { FantasyTeam } from '../types';
 
 export const createFantasyTeam = async (
@@ -20,6 +19,18 @@ export const createFantasyTeam = async (
       },
       config
     );
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getFantasyTeam = async (id: string) => {
+  try {
+    const response = await axios.get<FantasyTeam>(
+      `${apiBaseUrl}/fantasyTeams/${id}`
+    );
+    return response.data;
   } catch (error) {
     console.log(error);
     throw error;

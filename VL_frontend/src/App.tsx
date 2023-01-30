@@ -4,21 +4,21 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import TeamPage from './components/TeamPage';
 import { getAllUsers } from './services/userService';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { userState } from './state/user';
 import { useEffect } from 'react';
 
 const App = () => {
   const { users, isError } = getAllUsers();
-  const [user, setUser] = useRecoilState(userState);
+  const setUser = useSetRecoilState(userState);
 
   useEffect(() => {
     const loggedInUser = window.localStorage.getItem('loggedVLUser');
     if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
-      setUser(foundUser);
+      const foundUser = JSON.parse(loggedInUser) as string;
+      setUser((prev) => ({ ...prev, id: foundUser }));
     }
-  }, []);
+  }, [setUser]);
 
   return (
     <Router>

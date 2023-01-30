@@ -14,8 +14,14 @@ import { useRecoilState } from 'recoil';
 import { userState } from '../state/user';
 import { teamState } from '../state/fantasyTeam';
 import { Formik, Form } from 'formik';
-import { createFantasyTeam } from '../services/fantasyTeamService';
+import {
+  createFantasyTeam,
+  getFantasyTeam,
+} from '../services/fantasyTeamService';
 import { tokenState } from '../state/user';
+import { getUser } from '../services/userService';
+import { useEffect } from 'react';
+import { User } from '../types';
 
 const TeamPage = () => {
   const [user] = useRecoilState(userState);
@@ -26,7 +32,7 @@ const TeamPage = () => {
     teamName: string;
   }): Promise<void> => {
     try {
-      await createFantasyTeam(values.teamName, user, token);
+      await createFantasyTeam(values.teamName, user.id, token);
       setTeam((prev) => ({ ...prev, teamName: values.teamName }));
     } catch (error) {
       console.log(error);

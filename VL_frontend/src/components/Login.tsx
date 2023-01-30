@@ -32,8 +32,13 @@ const Loginform = () => {
     console.log('logging in with', values);
     try {
       const loggingIn = await login(values.username, values.password);
-      window.localStorage.setItem('loggedVLUser', JSON.stringify(loggingIn));
-      setUser(loggingIn.id);
+      window.localStorage.setItem('loggedVLUser', JSON.stringify(loggingIn.id));
+      setUser((prev) => ({
+        ...prev,
+        name: loggingIn.name,
+        id: loggingIn.id,
+        username: loggingIn.username,
+      }));
       setToken(loggingIn.token);
     } catch (error) {
       console.log(error);
@@ -62,7 +67,7 @@ const Loginform = () => {
       {({ isValid, values, handleChange }) => {
         return (
           <Form>
-            {user && <Navigate to="/" />}
+            {user.id !== '' && <Navigate to="/" />}
             <Flex
               minH={'100vh'}
               align={'center'}
