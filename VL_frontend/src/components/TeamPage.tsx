@@ -14,14 +14,8 @@ import { useRecoilState } from 'recoil';
 import { userState } from '../state/user';
 import { teamState } from '../state/fantasyTeam';
 import { Formik, Form } from 'formik';
-import {
-  createFantasyTeam,
-  getFantasyTeam,
-} from '../services/fantasyTeamService';
+import { createFantasyTeam } from '../services/fantasyTeamService';
 import { tokenState } from '../state/user';
-import { getUser } from '../services/userService';
-import { useEffect } from 'react';
-import { User } from '../types';
 
 const TeamPage = () => {
   const [user] = useRecoilState(userState);
@@ -64,7 +58,7 @@ const TeamPage = () => {
       </Center>
     );
   }
-  if (user && team.teamName === '') {
+  if (user && team.id === '') {
     return (
       <Formik
         initialValues={{ teamName: '' }}

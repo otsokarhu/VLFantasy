@@ -3,22 +3,26 @@ import NavigationBar from './components/NavigationBar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import TeamPage from './components/TeamPage';
-import { getAllUsers } from './services/userService';
 import { useSetRecoilState } from 'recoil';
-import { userState } from './state/user';
+import { tokenState, userState } from './state/user';
 import { useEffect } from 'react';
+import { LoginResponse } from './types';
+import { teamState } from './state/fantasyTeam';
 
 const App = () => {
-  const { users, isError } = getAllUsers();
   const setUser = useSetRecoilState(userState);
+  const setToken = useSetRecoilState(tokenState);
+  const setTeam = useSetRecoilState(teamState);
 
   useEffect(() => {
     const loggedInUser = window.localStorage.getItem('loggedVLUser');
     if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser) as string;
-      setUser((prev) => ({ ...prev, id: foundUser }));
+      const foundUser = JSON.parse(loggedInUser) as LoginResponse;
+      setUser(foundUser);
+      setToken(foundUser.token);
+      setTeam((prev) => ({ ...prev, id: foundUser.fantasyTeam }));
     }
-  }, [setUser]);
+  }, []);
 
   return (
     <Router>

@@ -16,31 +16,16 @@ import Loginform from './Login';
 import Signup from './SignUpForm';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userState } from '../state/user';
-import { useEffect } from 'react';
-import { UserFromLocalStorage } from '../types';
-import { setToken } from '../services/userService';
+
 import { teamState } from '../state/fantasyTeam';
 
 const NavigationBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const [user, setUser] = useRecoilState(userState);
-
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedVLUser');
-    if (loggedUserJSON) {
-      const localStorageUser = JSON.parse(
-        loggedUserJSON
-      ) as UserFromLocalStorage;
-      setToken(localStorageUser.token);
-      setUser((prev) => ({
-        ...prev,
-        id: localStorageUser.id,
-      }));
-    }
-  }, []);
+  const [user] = useRecoilState(userState);
 
   const handleLogOut = () => {
     window.localStorage.removeItem('loggedVLUser');
+    window.localStorage.removeItem('loggedFantasyTeam');
     useResetRecoilState(userState);
     useResetRecoilState(teamState);
   };

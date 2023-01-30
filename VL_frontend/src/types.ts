@@ -48,6 +48,8 @@ export type LoginResponse = {
   username: string;
   name: string;
   id: string;
+  email: string;
+  fantasyTeam: string | '';
 };
 
 export interface LoginFormValues {

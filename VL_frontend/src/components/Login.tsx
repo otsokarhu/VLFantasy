@@ -22,24 +22,33 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { login } from '../services/loginService';
 import { userState } from '../state/user';
 import { tokenState } from '../state/user';
+import { teamState } from '../state/fantasyTeam';
 
 const Loginform = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useRecoilState(userState);
   const setToken = useSetRecoilState(tokenState);
+  const setTeam = useSetRecoilState(teamState);
 
   const handleLogin = async (values: LoginFormValues): Promise<void> => {
     console.log('logging in with', values);
     try {
       const loggingIn = await login(values.username, values.password);
-      window.localStorage.setItem('loggedVLUser', JSON.stringify(loggingIn.id));
+      window.localStorage.setItem('loggedVLUser', JSON.stringify(loggingIn));
+
       setUser((prev) => ({
         ...prev,
         name: loggingIn.name,
         id: loggingIn.id,
         username: loggingIn.username,
+        email: loggingIn.email,
+        fantasyTeam: loggingIn.fantasyTeam,
       }));
       setToken(loggingIn.token);
+      setTeam((prev) => ({
+        ...prev,
+        id: loggingIn.fantasyTeam,
+      }));
     } catch (error) {
       console.log(error);
     }
