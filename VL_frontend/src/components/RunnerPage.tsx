@@ -4,6 +4,7 @@ import { getAllRunners } from '../services/runnerService';
 
 const RunnerPage = () => {
   const { runners, isError } = getAllRunners();
+  console.log(runners);
 
   if (isError) {
     return <div>Error</div>;
@@ -17,13 +18,14 @@ const RunnerPage = () => {
     <Grid templateColumns="repeat(10, 1fr)" gap={6}>
       {runners.map((runner) => (
         <RunnerCard
-          key={runner.name}
+          key={runner.id}
           runner={runner.name}
           runnerPhoto={runner.runnerPhoto}
           price={runner.price}
           points={runner.points}
           team={runner.team}
           teamPhoto={`${runner.team}.png`}
+          id={runner.id}
         />
       ))}
     </Grid>

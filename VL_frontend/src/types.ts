@@ -1,23 +1,18 @@
 export interface RunnerProps {
-  team: string;
-  runnerPhoto: string;
-  price: number;
-  runner: string;
-  teamPhoto: string;
-  points: number;
+  team?: string;
+  runnerPhoto?: string;
+  price?: number;
+  runner?: string;
+  teamPhoto?: string;
+  points?: number;
+  id: string;
 }
 
 export interface FantasyTeam {
-  id?: string | undefined;
+  id: string;
   name: string;
   user: string;
-  runners: {
-    name: string;
-    team: string;
-    points: number;
-    price: number;
-    runnerPhoto: string;
-  }[];
+  runners: Runner[];
   points: number;
 }
 
@@ -27,6 +22,7 @@ export type Runner = {
   points: number;
   price: number;
   runnerPhoto: string;
+  id: string;
 };
 
 export type User = {

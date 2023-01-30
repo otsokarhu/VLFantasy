@@ -12,3 +12,14 @@ export const getAllRunners = () => {
     isError: error,
   };
 };
+
+export const getRunner = (id: string) => {
+  const { data, error } = useSWR<Runner, Error>(
+    `${apiBaseUrl}/runners/${id}`,
+    fetcher
+  );
+  return {
+    runner: data,
+    isError: error,
+  };
+};

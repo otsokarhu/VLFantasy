@@ -1,5 +1,4 @@
 import { Center, Stack } from '@chakra-ui/react';
-import React from 'react';
 import CreateTeamCard from './CreateTeamCard';
 import ViestiLiigaCard from './ViestiLiigaCard';
 

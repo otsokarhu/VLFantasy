@@ -16,7 +16,6 @@ import Loginform from './Login';
 import Signup from './SignUpForm';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userState } from '../state/user';
-
 import { teamState } from '../state/fantasyTeam';
 
 const NavigationBar = () => {

@@ -11,19 +11,20 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useRecoilValue } from 'recoil';
-import { addRunnerToTeam } from '../services/fantasyTeamService';
+import { removeRunnerFromTeam } from '../services/fantasyTeamService';
 import { teamState } from '../state/fantasyTeam';
 import { tokenState } from '../state/user';
 import { RunnerProps } from '../types';
 
-const RunnerCard = (props: RunnerProps) => {
+const RunnerInTeamCard = (props: RunnerProps) => {
   const { team, runnerPhoto, price, runner, teamPhoto, points, id } = props;
+
   const teamId = useRecoilValue(teamState);
   const token = useRecoilValue(tokenState);
 
-  const handleRunnerAdding = async (): Promise<void> => {
+  const handleRunnerDeleting = async (): Promise<void> => {
     try {
-      await addRunnerToTeam(id, teamId.id, token);
+      await removeRunnerFromTeam(id, teamId.id, token);
     } catch (error) {
       console.log(error);
     }
@@ -90,18 +91,18 @@ const RunnerCard = (props: RunnerProps) => {
             </Stack>
             <Button
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
-              onClick={() => handleRunnerAdding()}
+              onClick={() => handleRunnerDeleting()}
               w={'full'}
               mt={8}
               bg={useColorModeValue('#151f21', 'gray.900')}
-              color={'white'}
+              color={'red'}
               rounded={'md'}
               _hover={{
                 transform: 'translateY(-2px)',
                 boxShadow: 'lg',
               }}
             >
-              Lisää joukkueeseen
+              Poista joukkueesta
             </Button>
           </Box>
         </Box>
@@ -110,4 +111,4 @@ const RunnerCard = (props: RunnerProps) => {
   );
 };
 
-export default RunnerCard;
+export default RunnerInTeamCard;

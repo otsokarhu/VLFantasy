@@ -62,7 +62,7 @@ const CreateTeamCard = () => {
           <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
             Luo oma VL-Fantasy-joukkueesi!
           </Heading>
-          <Link as={RouterLink} to="/teamPage" href="/teamPage">
+          <Link as={RouterLink} to="teamPage" href="teamPage">
             <Button
               bg={'green.400'}
               color={'white'}

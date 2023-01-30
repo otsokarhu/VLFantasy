@@ -3,14 +3,15 @@ import NavigationBar from './components/NavigationBar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import TeamPage from './components/TeamPage';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { tokenState, userState } from './state/user';
 import { useEffect } from 'react';
 import { LoginResponse } from './types';
 import { teamState } from './state/fantasyTeam';
+import { getFantasyTeam } from './services/fantasyTeamService';
 
 const App = () => {
-  const setUser = useSetRecoilState(userState);
+  const [user, setUser] = useRecoilState(userState);
   const setToken = useSetRecoilState(tokenState);
   const setTeam = useSetRecoilState(teamState);
 
@@ -22,7 +23,15 @@ const App = () => {
       setToken(foundUser.token);
       setTeam((prev) => ({ ...prev, id: foundUser.fantasyTeam }));
     }
-  }, []);
+  }, [setUser, setToken, setTeam]);
+
+  const { dbTeam } = getFantasyTeam(user.fantasyTeam);
+
+  useEffect(() => {
+    if (dbTeam) {
+      setTeam(dbTeam);
+    }
+  }, [dbTeam, setTeam]);
 
   return (
     <Router>
@@ -39,6 +48,7 @@ const App = () => {
           <Route path="/teamPage" element={<TeamPage />} />
           <Route path="/login" element={''} />
           <Route path="/signup" element={''} />
+          <Route path="*" element={<h1>404</h1>} />
         </Routes>
       </Box>
     </Router>

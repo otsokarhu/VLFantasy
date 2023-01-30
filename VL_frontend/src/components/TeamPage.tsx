@@ -10,17 +10,19 @@ import {
   Button,
 } from '@chakra-ui/react';
 import RunnerPage from './RunnerPage';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '../state/user';
 import { teamState } from '../state/fantasyTeam';
 import { Formik, Form } from 'formik';
 import { createFantasyTeam } from '../services/fantasyTeamService';
 import { tokenState } from '../state/user';
+import UserTeam from './UserTeam';
 
 const TeamPage = () => {
-  const [user] = useRecoilState(userState);
+  const user = useRecoilValue(userState);
   const [team, setTeam] = useRecoilState(teamState);
-  const [token] = useRecoilState(tokenState);
+  const token = useRecoilValue(tokenState);
+  console.log(team);
 
   const handleTeamCreation = async (values: {
     teamName: string;
@@ -145,10 +147,11 @@ const TeamPage = () => {
             bg={useColorModeValue('whitesmoke', 'dimgray')}
           >
             <Heading color={useColorModeValue('gray.500', 'whitesmoke')}>
-              Joukkuuesi:
+              {team.name}:
             </Heading>
           </Box>
         </Center>
+        <UserTeam />
       </Box>
     );
 };
