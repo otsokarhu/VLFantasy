@@ -16,7 +16,7 @@ import { teamState } from '../state/fantasyTeam';
 import { Formik, Form } from 'formik';
 import { createFantasyTeam } from '../services/fantasyTeamService';
 import { tokenState } from '../state/user';
-import UserTeam from './UserTeam';
+import UserTeam from './UserTeamRunners';
 
 const TeamPage = () => {
   const user = useRecoilValue(userState);
@@ -34,7 +34,7 @@ const TeamPage = () => {
     }
   };
 
-  if (!user) {
+  if (!user.id) {
     return (
       <Center p={2} h="90vh">
         <Box

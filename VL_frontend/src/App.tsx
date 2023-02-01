@@ -9,11 +9,14 @@ import { useEffect } from 'react';
 import { LoginResponse } from './types';
 import { teamState } from './state/fantasyTeam';
 import { getFantasyTeam } from './services/fantasyTeamService';
+import { getAllRunners } from './services/runnerService';
+import { allRunnersState } from './state/runners';
 
 const App = () => {
   const [user, setUser] = useRecoilState(userState);
   const setToken = useSetRecoilState(tokenState);
   const setTeam = useSetRecoilState(teamState);
+  const setAllRunners = useSetRecoilState(allRunnersState);
 
   useEffect(() => {
     const loggedInUser = window.localStorage.getItem('loggedVLUser');
@@ -32,6 +35,23 @@ const App = () => {
       setTeam(dbTeam);
     }
   }, [dbTeam, setTeam]);
+
+  const { runners } = getAllRunners();
+
+  useEffect(() => {
+    const loggedInUser = window.localStorage.getItem('loggedVLUser');
+    if (loggedInUser && runners && dbTeam) {
+      runners.map((runner) => {
+        if (dbTeam.runners.includes(runner.id)) {
+          const r = { ...runner, selected: true };
+          setAllRunners((prev) => [...prev, r]);
+        } else {
+          const r = { ...runner, selected: false };
+          setAllRunners((prev) => [...prev, r]);
+        }
+      });
+    }
+  }, [dbTeam, setAllRunners]);
 
   return (
     <Router>

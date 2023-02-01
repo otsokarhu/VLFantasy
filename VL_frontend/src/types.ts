@@ -6,13 +6,16 @@ export interface RunnerProps {
   teamPhoto?: string;
   points?: number;
   id: string;
+  displayDelete: boolean;
+  blur: boolean;
+  dbRunners: Runner[];
 }
 
 export interface FantasyTeam {
   id: string;
   name: string;
   user: string;
-  runners: Runner[];
+  runners: string[];
   points: number;
 }
 
@@ -23,6 +26,8 @@ export type Runner = {
   price: number;
   runnerPhoto: string;
   id: string;
+  selected?: boolean;
+  blur: boolean;
 };
 
 export type User = {

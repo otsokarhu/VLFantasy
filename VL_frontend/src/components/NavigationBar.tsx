@@ -17,6 +17,7 @@ import Signup from './SignUpForm';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userState } from '../state/user';
 import { teamState } from '../state/fantasyTeam';
+import { allRunnersState } from '../state/runners';
 import InfoPage from './InfoPage';
 
 const NavigationBar = () => {
@@ -28,6 +29,7 @@ const NavigationBar = () => {
     window.localStorage.removeItem('loggedFantasyTeam');
     useResetRecoilState(userState);
     useResetRecoilState(teamState);
+    useResetRecoilState(allRunnersState);
   };
 
   if (user.id !== '') {
@@ -49,7 +51,7 @@ const NavigationBar = () => {
           >
             <BreadcrumbItem>
               <BreadcrumbLink as={Link} href="/" to="/">
-                <Button>
+                <Button variant={'icon'}>
                   <Icon as={HomeRounded} boxSize={31} />
                 </Button>
               </BreadcrumbLink>
@@ -69,7 +71,7 @@ const NavigationBar = () => {
           </Breadcrumb>
         </Center>
         <Center w="3%">
-          <Button onClick={toggleColorMode}>
+          <Button onClick={toggleColorMode} variant={'icon'}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           </Button>
         </Center>
@@ -100,7 +102,7 @@ const NavigationBar = () => {
           >
             <BreadcrumbItem>
               <BreadcrumbLink as={Link} href="/" to="/">
-                <Button>
+                <Button variant={'icon'}>
                   <Icon as={HomeRounded} boxSize={31} />
                 </Button>
               </BreadcrumbLink>
@@ -125,7 +127,7 @@ const NavigationBar = () => {
           </Breadcrumb>
         </Center>
         <Center w="3%">
-          <Button onClick={toggleColorMode}>
+          <Button onClick={toggleColorMode} variant={'icon'}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           </Button>
         </Center>

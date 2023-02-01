@@ -1,24 +1,18 @@
 import RunnerCard from './RunnerCard';
 import { Grid } from '@chakra-ui/react';
-import { getAllRunners } from '../services/runnerService';
+import { useRecoilValue } from 'recoil';
+import { allRunnersState } from '../state/runners';
 
 const RunnerPage = () => {
-  const { runners, isError } = getAllRunners();
-  console.log(runners);
-
-  if (isError) {
-    return <div>Error</div>;
-  }
-
-  if (!runners) {
-    return <div>Loading...</div>;
-  }
+  const allRunners = useRecoilValue(allRunnersState);
+  console.log(allRunners);
 
   return (
     <Grid templateColumns="repeat(10, 1fr)" gap={6}>
-      {runners.map((runner) => (
+      {allRunners.map((runner) => (
         <RunnerCard
           key={runner.id}
+          blur={runner.blur}
           runner={runner.name}
           runnerPhoto={runner.runnerPhoto}
           price={runner.price}
@@ -26,6 +20,8 @@ const RunnerPage = () => {
           team={runner.team}
           teamPhoto={`${runner.team}.png`}
           id={runner.id}
+          displayDelete={false}
+          dbRunners={allRunners}
         />
       ))}
     </Grid>

@@ -64,10 +64,10 @@ const CreateTeamCard = () => {
           </Heading>
           <Link as={RouterLink} to="teamPage" href="teamPage">
             <Button
-              bg={'green.400'}
+              bg={useColorModeValue('green.400', 'blue.900')}
               color={'white'}
               _hover={{
-                bg: 'green.500',
+                bg: useColorModeValue('green.500', 'blue.800'),
               }}
             >
               Luo joukkue

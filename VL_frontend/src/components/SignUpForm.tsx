@@ -160,7 +160,7 @@ const Signup = () => {
                         />
                         <InputRightElement h={'full'}>
                           <Button
-                            variant={'ghost'}
+                            variant={'icon'}
                             onClick={() =>
                               setShowPassword((showPassword) => !showPassword)
                             }

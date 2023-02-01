@@ -63,10 +63,10 @@ const ViestiLiigaCard = () => {
           </Heading>
           <Link href="https://www.viestiliiga.fi/" isExternal>
             <Button
-              bg={'green.400'}
+              bg={useColorModeValue('green.400', 'blue.900')}
               color={'white'}
               _hover={{
-                bg: 'green.500',
+                bg: useColorModeValue('green.500', 'blue.800'),
               }}
             >
               Viestiliigan sivuille
