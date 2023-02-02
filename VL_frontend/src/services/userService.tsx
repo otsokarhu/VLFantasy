@@ -1,7 +1,8 @@
 import useSWR from 'swr';
 import { RegistrationResponse, User } from '../types';
-import { apiBaseUrl, fetcher } from '../constants';
+import { fetcher } from '../constants';
 import axios from 'axios';
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 export const getAllUsers = () => {
   const { data, error } = useSWR<User[], Error>(
