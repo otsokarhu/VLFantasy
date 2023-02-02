@@ -28,36 +28,40 @@ const App = () => {
     }
   }, [setUser, setToken, setTeam]);
 
-  const { dbTeam } = getFantasyTeam(user.fantasyTeam);
+  const { dbTeam, isLoading } = getFantasyTeam(user.fantasyTeam);
+
+  const { runners, isRunnersLoading } = getAllRunners();
 
   useEffect(() => {
-    if (dbTeam) {
-      setTeam(dbTeam);
-    }
-  }, [dbTeam, setTeam]);
-
-  const { runners } = getAllRunners();
-
-  useEffect(() => {
-    if (user.id !== '' && runners && allRunners.length === 0) {
+    if (!isLoading) {
       if (dbTeam) {
-        runners.map((runner) => {
-          if (dbTeam.runners.includes(runner.id)) {
-            const r = { ...runner, selected: true };
-            setAllRunners((prev) => [...prev, r]);
-          } else {
-            const r = { ...runner, selected: false };
-            setAllRunners((prev) => [...prev, r]);
-          }
-        });
-      } else {
-        runners.map((runner) => {
-          const r = { ...runner, selected: false };
-          setAllRunners((prev) => [...prev, r]);
-        });
+        setTeam(dbTeam);
       }
     }
-  }, [dbTeam, setAllRunners]);
+  }, [dbTeam, setTeam, isLoading]);
+
+  useEffect(() => {
+    if (!isRunnersLoading && !isLoading) {
+      if (user.id !== '' && runners && allRunners.length === 0) {
+        if (dbTeam) {
+          runners.map((runner) => {
+            if (dbTeam.runners.includes(runner.id)) {
+              const r = { ...runner, selected: true };
+              setAllRunners((prev) => [...prev, r]);
+            } else {
+              const r = { ...runner, selected: false };
+              setAllRunners((prev) => [...prev, r]);
+            }
+          });
+        } else {
+          runners.map((runner) => {
+            const r = { ...runner, selected: false };
+            setAllRunners((prev) => [...prev, r]);
+          });
+        }
+      }
+    }
+  }, [dbTeam, setAllRunners, isRunnersLoading, isLoading]);
 
   return (
     <Router>

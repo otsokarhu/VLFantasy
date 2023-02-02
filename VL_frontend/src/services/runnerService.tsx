@@ -4,13 +4,17 @@ import { fetcher } from '../constants';
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 export const getAllRunners = () => {
-  const { data, error } = useSWR<Runner[], Error>(
+  const { data, error, isLoading } = useSWR<Runner[], Error>(
     `${apiBaseUrl}/runners`,
     fetcher
   );
+
+  const isRunnersLoading = isLoading;
+
   return {
     runners: data,
     isError: error,
+    isRunnersLoading,
   };
 };
 

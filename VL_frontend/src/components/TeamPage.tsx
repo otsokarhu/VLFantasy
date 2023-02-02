@@ -16,7 +16,10 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '../state/user';
 import { teamState } from '../state/fantasyTeam';
 import { Formik, Form } from 'formik';
-import { createFantasyTeam } from '../services/fantasyTeamService';
+import {
+  createFantasyTeam,
+  getFantasyTeam,
+} from '../services/fantasyTeamService';
 import { tokenState } from '../state/user';
 import UserTeam from './UserTeamRunners';
 import { allRunnersState } from '../state/runners';
@@ -26,7 +29,8 @@ const TeamPage = () => {
   const [team, setTeam] = useRecoilState(teamState);
   const token = useRecoilValue(tokenState);
   const toast = useToast();
-  const runners = useRecoilValue(allRunnersState);
+  const runnersFromState = useRecoilValue(allRunnersState);
+  const { isLoading } = getFantasyTeam(user.fantasyTeam);
 
   const handleTeamCreation = async (values: {
     teamName: string;
@@ -57,7 +61,7 @@ const TeamPage = () => {
   let totalPrice = 0;
   if (team.runners) {
     team.runners.forEach((runner) => {
-      const runnerPrice = runners.find((r) => r.id === runner);
+      const runnerPrice = runnersFromState.find((r) => r.id === runner);
       if (runnerPrice) {
         totalPrice += runnerPrice.price;
       }
@@ -89,7 +93,7 @@ const TeamPage = () => {
       </Center>
     );
   }
-  if (user && team.id === '') {
+  if (user && team.id === '' && !isLoading) {
     return (
       <Formik
         initialValues={{ teamName: '' }}

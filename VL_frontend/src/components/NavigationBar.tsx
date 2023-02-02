@@ -19,6 +19,7 @@ import { userState } from '../state/user';
 import { teamState } from '../state/fantasyTeam';
 import { allRunnersState } from '../state/runners';
 import InfoPage from './InfoPage';
+import TeamPage from './TeamPage';
 
 const NavigationBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -41,7 +42,7 @@ const NavigationBar = () => {
         h="50px"
         bgColor={useColorModeValue('whitesmoke', 'dimgray')}
         opacity={0.9}
-        rounded="lg"
+        roundedBottom="lg"
       >
         <Center w="100%">
           <Breadcrumb
@@ -92,7 +93,7 @@ const NavigationBar = () => {
         h="50px"
         bgColor={useColorModeValue('whitesmoke', 'dimgray')}
         opacity={0.9}
-        rounded="lg"
+        roundedBottom="lg"
       >
         <Center w="100%">
           <Breadcrumb
@@ -136,6 +137,7 @@ const NavigationBar = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={''} />
           <Route path="/info" element={<InfoPage />} />
+          <Route path="/teamPage" element={<TeamPage />} />
         </Routes>
       </Flex>
     );

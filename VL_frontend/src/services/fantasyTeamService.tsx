@@ -28,13 +28,14 @@ export const createFantasyTeam = async (
 };
 
 export const getFantasyTeam = (id: string) => {
-  const { data, error } = useSWR<FantasyTeam>(
+  const { data, error, isLoading } = useSWR<FantasyTeam>(
     `${apiBaseUrl}/fantasyTeams/${id}`,
     fetcher
   );
   return {
     dbTeam: data,
     isError: error,
+    isLoading,
   };
 };
 
