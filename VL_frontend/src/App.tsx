@@ -39,16 +39,23 @@ const App = () => {
   const { runners } = getAllRunners();
 
   useEffect(() => {
-    if (user.id !== '' && runners && dbTeam && allRunners.length === 0) {
-      runners.map((runner) => {
-        if (dbTeam.runners.includes(runner.id)) {
-          const r = { ...runner, selected: true };
-          setAllRunners((prev) => [...prev, r]);
-        } else {
+    if (user.id !== '' && runners && allRunners.length === 0) {
+      if (dbTeam) {
+        runners.map((runner) => {
+          if (dbTeam.runners.includes(runner.id)) {
+            const r = { ...runner, selected: true };
+            setAllRunners((prev) => [...prev, r]);
+          } else {
+            const r = { ...runner, selected: false };
+            setAllRunners((prev) => [...prev, r]);
+          }
+        });
+      } else {
+        runners.map((runner) => {
           const r = { ...runner, selected: false };
           setAllRunners((prev) => [...prev, r]);
-        }
-      });
+        });
+      }
     }
   }, [dbTeam, setAllRunners]);
 
