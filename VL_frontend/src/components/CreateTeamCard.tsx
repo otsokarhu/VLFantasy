@@ -8,7 +8,8 @@ import {
   Image,
   Link,
 } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, Route, Routes } from 'react-router-dom';
+import TeamPage from './TeamPage';
 
 const IMAGE =
   'https://img.freepik.com/free-photo/outdoor-team-orienteering-activity_53876-48899.jpg';
@@ -75,6 +76,9 @@ const CreateTeamCard = () => {
           </Link>
         </Stack>
       </Box>
+      <Routes>
+        <Route path="/teamPage" element={<TeamPage />} />
+      </Routes>
     </Center>
   );
 };

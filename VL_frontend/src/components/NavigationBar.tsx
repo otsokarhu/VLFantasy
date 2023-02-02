@@ -19,7 +19,6 @@ import { userState } from '../state/user';
 import { teamState } from '../state/fantasyTeam';
 import { allRunnersState } from '../state/runners';
 import InfoPage from './InfoPage';
-import TeamPage from './TeamPage';
 
 const NavigationBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -81,6 +80,7 @@ const NavigationBar = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={''} />
           <Route path="/info" element={<InfoPage />} />
+          <Route path="/teamPage" element={''} />
         </Routes>
       </Flex>
     );
@@ -137,7 +137,7 @@ const NavigationBar = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={''} />
           <Route path="/info" element={<InfoPage />} />
-          <Route path="/teamPage" element={<TeamPage />} />
+          <Route path="/teamPage" element={''} />
         </Routes>
       </Flex>
     );

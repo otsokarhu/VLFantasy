@@ -74,7 +74,7 @@ const App = () => {
         <NavigationBar />
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="*" element={<Home />} />
           <Route path="/teamPage" element={<TeamPage />} />
           <Route path="/login" element={''} />
           <Route path="/signup" element={''} />
