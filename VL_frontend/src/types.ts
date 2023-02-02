@@ -27,7 +27,6 @@ export type Runner = {
   runnerPhoto: string;
   id: string;
   selected?: boolean;
-  blur: boolean;
 };
 
 export type User = {

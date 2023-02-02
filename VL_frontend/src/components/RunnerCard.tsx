@@ -46,9 +46,12 @@ const RunnerCard = (props: RunnerProps) => {
         return;
       }
       if (runnerToUpdate) {
-        runnerToUpdate.blur = true;
+        const updatedRunner = {
+          ...runnerToUpdate,
+          selected: true,
+        };
         setRunners((prev) =>
-          prev.map((r) => (r.id === id ? runnerToUpdate : r))
+          prev.map((r) => (r.id === id ? updatedRunner : r))
         );
       }
     } catch (error) {
@@ -59,6 +62,20 @@ const RunnerCard = (props: RunnerProps) => {
   const handleRunnerDeleting = async (): Promise<void> => {
     try {
       await removeRunnerFromTeam(id, teamId.id, token);
+
+      const runnerToUpdate = dbRunners.find((r) => r.id === id);
+      if (!runnerToUpdate) {
+        return;
+      }
+      if (runnerToUpdate) {
+        const updatedRunner = {
+          ...runnerToUpdate,
+          selected: false,
+        };
+        setRunners((prev) =>
+          prev.map((r) => (r.id === id ? updatedRunner : r))
+        );
+      }
       setTeam((prev) => ({
         ...prev,
         runners: prev.runners.filter((runner) => runner !== id),
@@ -127,6 +144,7 @@ const RunnerCard = (props: RunnerProps) => {
                 </Text>
               </Stack>
             </Stack>
+
             {displayDelete ? (
               <Button
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -148,6 +166,7 @@ const RunnerCard = (props: RunnerProps) => {
                 onClick={() => handleRunnerAdding()}
                 color={useColorModeValue('#17d424', 'green')}
                 bg={useColorModeValue('#151f21', 'gray.900')}
+                opacity={blur ? 0 : 1}
                 _hover={{
                   bgColor: useColorModeValue('green', 'green.600'),
                   transform: 'translateY(-2px)',

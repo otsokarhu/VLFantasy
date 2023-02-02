@@ -16,7 +16,7 @@ const App = () => {
   const [user, setUser] = useRecoilState(userState);
   const setToken = useSetRecoilState(tokenState);
   const setTeam = useSetRecoilState(teamState);
-  const setAllRunners = useSetRecoilState(allRunnersState);
+  const [allRunners, setAllRunners] = useRecoilState(allRunnersState);
 
   useEffect(() => {
     const loggedInUser = window.localStorage.getItem('loggedVLUser');
@@ -39,8 +39,7 @@ const App = () => {
   const { runners } = getAllRunners();
 
   useEffect(() => {
-    const loggedInUser = window.localStorage.getItem('loggedVLUser');
-    if (loggedInUser && runners && dbTeam) {
+    if (user.id !== '' && runners && dbTeam && allRunners.length === 0) {
       runners.map((runner) => {
         if (dbTeam.runners.includes(runner.id)) {
           const r = { ...runner, selected: true };

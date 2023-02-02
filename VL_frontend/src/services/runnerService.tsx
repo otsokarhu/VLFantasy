@@ -14,10 +14,18 @@ export const getAllRunners = () => {
 };
 
 export const getRunner = (id: string) => {
-  const { data, error } = useSWR<Runner, Error>(
+  const { data, error, isLoading } = useSWR<Runner, Error>(
     `${apiBaseUrl}/runners/${id}`,
     fetcher
   );
+
+  if (isLoading) {
+    return {
+      runner: null,
+      isError: false,
+    };
+  }
+
   return {
     runner: data,
     isError: error,
