@@ -13,7 +13,7 @@ Users can register, login, create their own fantasy team and select runners to t
 
 ### Main page with user logged out
 
-(https://1drv.ms/u/s!An64pS8QVof4ng2xJMa_ydNzNhwV?e=Mgvo8m)
+![Screenshot](https://am3pap007files.storage.live.com/y4mJKN2_Ao8dBzpst06P1-FVFiOJt1RXhvSvIVYIf_0sN-m6Kik_gdES9USjV4FdQ1Ibskw2hwB2W6zRLXwq5HO1tQy0z4puKS8Q2oWyaphRKGqyVzozCSg_TqOlpsOzYHzMqS_dWkh5aReEJ0wKSZndthrCk1UD2J1bc0By_n3KYqwfLYwUP4mRcs5Uv3bwYdX?width=2560&height=1371&cropmode=none)
 
 ## To do
 
