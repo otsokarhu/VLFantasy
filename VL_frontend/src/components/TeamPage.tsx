@@ -8,6 +8,8 @@ import {
   Input,
   Stack,
   Button,
+  useToast,
+  Text,
 } from '@chakra-ui/react';
 import RunnerPage from './RunnerPage';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -17,11 +19,14 @@ import { Formik, Form } from 'formik';
 import { createFantasyTeam } from '../services/fantasyTeamService';
 import { tokenState } from '../state/user';
 import UserTeam from './UserTeamRunners';
+import { allRunnersState } from '../state/runners';
 
 const TeamPage = () => {
   const user = useRecoilValue(userState);
   const [team, setTeam] = useRecoilState(teamState);
   const token = useRecoilValue(tokenState);
+  const toast = useToast();
+  const runners = useRecoilValue(allRunnersState);
 
   const handleTeamCreation = async (values: {
     teamName: string;
@@ -29,10 +34,35 @@ const TeamPage = () => {
     try {
       await createFantasyTeam(values.teamName, user.id, token);
       setTeam((prev) => ({ ...prev, teamName: values.teamName }));
+      toast({
+        title: 'Joukkue luotu',
+        description: 'Joukkueen nimi on ' + values.teamName,
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Virhe',
+        description: 'Joukkueen luominen epäonnistui',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
     }
   };
+
+  let totalPrice = 0;
+  if (team.runners) {
+    team.runners.forEach((runner) => {
+      const runnerPrice = runners.find((r) => r.id === runner);
+      if (runnerPrice) {
+        totalPrice += runnerPrice.price;
+      }
+    });
+  }
 
   if (!user.id) {
     return (
@@ -132,9 +162,15 @@ const TeamPage = () => {
             rounded={'md'}
             bg={useColorModeValue('whitesmoke', 'dimgray')}
           >
-            <Heading color={useColorModeValue('gray.500', 'whitesmoke')}>
-              Valitse joukkuuesi!
-            </Heading>
+            {team.runners.length === 5 ? (
+              <Heading color={useColorModeValue('gray.500', 'whitesmoke')}>
+                Joukkue valmis!
+              </Heading>
+            ) : (
+              <Heading color={useColorModeValue('gray.500', 'whitesmoke')}>
+                Juoksijoita valittavana: {5 - team.runners.length}
+              </Heading>
+            )}
           </Box>
         </Center>
 
@@ -148,6 +184,13 @@ const TeamPage = () => {
             <Heading color={useColorModeValue('gray.500', 'whitesmoke')}>
               {team.name}:
             </Heading>
+            <Text
+              color={useColorModeValue('gray.500', 'whitesmoke')}
+              align={'center'}
+              fontSize={'xl'}
+            >
+              budjettia jäljellä: {200 - totalPrice}
+            </Text>
           </Box>
         </Center>
         <UserTeam />

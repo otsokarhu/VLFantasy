@@ -11,6 +11,7 @@ import {
   InputRightElement,
   FormControl,
   FormLabel,
+  useToast,
 } from '@chakra-ui/react';
 import { Link as RouterLink, Navigate } from 'react-router-dom';
 import ToHome from './helpers';
@@ -29,6 +30,8 @@ const Loginform = () => {
   const [user, setUser] = useRecoilState(userState);
   const setToken = useSetRecoilState(tokenState);
   const setTeam = useSetRecoilState(teamState);
+
+  const toast = useToast();
 
   const handleLogin = async (values: LoginFormValues): Promise<void> => {
     console.log('logging in with', values);
@@ -49,8 +52,23 @@ const Loginform = () => {
         ...prev,
         id: loggingIn.fantasyTeam,
       }));
+      toast({
+        title: 'Kirjautuminen onnistui',
+        description: 'Tervetuloa takaisin',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Kirjautuminen epäonnistui',
+        description: 'Tarkista käyttäjätunnus ja salasana',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
     }
   };
 

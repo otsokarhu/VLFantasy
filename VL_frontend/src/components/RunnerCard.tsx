@@ -9,6 +9,7 @@ import {
   Stack,
   Button,
   useColorModeValue,
+  useToast,
 } from '@chakra-ui/react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
@@ -33,18 +34,39 @@ const RunnerCard = (props: RunnerProps) => {
     blur,
     dbRunners,
   } = props;
-  const [teamId, setTeam] = useRecoilState(teamState);
+  const [userTeam, setTeam] = useRecoilState(teamState);
   const token = useRecoilValue(tokenState);
   const setRunners = useSetRecoilState(allRunnersState);
+  const toast = useToast();
+
+  const totalPrice = userTeam.runners.reduce((acc, runner) => {
+    const runnerPrice = dbRunners.find((r) => r.id === runner);
+    if (runnerPrice) {
+      return acc + runnerPrice.price;
+    }
+    return acc;
+  }, 0);
 
   const handleRunnerAdding = async (): Promise<void> => {
+    const runnerToUpdate = dbRunners.find((r) => r.id === id);
+    if (!runnerToUpdate) {
+      return;
+    }
+    if (totalPrice + runnerToUpdate.price > 200) {
+      toast({
+        title: 'Virhe',
+        description: 'Joukkueen kokonaisbudjetti ylittyy',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
+      return;
+    }
     try {
-      await addRunnerToTeam(id, teamId.id, token);
+      await addRunnerToTeam(id, userTeam.id, token);
       setTeam((prev) => ({ ...prev, runners: [...prev.runners, id] }));
-      const runnerToUpdate = dbRunners.find((r) => r.id === id);
-      if (!runnerToUpdate) {
-        return;
-      }
+
       if (runnerToUpdate) {
         const updatedRunner = {
           ...runnerToUpdate,
@@ -55,13 +77,20 @@ const RunnerCard = (props: RunnerProps) => {
         );
       }
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Virhe',
+        description: 'Joukkueessasi on jo 5 juoksijaa',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
     }
   };
 
   const handleRunnerDeleting = async (): Promise<void> => {
     try {
-      await removeRunnerFromTeam(id, teamId.id, token);
+      await removeRunnerFromTeam(id, userTeam.id, token);
 
       const runnerToUpdate = dbRunners.find((r) => r.id === id);
       if (!runnerToUpdate) {
@@ -81,7 +110,14 @@ const RunnerCard = (props: RunnerProps) => {
         runners: prev.runners.filter((runner) => runner !== id),
       }));
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Virhe',
+        description: 'Juoksijan poistaminen joukkueesta epäonnistui',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
     }
   };
 
@@ -166,7 +202,7 @@ const RunnerCard = (props: RunnerProps) => {
                 onClick={() => handleRunnerAdding()}
                 color={useColorModeValue('#17d424', 'green')}
                 bg={useColorModeValue('#151f21', 'gray.900')}
-                opacity={blur ? 0 : 1}
+                visibility={blur ? 'hidden' : 'visible'}
                 _hover={{
                   bgColor: useColorModeValue('green', 'green.600'),
                   transform: 'translateY(-2px)',

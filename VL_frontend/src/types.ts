@@ -77,3 +77,9 @@ export type UserFromLocalStorage = {
   token: string;
   id: string;
 };
+
+export type NotificationProps = {
+  title: string;
+  description: string;
+  status: 'success' | 'error' | 'info';
+};

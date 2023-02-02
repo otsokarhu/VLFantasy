@@ -13,6 +13,7 @@ import {
   Text,
   useColorModeValue,
   Link,
+  useToast,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
@@ -25,6 +26,7 @@ import { createUser } from '../services/userService';
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [registered, setRegistered] = useState(false);
+  const toast = useToast();
 
   const handleRegister = async (values: RegisterFormValues): Promise<void> => {
     console.log('registering with', values);
@@ -38,7 +40,14 @@ const Signup = () => {
       );
       setRegistered(true);
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Rekisteröityminen epäonnistui',
+        description: 'Tarkista tiedot ja yritä uudelleen',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
     }
   };
 
