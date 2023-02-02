@@ -7,7 +7,7 @@ In VL-Fantasy users can select real orienteers to their team, whom then earn poi
 
 ## Link to VL-fantasy
 
-(https://vl-fantasy.vercel.app/)
+https://vl-fantasy.vercel.app/
 
 ## Functionality as of now
 
