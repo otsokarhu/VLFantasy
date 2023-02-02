@@ -5,6 +5,10 @@
 VL-Fantasy is a fantasy game such as [Fantasy Premier League](https://fantasy.premierleague.com/), but for [Viestiliiga](https://www.viestiliiga.fi/).
 In VL-Fantasy users can select real orienteers to their team, whom then earn points based on their real life performances.
 
+## Link to VL-fantasy
+
+(https://vl-fantasy.vercel.app/)
+
 ## Functionality as of now
 
 Users can register, login, create their own fantasy team and select runners to that team with budget 200.
