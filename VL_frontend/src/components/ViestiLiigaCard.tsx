@@ -13,6 +13,9 @@ const IMAGE =
   'https://www.viestiliiga.fi/wp-content/uploads/2019/11/suunnistus_viestiliiga_logo_pieni.jpg';
 
 const ViestiLiigaCard = () => {
+  const wd = useColorModeValue('whitesmoke', 'dimgray');
+  const buttonBg = useColorModeValue('green.400', 'blue.900');
+  const hoverBg = useColorModeValue('green.500', 'blue.800');
   return (
     <Center py={12}>
       <Box
@@ -20,7 +23,7 @@ const ViestiLiigaCard = () => {
         p={6}
         maxW={'330px'}
         w={'full'}
-        bg={useColorModeValue('whitesmoke', 'dimgray')}
+        bg={wd}
         boxShadow={'2xl'}
         rounded={'lg'}
         pos={'relative'}
@@ -63,10 +66,10 @@ const ViestiLiigaCard = () => {
           </Heading>
           <Link href="https://www.viestiliiga.fi/" isExternal>
             <Button
-              bg={useColorModeValue('green.400', 'blue.900')}
+              bg={buttonBg}
               color={'white'}
               _hover={{
-                bg: useColorModeValue('green.500', 'blue.800'),
+                bg: hoverBg,
               }}
             >
               Viestiliigan sivuille

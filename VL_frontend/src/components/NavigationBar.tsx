@@ -14,7 +14,7 @@ import { HomeRounded } from '@mui/icons-material';
 import { Route, Link, Routes } from 'react-router-dom';
 import Loginform from './Login';
 import Signup from './SignUpForm';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { userState } from '../state/user';
 import { teamState } from '../state/fantasyTeam';
 import { allRunnersState } from '../state/runners';
@@ -22,7 +22,8 @@ import InfoPage from './InfoPage';
 
 const NavigationBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const [user] = useRecoilState(userState);
+  const user = useRecoilValue(userState);
+  const bg = useColorModeValue('whitesmoke', 'dimgray');
 
   const handleLogOut = () => {
     window.localStorage.removeItem('loggedVLUser');
@@ -39,7 +40,7 @@ const NavigationBar = () => {
         top={0}
         w="100%"
         h="50px"
-        bgColor={useColorModeValue('whitesmoke', 'dimgray')}
+        bgColor={bg}
         opacity={0.9}
         roundedBottom="lg"
       >
@@ -91,7 +92,7 @@ const NavigationBar = () => {
         top={0}
         w="100%"
         h="50px"
-        bgColor={useColorModeValue('whitesmoke', 'dimgray')}
+        bgColor={bg}
         opacity={0.9}
         roundedBottom="lg"
       >

@@ -8,13 +8,10 @@ import {
 import ToHome from './helpers';
 
 const InfoPage = () => {
+  const flexBg = useColorModeValue('gray.50', 'gray.800');
+  const bg = useColorModeValue('gray.500', 'whitesmoke');
   return (
-    <Flex
-      minH={'100vh'}
-      align={'center'}
-      justify={'center'}
-      bg={useColorModeValue('gray.50', 'gray.800')}
-    >
+    <Flex minH={'100vh'} align={'center'} justify={'center'} bg={flexBg}>
       <ToHome />
       <Center p={3} h="90vh">
         <Box
@@ -28,18 +25,10 @@ const InfoPage = () => {
           p={2}
           opacity={0.8}
         >
-          <Heading
-            alignContent={'center'}
-            fontSize={'2xl'}
-            color={useColorModeValue('gray.500', 'whitesmoke')}
-          >
+          <Heading alignContent={'center'} fontSize={'2xl'} color={bg}>
             Tervetuloa ViestiLiigaan-Fantasyyn!
           </Heading>
-          <Heading
-            alignContent={'center'}
-            fontSize={'1xl'}
-            color={useColorModeValue('gray.500', 'whitesmoke')}
-          >
+          <Heading alignContent={'center'} fontSize={'1xl'} color={bg}>
             Täällä voit luoda joukkueen ViestiLiigaFantasyyn ja valita
             joukkueesi pelaajat. Valitsemasi joukkue kerää pisteitä perustuen
             suunnistajiensa suorituksiin kesän 2023 ViestiLiiga-kilpailuissa.

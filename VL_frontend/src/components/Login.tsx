@@ -30,11 +30,12 @@ const Loginform = () => {
   const [user, setUser] = useRecoilState(userState);
   const setToken = useSetRecoilState(tokenState);
   const setTeam = useSetRecoilState(teamState);
+  const flexBg = useColorModeValue('gray.50', 'gray.800');
+  const bg = useColorModeValue('white', 'gray.700');
 
   const toast = useToast();
 
   const handleLogin = async (values: LoginFormValues): Promise<void> => {
-    console.log('logging in with', values);
     try {
       const loggingIn = await login(values.username, values.password);
       window.localStorage.setItem('loggedVLUser', JSON.stringify(loggingIn));
@@ -99,7 +100,7 @@ const Loginform = () => {
               minH={'100vh'}
               align={'center'}
               justify={'center'}
-              bg={useColorModeValue('gray.50', 'gray.800')}
+              bg={flexBg}
             >
               <ToHome />
               <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
@@ -113,12 +114,7 @@ const Loginform = () => {
                     Kirjaudu sisään
                   </Heading>
                 </Stack>
-                <Box
-                  rounded={'lg'}
-                  bg={useColorModeValue('white', 'gray.700')}
-                  boxShadow={'lg'}
-                  p={8}
-                >
+                <Box rounded={'lg'} bg={bg} boxShadow={'lg'} p={8}>
                   <Stack spacing={4}>
                     <FormControl id="username">
                       <FormLabel>Käyttäjätunnus</FormLabel>

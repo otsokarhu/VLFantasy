@@ -15,6 +15,9 @@ const IMAGE =
   'https://img.freepik.com/free-photo/outdoor-team-orienteering-activity_53876-48899.jpg';
 
 const CreateTeamCard = () => {
+  const boxBg = useColorModeValue('whitesmoke', 'dimgray');
+  const buttonBg = useColorModeValue('green.400', 'blue.900');
+  const hoverBg = useColorModeValue('green.500', 'blue.800');
   return (
     <Center py={12}>
       <Box
@@ -22,7 +25,7 @@ const CreateTeamCard = () => {
         p={6}
         maxW={'330px'}
         w={'full'}
-        bg={useColorModeValue('whitesmoke', 'dimgray')}
+        bg={boxBg}
         boxShadow={'2xl'}
         rounded={'lg'}
         pos={'relative'}
@@ -65,10 +68,10 @@ const CreateTeamCard = () => {
           </Heading>
           <Link as={RouterLink} to="teamPage" href="teamPage">
             <Button
-              bg={useColorModeValue('green.400', 'blue.900')}
+              bg={buttonBg}
               color={'white'}
               _hover={{
-                bg: useColorModeValue('green.500', 'blue.800'),
+                bg: hoverBg,
               }}
             >
               Luo joukkue

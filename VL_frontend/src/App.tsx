@@ -17,6 +17,8 @@ const App = () => {
   const setToken = useSetRecoilState(tokenState);
   const setTeam = useSetRecoilState(teamState);
   const [allRunners, setAllRunners] = useRecoilState(allRunnersState);
+  const { dbTeam, isLoading } = getFantasyTeam(user.fantasyTeam);
+  const { runners, isRunnersLoading } = getAllRunners();
 
   useEffect(() => {
     const loggedInUser = window.localStorage.getItem('loggedVLUser');
@@ -27,10 +29,6 @@ const App = () => {
       setTeam((prev) => ({ ...prev, id: foundUser.fantasyTeam }));
     }
   }, [setUser, setToken, setTeam]);
-
-  const { dbTeam, isLoading } = getFantasyTeam(user.fantasyTeam);
-
-  const { runners, isRunnersLoading } = getAllRunners();
 
   useEffect(() => {
     if (!isLoading) {

@@ -28,9 +28,11 @@ const TeamPage = () => {
   const user = useRecoilValue(userState);
   const [team, setTeam] = useRecoilState(teamState);
   const token = useRecoilValue(tokenState);
-  const toast = useToast();
   const runnersFromState = useRecoilValue(allRunnersState);
   const { isLoading } = getFantasyTeam(user.fantasyTeam);
+  const wd = useColorModeValue('whitesmoke', 'dimgray');
+  const gw = useColorModeValue('gray.500', 'whitesmoke');
+  const toast = useToast();
 
   const handleTeamCreation = async (values: {
     teamName: string;
@@ -74,7 +76,7 @@ const TeamPage = () => {
         <Box
           maxW={'270px'}
           w={'270px'}
-          bg={useColorModeValue('whitesmoke', 'dimgray')}
+          bg={wd}
           boxShadow={'2xl'}
           rounded={'lg'}
           overflow={'hidden'}
@@ -83,10 +85,7 @@ const TeamPage = () => {
           p={2}
           opacity={0.8}
         >
-          <Heading
-            alignContent={'center'}
-            color={useColorModeValue('gray.500', 'whitesmoke')}
-          >
+          <Heading alignContent={'center'} color={gw}>
             Kirjaudu sisään valitaksesi joukkueesi!
           </Heading>
         </Box>
@@ -113,7 +112,7 @@ const TeamPage = () => {
                 <Box
                   maxW={'270px'}
                   w={'270px'}
-                  bg={useColorModeValue('whitesmoke', 'dimgray')}
+                  bg={wd}
                   boxShadow={'2xl'}
                   rounded={'lg'}
                   overflow={'hidden'}
@@ -123,10 +122,7 @@ const TeamPage = () => {
                   opacity={0.95}
                 >
                   <Stack spacing={4} align={'center'}>
-                    <Heading
-                      alignItems={'center'}
-                      color={useColorModeValue('gray.500', 'whitesmoke')}
-                    >
+                    <Heading alignItems={'center'} color={gw}>
                       luo joukkueesi!
                     </Heading>
                     <FormControl id="teamName">
@@ -161,17 +157,11 @@ const TeamPage = () => {
     return (
       <Box alignContent={'center'}>
         <Center p={2}>
-          <Box
-            p={2}
-            rounded={'md'}
-            bg={useColorModeValue('whitesmoke', 'dimgray')}
-          >
+          <Box p={2} rounded={'md'} bg={wd}>
             {team.runners.length === 5 ? (
-              <Heading color={useColorModeValue('gray.500', 'whitesmoke')}>
-                Joukkue valmis!
-              </Heading>
+              <Heading color={gw}>Joukkue valmis!</Heading>
             ) : (
-              <Heading color={useColorModeValue('gray.500', 'whitesmoke')}>
+              <Heading color={gw}>
                 Juoksijoita valittavana: {5 - team.runners.length}
               </Heading>
             )}
@@ -180,19 +170,9 @@ const TeamPage = () => {
 
         <RunnerPage />
         <Center p={2}>
-          <Box
-            p={2}
-            rounded={'md'}
-            bg={useColorModeValue('whitesmoke', 'dimgray')}
-          >
-            <Heading color={useColorModeValue('gray.500', 'whitesmoke')}>
-              {team.name}:
-            </Heading>
-            <Text
-              color={useColorModeValue('gray.500', 'whitesmoke')}
-              align={'center'}
-              fontSize={'xl'}
-            >
+          <Box p={2} rounded={'md'} bg={wd}>
+            <Heading color={gw}>{team.name}:</Heading>
+            <Text color={gw} align={'center'} fontSize={'xl'}>
               budjettia jäljellä: {200 - totalPrice}
             </Text>
           </Box>

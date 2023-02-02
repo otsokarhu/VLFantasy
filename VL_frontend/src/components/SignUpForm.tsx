@@ -26,6 +26,8 @@ import { createUser } from '../services/userService';
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [registered, setRegistered] = useState(false);
+  const flexBg = useColorModeValue('gray.50', 'gray.800');
+  const boxBg = useColorModeValue('white', 'gray.700');
   const toast = useToast();
 
   const handleRegister = async (values: RegisterFormValues): Promise<void> => {
@@ -90,7 +92,7 @@ const Signup = () => {
               minH={'100vh'}
               align={'center'}
               justify={'center'}
-              bg={useColorModeValue('gray.50', 'gray.800')}
+              bg={flexBg}
               fontFamily={
                 'Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace'
               }
@@ -108,12 +110,7 @@ const Signup = () => {
                     Rekisteröidy
                   </Heading>
                 </Stack>
-                <Box
-                  rounded={'lg'}
-                  bg={useColorModeValue('white', 'gray.700')}
-                  boxShadow={'lg'}
-                  p={8}
-                >
+                <Box rounded={'lg'} bg={boxBg} boxShadow={'lg'} p={8}>
                   <Stack spacing={4}>
                     <HStack>
                       <Box>

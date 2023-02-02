@@ -37,6 +37,12 @@ const RunnerCard = (props: RunnerProps) => {
   const [userTeam, setTeam] = useRecoilState(teamState);
   const token = useRecoilValue(tokenState);
   const setRunners = useSetRecoilState(allRunnersState);
+  const textBg = useColorModeValue('gray.500', 'whitesmoke');
+  const boxBg = useColorModeValue('whitesmoke', 'dimgray');
+  const buttonBg = useColorModeValue('#151f21', 'gray.900');
+  const redHover = useColorModeValue('red', 'red.400');
+  const greenHover = useColorModeValue('green', 'green.600');
+  const greenButton = useColorModeValue('#17d424', 'green');
   const toast = useToast();
 
   const totalPrice = userTeam.runners.reduce((acc, runner) => {
@@ -127,7 +133,7 @@ const RunnerCard = (props: RunnerProps) => {
         opacity={blur ? 0.5 : 1}
         maxW={'270px'}
         w={'full'}
-        bg={useColorModeValue('whitesmoke', 'dimgray')}
+        bg={boxBg}
         boxShadow={'2xl'}
         rounded={'md'}
         overflow={'hidden'}
@@ -154,28 +160,20 @@ const RunnerCard = (props: RunnerProps) => {
             >
               {runner}
             </Heading>
-            <Text color={useColorModeValue('gray.500', 'whitesmoke')}>
-              {team}
-            </Text>
+            <Text color={textBg}>{team}</Text>
           </Stack>
 
           <Box bottom={'0px'} p={'absolute'}>
             <Stack direction={'row'} justify={'center'} spacing={6}>
               <Stack spacing={0} align={'center'}>
                 <Text fontWeight={600}>{points}</Text>
-                <Text
-                  fontSize={'sm'}
-                  color={useColorModeValue('gray.500', 'whitesmoke')}
-                >
+                <Text fontSize={'sm'} color={textBg}>
                   Kerätyt pisteet
                 </Text>
               </Stack>
               <Stack spacing={0} align={'center'}>
                 <Text fontWeight={600}>{price}</Text>
-                <Text
-                  fontSize={'sm'}
-                  color={useColorModeValue('gray.500', 'whitesmoke')}
-                >
+                <Text fontSize={'sm'} color={textBg}>
                   Hinta
                 </Text>
               </Stack>
@@ -185,10 +183,10 @@ const RunnerCard = (props: RunnerProps) => {
               <Button
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
                 onClick={() => handleRunnerDeleting()}
-                bg={useColorModeValue('#151f21', 'gray.900')}
+                bg={buttonBg}
                 color={'red'}
                 _hover={{
-                  bgColor: useColorModeValue('red', 'red.400'),
+                  bgColor: redHover,
                   transform: 'translateY(-2px)',
                   boxShadow: 'lg',
                   color: 'black',
@@ -200,11 +198,11 @@ const RunnerCard = (props: RunnerProps) => {
               <Button
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
                 onClick={() => handleRunnerAdding()}
-                color={useColorModeValue('#17d424', 'green')}
-                bg={useColorModeValue('#151f21', 'gray.900')}
+                color={greenButton}
+                bg={buttonBg}
                 visibility={blur ? 'hidden' : 'visible'}
                 _hover={{
-                  bgColor: useColorModeValue('green', 'green.600'),
+                  bgColor: greenHover,
                   transform: 'translateY(-2px)',
                   boxShadow: 'lg',
                   color: 'white',
