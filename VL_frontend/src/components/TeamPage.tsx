@@ -51,7 +51,6 @@ const TeamPage = () => {
         points: newTeam.points,
       });
 
-      console.log(newTeam);
       toast({
         title: 'Joukkue luotu',
         description: 'Joukkueen nimi on ' + values.teamName,
@@ -71,7 +70,6 @@ const TeamPage = () => {
       });
     }
   };
-  console.log(team);
 
   let totalPrice = 0;
   if (team.runners) {

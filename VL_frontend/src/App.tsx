@@ -20,8 +20,6 @@ const App = () => {
   const { dbTeam, isLoading } = getFantasyTeam(user.fantasyTeam);
   const { runners, isRunnersLoading } = getAllRunners();
 
-  console.log(user.fantasyTeam);
-
   useEffect(() => {
     const loggedInUser = window.localStorage.getItem('loggedVLUser');
     if (loggedInUser) {
@@ -39,8 +37,6 @@ const App = () => {
       }
     }
   }, [dbTeam, setTeam, isLoading]);
-
-  console.log(dbTeam);
 
   useEffect(() => {
     if (!isRunnersLoading && !isLoading) {
@@ -64,8 +60,6 @@ const App = () => {
       }
     }
   }, [dbTeam, setAllRunners, isRunnersLoading, isLoading]);
-
-  console.log(allRunners);
 
   return (
     <Router>
