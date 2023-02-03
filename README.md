@@ -9,6 +9,8 @@ In VL-Fantasy users can select real orienteers to their team, whom then earn poi
 
 https://vl-fantasy.vercel.app/
 
+You can test it with username:test, password:test
+
 ## Functionality as of now
 
 Users can register, login, create their own fantasy team and select runners to that team with budget 200.
