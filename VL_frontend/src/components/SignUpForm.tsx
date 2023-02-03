@@ -31,7 +31,6 @@ const Signup = () => {
   const toast = useToast();
 
   const handleRegister = async (values: RegisterFormValues): Promise<void> => {
-    console.log('registering with', values);
     try {
       await createUser(
         values.username,

@@ -13,7 +13,7 @@ export const createFantasyTeam = async (
     const config = {
       headers: { Authorization: `bearer ${token}` },
     };
-    await axios.post<FantasyTeam>(
+    const response = await axios.post<FantasyTeam>(
       `${apiBaseUrl}/fantasyTeams`,
       {
         name,
@@ -21,6 +21,7 @@ export const createFantasyTeam = async (
       },
       config
     );
+    return response.data;
   } catch (error) {
     console.log(error);
     throw error;
