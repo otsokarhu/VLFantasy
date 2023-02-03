@@ -19,7 +19,7 @@ import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Formik, Form } from 'formik';
 import { Link as RouterLink, Navigate } from 'react-router-dom';
-import ToHome from './helpers';
+import ToHome from './HomeButton';
 import { RegisterFormValues } from '../types';
 import { createUser } from '../services/userService';
 

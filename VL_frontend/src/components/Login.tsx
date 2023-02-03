@@ -14,7 +14,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { Link as RouterLink, Navigate } from 'react-router-dom';
-import ToHome from './helpers';
+import ToHome from './HomeButton';
 import { Formik, Form } from 'formik';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';

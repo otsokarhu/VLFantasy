@@ -8,11 +8,9 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { ChevronRightIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
-
-import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { handleLogOut } from '../utils/utils';
+import { useRecoilValue } from 'recoil';
 import { userState } from '../state/user';
-import { teamState } from '../state/fantasyTeam';
-import { allRunnersState } from '../state/runners';
 
 import {
   NavBarHome,
@@ -28,14 +26,6 @@ const NavigationBar = () => {
   const user = useRecoilValue(userState);
   const bg = useColorModeValue('whitesmoke', 'dimgray');
 
-  const handleLogOut = () => {
-    window.localStorage.removeItem('loggedVLUser');
-    window.localStorage.removeItem('loggedFantasyTeam');
-    useResetRecoilState(userState);
-    useResetRecoilState(teamState);
-    useResetRecoilState(allRunnersState);
-  };
-
   return (
     <Flex
       pos="sticky"
@@ -45,6 +35,7 @@ const NavigationBar = () => {
       bgColor={bg}
       opacity={0.9}
       roundedBottom="lg"
+      zIndex={1}
     >
       <Center w="100%">
         {user.id !== '' ? (

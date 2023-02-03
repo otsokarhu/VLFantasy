@@ -5,7 +5,7 @@ import {
   Heading,
   useColorModeValue,
 } from '@chakra-ui/react';
-import ToHome from './helpers';
+import ToHome from './HomeButton';
 
 const InfoPage = () => {
   const flexBg = useColorModeValue('gray.50', 'gray.800');

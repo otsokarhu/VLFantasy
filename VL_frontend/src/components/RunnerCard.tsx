@@ -20,6 +20,7 @@ import { teamState } from '../state/fantasyTeam';
 import { allRunnersState } from '../state/runners';
 import { tokenState } from '../state/user';
 import { RunnerProps } from '../types';
+import { getError, handleLogOut } from '../utils/utils';
 
 const RunnerCard = (props: RunnerProps) => {
   const {
@@ -83,14 +84,29 @@ const RunnerCard = (props: RunnerProps) => {
         );
       }
     } catch (error) {
-      toast({
-        title: 'Virhe',
-        description: 'Joukkueessasi on jo 5 juoksijaa',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top',
-      });
+      const errorMessage = getError(error);
+
+      if (errorMessage.includes('400')) {
+        toast({
+          title: 'Virhe',
+          description: 'Joukkueessasi on jo 5 juoksijaa',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+          position: 'top',
+        });
+      }
+      if (errorMessage.includes('401')) {
+        toast({
+          title: 'Virhe',
+          description: 'Istunto on vanhentunut, kirjaudu uudelleen sisään',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+          position: 'top',
+        });
+        handleLogOut();
+      }
     }
   };
 

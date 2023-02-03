@@ -65,9 +65,11 @@ const App = () => {
     <Router>
       <Box
         pos="relative"
-        h="100vh"
+        minH="100vh"
         bgImg="url(VLfantasyBG.jpg)"
-        bgSize={'cover'}
+        bgSize="cover"
+        bgRepeat="no-repeat"
+        bg-attachment="fixed"
       >
         <NavigationBar />
 
