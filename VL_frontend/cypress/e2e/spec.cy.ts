@@ -207,5 +207,18 @@ describe('VL-Fantasy', () => {
       cy.contains('button', 'Luo joukkue').click();
       cy.contains('Joukkue luotu');
     });
+
+    it('cannot create two teams with one user', () => {
+      cy.contains('Luo joukkue').click();
+      cy.url().should('include', '/teamPage');
+      cy.contains('luo joukkueesi!');
+      cy.get('input[name="teamName"]').type('Testijoukkue');
+      cy.contains('button', 'Luo joukkue').click();
+      cy.get('button[aria-label="HomeButton"]').click();
+      cy.contains('Luo joukkue').click();
+      cy.url().should('include', '/teamPage');
+      cy.contains('Juoksijoita valittavana');
+      cy.contains('Testijoukkue:');
+    });
   });
 });
