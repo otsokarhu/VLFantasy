@@ -3,3 +3,5 @@ node_modules
 vite.config.ts
 .dockerignore
 .gitignore
+cypress/*
+cypress.config.ts

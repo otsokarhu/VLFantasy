@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { LoginResponse } from '../types';
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+import { VITE_API_BASE_URL } from '../utils/config';
+const apiBaseUrl = VITE_API_BASE_URL;
 
 export const login = async (username: string, password: string) => {
   try {

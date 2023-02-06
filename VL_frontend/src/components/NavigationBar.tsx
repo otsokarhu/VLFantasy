@@ -81,7 +81,11 @@ const NavigationBar = () => {
         )}
       </Center>
       <Center w="3%">
-        <Button onClick={toggleColorMode} variant={'icon'}>
+        <Button
+          aria-label="DarkMode-Button"
+          onClick={toggleColorMode}
+          variant={'icon'}
+        >
           {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
         </Button>
       </Center>

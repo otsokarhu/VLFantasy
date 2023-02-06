@@ -24,13 +24,15 @@ import {
 import { tokenState } from '../state/user';
 import UserTeam from './UserTeamRunners';
 import { allRunnersState } from '../state/runners';
+import { getAllRunners } from '../services/runnerService';
 
 const TeamPage = () => {
   const [user, setUser] = useRecoilState(userState);
   const [team, setTeam] = useRecoilState(teamState);
+  const { isLoading } = getFantasyTeam(user.fantasyTeam);
+  const { isRunnersLoading } = getAllRunners();
   const token = useRecoilValue(tokenState);
   const runnersFromState = useRecoilValue(allRunnersState);
-  const { isLoading } = getFantasyTeam(user.fantasyTeam);
   const wd = useColorModeValue('whitesmoke', 'dimgray');
   const gw = useColorModeValue('gray.500', 'whitesmoke');
   const toast = useToast();
@@ -103,7 +105,13 @@ const TeamPage = () => {
       </Center>
     );
   }
-  if (!isLoading) {
+  if (isLoading || isRunnersLoading) {
+    return (
+      <Center p={2} h="90vh">
+        <Spinner />
+      </Center>
+    );
+  } else {
     if (user && team.id === '') {
       return (
         <Formik
@@ -192,8 +200,6 @@ const TeamPage = () => {
           <UserTeam />
         </Box>
       );
-  } else {
-    return <Spinner />;
   }
 };
 

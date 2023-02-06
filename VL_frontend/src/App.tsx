@@ -15,6 +15,7 @@ import { allRunnersState } from './state/runners';
 const App = () => {
   const [user, setUser] = useRecoilState(userState);
   const setToken = useSetRecoilState(tokenState);
+
   const setTeam = useSetRecoilState(teamState);
   const [allRunners, setAllRunners] = useRecoilState(allRunnersState);
   const { dbTeam, isLoading } = getFantasyTeam(user.fantasyTeam);
@@ -33,15 +34,19 @@ const App = () => {
   useEffect(() => {
     if (!isLoading) {
       if (dbTeam) {
-        setTeam(dbTeam);
+        if (dbTeam.runners) {
+          setTeam(dbTeam);
+        }
       }
     }
   }, [dbTeam, setTeam, isLoading]);
 
+  console.log('dbTeam', dbTeam);
+
   useEffect(() => {
     if (!isRunnersLoading && !isLoading) {
       if (user.id !== '' && runners && allRunners.length === 0) {
-        if (dbTeam) {
+        if (dbTeam?.runners) {
           runners.map((runner) => {
             if (dbTeam.runners.includes(runner.id)) {
               const r = { ...runner, selected: true };

@@ -1,7 +1,8 @@
 import useSWR from 'swr';
 import { Runner } from '../types';
 import { fetcher } from '../constants';
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+import { VITE_API_BASE_URL } from '../utils/config';
+const apiBaseUrl = VITE_API_BASE_URL;
 
 export const getAllRunners = () => {
   const { data, error, isLoading } = useSWR<Runner[], Error>(

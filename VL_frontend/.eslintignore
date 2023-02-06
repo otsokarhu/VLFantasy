@@ -1,2 +1,4 @@
 node_modules
 vite.config.ts
+cypress/*
+cypress.config.ts

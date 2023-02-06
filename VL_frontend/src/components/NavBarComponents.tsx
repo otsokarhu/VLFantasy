@@ -8,7 +8,7 @@ import Signup from './SignUpForm';
 export const NavBarHome = () => {
   return (
     <BreadcrumbLink as={Link} href="/" to="/">
-      <Button variant={'icon'}>
+      <Button aria-label="HomeButton" variant={'icon'}>
         <Icon as={HomeRounded} boxSize={31} />
       </Button>
     </BreadcrumbLink>

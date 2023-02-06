@@ -7,6 +7,7 @@ import userRouter from './controllers/userController';
 import loginRouter from './controllers/loginController';
 import runnerRouter from './controllers/runnerController';
 import fantasyTeamRouter from './controllers/fantasyTeamController';
+import testRouter from './controllers/testController';
 
 export const app = express();
 
@@ -21,6 +22,9 @@ app.use('/api/VLusers', userRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/runners', runnerRouter);
 app.use('/api/fantasyTeams', fantasyTeamRouter);
+if (process.env.NODE_ENV === 'test') {
+  app.use('/api/testing', testRouter);
+}
 
 app.get('/');
 

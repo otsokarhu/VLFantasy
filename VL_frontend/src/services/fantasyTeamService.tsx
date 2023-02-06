@@ -2,7 +2,8 @@ import axios from 'axios';
 import useSWR from 'swr';
 import { fetcher } from '../constants';
 import { FantasyTeam } from '../types';
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+import { VITE_API_BASE_URL } from '../utils/config';
+const apiBaseUrl = VITE_API_BASE_URL;
 
 export const createFantasyTeam = async (
   name: string,

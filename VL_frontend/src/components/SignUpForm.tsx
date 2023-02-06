@@ -40,6 +40,14 @@ const Signup = () => {
         values.password
       );
       setRegistered(true);
+      toast({
+        title: 'Rekisteröityminen onnistui',
+        description: 'Voit nyt kirjautua sisään',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
     } catch (error) {
       toast({
         title: 'Rekisteröityminen epäonnistui',
@@ -195,6 +203,7 @@ const Signup = () => {
                       <Text align={'center'}>
                         Rekisteröitynyt jo?{' '}
                         <Link
+                          aria-label="toLogin"
                           as={RouterLink}
                           href="/login"
                           to="/login"
