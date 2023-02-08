@@ -82,6 +82,14 @@ const RunnerCard = (props: RunnerProps) => {
         setRunners((prev) =>
           prev.map((r) => (r.id === id ? updatedRunner : r))
         );
+        toast({
+          title: 'Lisätty!',
+          description: 'Juoksija lisätty joukkueeseen',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top',
+        });
       }
     } catch (error) {
       const errorMessage = getError(error);
@@ -131,6 +139,14 @@ const RunnerCard = (props: RunnerProps) => {
         ...prev,
         runners: prev.runners.filter((runner) => runner !== id),
       }));
+      toast({
+        title: 'Poistettu!',
+        description: 'Juoksija poistettu joukkueesta',
+        status: 'info',
+        duration: 3000,
+        isClosable: true,
+        position: 'top',
+      });
     } catch (error) {
       toast({
         title: 'Virhe',
@@ -201,6 +217,7 @@ const RunnerCard = (props: RunnerProps) => {
                 onClick={() => handleRunnerDeleting()}
                 bg={buttonBg}
                 color={'red'}
+                aria-label="RemoveFromTeam"
                 _hover={{
                   bgColor: redHover,
                   transform: 'translateY(-2px)',
@@ -216,6 +233,7 @@ const RunnerCard = (props: RunnerProps) => {
                 onClick={() => handleRunnerAdding()}
                 color={greenButton}
                 bg={buttonBg}
+                aria-label="AddToTeam"
                 visibility={blur ? 'hidden' : 'visible'}
                 _hover={{
                   bgColor: greenHover,

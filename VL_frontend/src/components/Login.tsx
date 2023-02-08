@@ -99,6 +99,7 @@ const Loginform = () => {
             <Flex
               minH={'100vh'}
               align={'center'}
+              w={'25vw'}
               justify={'center'}
               bg={flexBg}
             >

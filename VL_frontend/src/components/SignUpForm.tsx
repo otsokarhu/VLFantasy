@@ -97,6 +97,7 @@ const Signup = () => {
             {registered && <Navigate to="/" />}
             <Flex
               minH={'100vh'}
+              w={'25vw'}
               align={'center'}
               justify={'center'}
               bg={flexBg}

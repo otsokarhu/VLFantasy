@@ -11,7 +11,13 @@ const InfoPage = () => {
   const flexBg = useColorModeValue('gray.50', 'gray.800');
   const bg = useColorModeValue('gray.500', 'whitesmoke');
   return (
-    <Flex minH={'100vh'} align={'center'} justify={'center'} bg={flexBg}>
+    <Flex
+      w={'25vw'}
+      minH={'100vh'}
+      align={'center'}
+      justify={'center'}
+      bg={flexBg}
+    >
       <ToHome />
       <Center p={3} h="90vh">
         <Box

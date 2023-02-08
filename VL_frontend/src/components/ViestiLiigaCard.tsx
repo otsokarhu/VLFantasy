@@ -22,12 +22,10 @@ const ViestiLiigaCard = () => {
         role={'group'}
         p={6}
         maxW={'330px'}
-        w={'full'}
         bg={wd}
         boxShadow={'2xl'}
         rounded={'lg'}
         pos={'relative'}
-        zIndex={1}
       >
         <Box
           rounded={'lg'}

@@ -15,7 +15,6 @@ import { allRunnersState } from './state/runners';
 const App = () => {
   const [user, setUser] = useRecoilState(userState);
   const setToken = useSetRecoilState(tokenState);
-
   const setTeam = useSetRecoilState(teamState);
   const [allRunners, setAllRunners] = useRecoilState(allRunnersState);
   const { dbTeam, isLoading } = getFantasyTeam(user.fantasyTeam);
@@ -75,15 +74,12 @@ const App = () => {
         bgSize="cover"
         bgRepeat="no-repeat"
         bg-attachment="fixed"
+        opacity={0.95}
       >
         <NavigationBar />
-
         <Routes>
           <Route path="*" element={<Home />} />
           <Route path="/teamPage" element={<TeamPage />} />
-          <Route path="/login" element={''} />
-          <Route path="/signup" element={''} />
-          <Route path="*" element={<h1>404</h1>} />
         </Routes>
       </Box>
     </Router>
