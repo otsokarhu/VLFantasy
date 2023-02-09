@@ -201,12 +201,11 @@ const TeamPage = () => {
                 </Heading>
               )}
               <Select
-                placeholder="Järjestys"
+                placeholder="Aakkosjärjestys"
                 id="orderBy"
                 onChange={handleOrderChange}
               >
                 <option value="price">Hinnan mukaan</option>
-                <option value="name">Aakkosjärjestys</option>
                 <option value="points">Pisteiden mukaan</option>
               </Select>
             </Box>
