@@ -11,9 +11,10 @@ import {
   useToast,
   Text,
   Spinner,
+  Select,
 } from '@chakra-ui/react';
 import RunnerPage from './RunnerPage';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { userState } from '../state/user';
 import { teamState } from '../state/fantasyTeam';
 import { Formik, Form } from 'formik';
@@ -23,12 +24,13 @@ import {
 } from '../services/fantasyTeamService';
 import { tokenState } from '../state/user';
 import UserTeam from './UserTeamRunners';
-import { allRunnersState } from '../state/runners';
+import { allRunnersState, runnerOrderState } from '../state/runners';
 import { getAllRunners } from '../services/runnerService';
 
 const TeamPage = () => {
   const [user, setUser] = useRecoilState(userState);
   const [team, setTeam] = useRecoilState(teamState);
+  const setOrder = useSetRecoilState(runnerOrderState);
   const { isLoading } = getFantasyTeam(user.fantasyTeam);
   const { isRunnersLoading } = getAllRunners();
   const token = useRecoilValue(tokenState);
@@ -36,6 +38,10 @@ const TeamPage = () => {
   const wd = useColorModeValue('whitesmoke', 'dimgray');
   const gw = useColorModeValue('gray.500', 'whitesmoke');
   const toast = useToast();
+
+  const handleOrderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setOrder(e.target.value);
+  };
 
   const handleTeamCreation = async (values: {
     teamName: string;
@@ -178,19 +184,6 @@ const TeamPage = () => {
         <Box alignContent={'center'}>
           <Center p={2}>
             <Box p={2} rounded={'md'} bg={wd}>
-              {team.runners.length === 5 ? (
-                <Heading color={gw}>Joukkue valmis!</Heading>
-              ) : (
-                <Heading color={gw}>
-                  Juoksijoita valittavana: {5 - team.runners.length}
-                </Heading>
-              )}
-            </Box>
-          </Center>
-
-          <RunnerPage />
-          <Center p={2}>
-            <Box p={2} rounded={'md'} bg={wd}>
               <Heading color={gw}>{team.name}:</Heading>
               <Text color={gw} align={'center'} fontSize={'xl'}>
                 budjettia jäljellä: {200 - totalPrice}
@@ -198,6 +191,27 @@ const TeamPage = () => {
             </Box>
           </Center>
           <UserTeam />
+          <Center p={2}>
+            <Box p={2} rounded={'md'} bg={wd}>
+              {team.runners.length === 5 ? (
+                <Heading color={gw}>Joukkue valmis!</Heading>
+              ) : (
+                <Heading color={gw}>
+                  Juoksijoita valittavana: {5 - team.runners.length}
+                </Heading>
+              )}
+              <Select
+                placeholder="Järjestys"
+                id="orderBy"
+                onChange={handleOrderChange}
+              >
+                <option value="price">Hinnan mukaan</option>
+                <option value="name">Aakkosjärjestys</option>
+                <option value="points">Pisteiden mukaan</option>
+              </Select>
+            </Box>
+          </Center>
+          <RunnerPage />
         </Box>
       );
   }

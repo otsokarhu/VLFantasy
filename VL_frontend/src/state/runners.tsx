@@ -5,3 +5,8 @@ export const allRunnersState = atom<Runner[]>({
   key: 'allRunnersState',
   default: [],
 });
+
+export const runnerOrderState = atom<string>({
+  key: 'runnerOrderState',
+  default: 'points',
+});

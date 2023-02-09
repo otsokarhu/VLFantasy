@@ -42,5 +42,4 @@ Database:
 
 Implement the fantasy game functionality and get the app ready for Viestiliiga 2023.
 Add more runners
-Improve frontend test coverage
 Mobile integration
