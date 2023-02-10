@@ -28,7 +28,7 @@ const App = () => {
       setToken(foundUser.token);
       setTeam((prev) => ({ ...prev, id: foundUser.fantasyTeam }));
     }
-  }, [setUser, setToken]);
+  }, []);
 
   useEffect(() => {
     if (!isLoading) {
@@ -39,8 +39,6 @@ const App = () => {
       }
     }
   }, [dbTeam, setTeam, isLoading]);
-
-  console.log('dbTeam', dbTeam);
 
   useEffect(() => {
     if (!isRunnersLoading && !isLoading) {

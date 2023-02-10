@@ -8,23 +8,35 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { ChevronRightIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { handleLogOut } from '../utils/utils';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { userState } from '../state/user';
 
 import {
   NavBarHome,
   NavBarInfo,
-  NavBarLogOut,
   NavBarLogin,
   NavBarSignUp,
   NavBarRoutes,
+  NavBarLogOut,
 } from './NavBarComponents';
+import { teamState } from '../state/fantasyTeam';
+import { allRunnersState } from '../state/runners';
 
 const NavigationBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const user = useRecoilValue(userState);
   const bg = useColorModeValue('whitesmoke', 'dimgray');
+  const resetUser = useResetRecoilState(userState);
+  const resetTeam = useResetRecoilState(teamState);
+  const resetRunner = useResetRecoilState(allRunnersState);
+
+  const handleLogOut = () => {
+    window.localStorage.removeItem('loggedVLUser');
+    window.localStorage.removeItem('loggedFantasyTeam');
+    resetUser();
+    resetTeam();
+    resetRunner();
+  };
 
   return (
     <Flex

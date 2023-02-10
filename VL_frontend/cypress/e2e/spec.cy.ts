@@ -8,6 +8,13 @@ describe('VL-Fantasy', () => {
       password: 'testi123',
     };
     cy.request('POST', 'http://localhost:4004/api/VLusers', user);
+    const user2 = {
+      name: 'Testi Testaus',
+      username: 'testi2',
+      email: 'sposti@testi.com',
+      password: 'testi1234',
+    };
+    cy.request('POST', 'http://localhost:4004/api/VLusers', user2);
   });
   describe('general tests', () => {
     it('Visits VLFantasy', () => {
@@ -220,6 +227,28 @@ describe('VL-Fantasy', () => {
       cy.contains('Juoksijoita valittavana');
       cy.contains('Testijoukkue:');
     });
+
+    it('different users can create teams', () => {
+      cy.contains('Luo joukkue').click();
+      cy.url().should('include', '/teamPage');
+      cy.contains('luo joukkueesi!');
+      cy.get('input[name="teamName"]').type('Testijoukkue');
+      cy.contains('button', 'Luo joukkue').click();
+      cy.contains('Joukkue luotu');
+      cy.wait(6000);
+      cy.contains('Kirjaudu ulos').click();
+      cy.contains('Kirjaudu sisään').click();
+      cy.get('input[name="username"]').type('testi2');
+      cy.get('input[name="password"]').type('testi1234');
+      cy.get('button[type="submit"]').click();
+      cy.contains('Kirjautuminen onnistui');
+      cy.contains('Luo joukkue').click();
+      cy.url().should('include', '/teamPage');
+      cy.contains('luo joukkueesi!');
+      cy.get('input[name="teamName"]').type('Testijoukkue2');
+      cy.contains('button', 'Luo joukkue').click();
+      cy.contains('Joukkue luotu');
+    });
   });
 
   describe('runners to team', () => {
@@ -241,7 +270,7 @@ describe('VL-Fantasy', () => {
       cy.contains('Testijoukkue:');
       cy.contains('Juoksijoita valittavana');
       cy.contains('button', 'Lisää joukkueeseen').click();
-      cy.contains('Juoksija lisätty joukkueeseen');
+      cy.contains('lisätty joukkueeseen');
     });
     it('adding runners to team and removing them', () => {
       cy.contains('Luo joukkue').click();
@@ -249,9 +278,9 @@ describe('VL-Fantasy', () => {
       cy.contains('Testijoukkue:');
       cy.contains('Juoksijoita valittavana');
       cy.contains('button', 'Lisää joukkueeseen').click();
-      cy.contains('Juoksija lisätty joukkueeseen');
+      cy.contains('lisätty joukkueeseen');
       cy.contains('button', 'Poista joukkueesta').click();
-      cy.contains('Juoksija poistettu joukkueesta');
+      cy.contains('poistettu joukkueesta');
     });
     it('can not add existing team runner to team', () => {
       cy.contains('Luo joukkue').click();
@@ -259,7 +288,7 @@ describe('VL-Fantasy', () => {
       cy.contains('Testijoukkue:');
       cy.contains('Juoksijoita valittavana');
       cy.contains('button', 'Lisää joukkueeseen').click();
-      cy.contains('Juoksija lisätty joukkueeseen');
+      cy.contains('lisätty joukkueeseen');
       cy.should('not.contain', 'Lisää joukkueeseen');
     });
     it('can not add more than 5 runners to team', () => {
@@ -268,25 +297,25 @@ describe('VL-Fantasy', () => {
       cy.contains('Testijoukkue:');
       cy.contains('Juoksijoita valittavana');
       cy.get('button[aria-label="AddToTeam"]').eq(0).click();
-      cy.contains('Juoksija lisätty joukkueeseen');
+      cy.contains('lisätty joukkueeseen');
       cy.get('button[aria-label="AddToTeam"]').eq(1).click();
-      cy.contains('Juoksija lisätty joukkueeseen');
+      cy.contains('lisätty joukkueeseen');
       cy.get('button[aria-label="AddToTeam"]').eq(2).click();
-      cy.contains('Juoksija lisätty joukkueeseen');
+      cy.contains('lisätty joukkueeseen');
       cy.get('button[aria-label="AddToTeam"]').eq(3).click();
-      cy.contains('Juoksija lisätty joukkueeseen');
+      cy.contains('lisätty joukkueeseen');
       cy.get('button[aria-label="AddToTeam"]').eq(4).click();
-      cy.contains('Juoksija lisätty joukkueeseen');
+      cy.contains('lisätty joukkueeseen');
       cy.get('button[aria-label="AddToTeam"]').eq(6).click();
       cy.contains('Joukkueessasi on jo 5 juoksijaa');
     });
-    it.only('can not add more than your budget', () => {
+    it('can not add more than your budget', () => {
       cy.contains('Luo joukkue').click();
       cy.url().should('include', '/teamPage');
       cy.contains('Testijoukkue:');
       cy.contains('Juoksijoita valittavana');
       cy.get('button[aria-label="AddToTeam"]').eq(5).click();
-      cy.contains('Juoksija lisätty joukkueeseen');
+      cy.contains('lisätty joukkueeseen');
       cy.get('button[aria-label="AddToTeam"]').eq(0).click();
       cy.contains('Joukkueen kokonaisbudjetti ylittyy');
     });

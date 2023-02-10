@@ -11,16 +11,22 @@ import {
   useColorModeValue,
   useToast,
 } from '@chakra-ui/react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
+import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from 'recoil';
 import {
   addRunnerToTeam,
   removeRunnerFromTeam,
 } from '../services/fantasyTeamService';
 import { teamState } from '../state/fantasyTeam';
 import { allRunnersState } from '../state/runners';
-import { tokenState } from '../state/user';
+import { tokenState, userState } from '../state/user';
 import { RunnerProps } from '../types';
-import { getError, handleLogOut } from '../utils/utils';
+import { getError } from '../utils/utils';
 
 const RunnerCard = (props: RunnerProps) => {
   const {
@@ -38,6 +44,9 @@ const RunnerCard = (props: RunnerProps) => {
   const [userTeam, setTeam] = useRecoilState(teamState);
   const token = useRecoilValue(tokenState);
   const setRunners = useSetRecoilState(allRunnersState);
+  const resetUser = useResetRecoilState(userState);
+  const resetTeam = useResetRecoilState(teamState);
+  const resetRunner = useResetRecoilState(allRunnersState);
   const textBg = useColorModeValue('gray.500', 'whitesmoke');
   const boxBg = useColorModeValue('whitesmoke', 'dimgray');
   const buttonBg = useColorModeValue('#151f21', 'gray.900');
@@ -45,6 +54,7 @@ const RunnerCard = (props: RunnerProps) => {
   const greenHover = useColorModeValue('green', 'green.600');
   const greenButton = useColorModeValue('#17d424', 'green');
   const toast = useToast();
+  const navigate = useNavigate();
 
   const totalPrice = userTeam.runners.reduce((acc, runner) => {
     const runnerPrice = dbRunners.find((r) => r.id === runner);
@@ -113,7 +123,12 @@ const RunnerCard = (props: RunnerProps) => {
           isClosable: true,
           position: 'top',
         });
-        handleLogOut();
+        resetUser();
+        resetTeam();
+        resetRunner();
+        window.localStorage.removeItem('loggedVLUser');
+        window.localStorage.removeItem('loggedFantasyTeam');
+        navigate('/login');
       }
     }
   };
@@ -148,14 +163,32 @@ const RunnerCard = (props: RunnerProps) => {
         position: 'top',
       });
     } catch (error) {
-      toast({
-        title: 'Virhe',
-        description: 'Juoksijan poistaminen joukkueesta epäonnistui',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top',
-      });
+      const errorMessage = getError(error);
+      if (errorMessage.includes('401')) {
+        toast({
+          title: 'Virhe',
+          description: 'Istunto on vanhentunut, kirjaudu uudelleen sisään',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+          position: 'top',
+        });
+        resetUser();
+        resetTeam();
+        resetRunner();
+        window.localStorage.removeItem('loggedVLUser');
+        window.localStorage.removeItem('loggedFantasyTeam');
+        navigate('/login');
+      } else {
+        toast({
+          title: 'Virhe',
+          description: 'Juoksijan poistaminen joukkueesta epäonnistui',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+          position: 'top',
+        });
+      }
     }
   };
 
