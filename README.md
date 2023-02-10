@@ -23,7 +23,7 @@ Users can register, login, create their own fantasy team and select runners to t
 
 ### Team page where users select their runners
 
-![Screenshot](https://am3pap007files.storage.live.com/y4mIFWeiZdRKyZJb2N3JJiBCDU6LLOkNgqFAL9a-eRXRNAXNTrtz6QqoFh9JQ04qp80p2BT_HAMBGsEN0Huzxw2MlbC1zJsuUSw4_WKFzEM1wlnGaqZUs8Lzc7FsccckywlI7J6FahCPZIOLg4QPfqGrgMjWsMBBGNeQaNpG-tCPQOw_-z6H_YVrrRU3VvzsYkU?width=2560&height=1367&cropmode=none)
+![Screenshot](https://helsinkifi-my.sharepoint.com/personal/webotso_ad_helsinki_fi/_layouts/15/embed.aspx?UniqueId=d868c1db-42b8-4e47-98df-3f307abc612c" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Screenshot from 2023-02-10 17-59-35.png)
 
 ## Technologies
 
