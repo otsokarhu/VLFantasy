@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import RunnerCard from './RunnerCard';
 import { Grid } from '@chakra-ui/react';
 import { useRecoilValue } from 'recoil';
@@ -17,8 +16,8 @@ const RunnerPage = () => {
     sortedRunners.sort((a, b) => a.team.localeCompare(b.team));
   } else {
     sortedRunners.sort((a, b) => {
-      const [_firstNameA, lastNameA] = a.name.split(' ');
-      const [_firstNameB, lastNameB] = b.name.split(' ');
+      const [, lastNameA] = a.name.split(' ');
+      const [, lastNameB] = b.name.split(' ');
       return lastNameA.localeCompare(lastNameB);
     });
   }
