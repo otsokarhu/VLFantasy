@@ -84,7 +84,7 @@ const RunnerCard = (props: RunnerProps) => {
         );
         toast({
           title: 'Lisätty!',
-          description: 'Juoksija lisätty joukkueeseen',
+          description: runnerToUpdate.name + ' lisätty joukkueeseen',
           status: 'success',
           duration: 3000,
           isClosable: true,
@@ -141,7 +141,7 @@ const RunnerCard = (props: RunnerProps) => {
       }));
       toast({
         title: 'Poistettu!',
-        description: 'Juoksija poistettu joukkueesta',
+        description: runnerToUpdate.name + ' poistettu joukkueesta',
         status: 'info',
         duration: 3000,
         isClosable: true,
