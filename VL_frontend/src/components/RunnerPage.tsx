@@ -13,6 +13,8 @@ const RunnerPage = () => {
     sortedRunners.sort((a, b) => b.points - a.points);
   } else if (order === 'price') {
     sortedRunners.sort((a, b) => b.price - a.price);
+  } else if (order === 'team') {
+    sortedRunners.sort((a, b) => a.team.localeCompare(b.team));
   } else {
     sortedRunners.sort((a, b) => {
       const [_firstNameA, lastNameA] = a.name.split(' ');

@@ -207,6 +207,7 @@ const TeamPage = () => {
               >
                 <option value="price">Hinnan mukaan</option>
                 <option value="points">Pisteiden mukaan</option>
+                <option value="team">Joukkueen mukaan</option>
               </Select>
             </Box>
           </Center>
