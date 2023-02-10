@@ -49,13 +49,11 @@ describe('VL-Fantasy', () => {
 
     it('contains correct content when not logged in', () => {
       cy.visit('/');
-
       cy.contains('Luo oma VL-Fantasy-joukkueesi');
       cy.contains('Lue lisää Viestiliigasta');
       cy.contains('Tietoja');
       cy.contains('Rekisteröidy');
       cy.contains('Kirjaudu sisään');
-
       cy.contains('button', 'Luo joukkue');
       cy.contains('button', 'Viestiliigan sivuille');
       cy.get('button[aria-label="HomeButton"]');
@@ -71,7 +69,6 @@ describe('VL-Fantasy', () => {
 
     it('contains correct content', () => {
       cy.visit('/signup');
-
       cy.contains('Rekisteröidy');
       cy.contains('Etunimi');
       cy.contains('Sukunimi');
@@ -87,26 +84,24 @@ describe('VL-Fantasy', () => {
     });
 
     it('registering new user works', () => {
-      cy.visit('/signup');
-
-      cy.get('input[name="firstName"]').type('Testit');
-      cy.get('input[name="lastName"]').type('Testaajat');
-      cy.get('input[name="username"]').type('testi1');
-      cy.get('input[name="email"]').type('testaus@testi.com');
-      cy.get('input[name="password"]').type('testi1234');
-      cy.get('button[type="submit"]').click();
+      cy.register(
+        'Testit',
+        'Testaajat',
+        'testi1',
+        'testaus@testi.com',
+        'testi1234'
+      );
       cy.contains('Rekisteröityminen onnistui');
     });
 
     it('registering new user with existing username fails', () => {
-      cy.visit('/signup');
-
-      cy.get('input[name="firstName"]').type('Testit');
-      cy.get('input[name="lastName"]').type('Testaajat');
-      cy.get('input[name="username"]').type('testi');
-      cy.get('input[name="email"]').type('testaustest@testi.com');
-      cy.get('input[name="password"]').type('testi1234');
-      cy.get('button[type="submit"]').click();
+      cy.register(
+        'Testit',
+        'Testaajat',
+        'testi',
+        'testaus@testi.com',
+        'testi1234'
+      );
       cy.contains('Rekisteröityminen epäonnistui');
     });
   });
@@ -120,7 +115,6 @@ describe('VL-Fantasy', () => {
 
     it('contains correct content', () => {
       cy.visit('/login');
-
       cy.contains('Kirjaudu sisään');
       cy.contains('Rekisteröidy');
       cy.contains('button', 'Kirjaudu sisään');
@@ -134,40 +128,24 @@ describe('VL-Fantasy', () => {
     });
 
     it('logging in works', () => {
-      cy.visit('/login');
-
-      cy.get('input[name="username"]').type('testi');
-      cy.get('input[name="password"]').type('testi123');
-      cy.get('button[type="submit"]').click();
+      cy.login('testi', 'testi123');
       cy.contains('Kirjautuminen onnistui');
     });
 
     it('logging in with wrong password fails', () => {
-      cy.visit('/login');
-
-      cy.get('input[name="username"]').type('testi');
-      cy.get('input[name="password"]').type('testi12');
-      cy.get('button[type="submit"]').click();
+      cy.login('testi', 'testi1234');
       cy.contains('Kirjautuminen epäonnistui');
     });
 
     it('logging in with wrong username fails', () => {
-      cy.visit('/login');
-
-      cy.get('input[name="username"]').type('testi1');
-      cy.get('input[name="password"]').type('testi123');
-      cy.get('button[type="submit"]').click();
+      cy.login('testi1', 'testi123');
       cy.contains('Kirjautuminen epäonnistui');
     });
   });
 
   describe('logged in tests', () => {
     beforeEach(() => {
-      cy.visit('/login');
-
-      cy.get('input[name="username"]').type('testi');
-      cy.get('input[name="password"]').type('testi123');
-      cy.get('button[type="submit"]').click();
+      cy.login('testi', 'testi123');
       cy.contains('Kirjautuminen onnistui');
     });
 
@@ -192,11 +170,7 @@ describe('VL-Fantasy', () => {
 
   describe('team-page', () => {
     beforeEach(() => {
-      cy.visit('/login');
-
-      cy.get('input[name="username"]').type('testi');
-      cy.get('input[name="password"]').type('testi123');
-      cy.get('button[type="submit"]').click();
+      cy.login('testi', 'testi123');
       cy.contains('Kirjautuminen onnistui');
     });
 
@@ -207,20 +181,13 @@ describe('VL-Fantasy', () => {
     });
 
     it('creating team', () => {
-      cy.contains('Luo joukkue').click();
-      cy.url().should('include', '/teamPage');
-      cy.contains('luo joukkueesi!');
-      cy.get('input[name="teamName"]').type('Testijoukkue');
-      cy.contains('button', 'Luo joukkue').click();
+      cy.createTeam('Testijoukkue');
       cy.contains('Joukkue luotu');
     });
 
     it('cannot create two teams with one user', () => {
-      cy.contains('Luo joukkue').click();
-      cy.url().should('include', '/teamPage');
-      cy.contains('luo joukkueesi!');
-      cy.get('input[name="teamName"]').type('Testijoukkue');
-      cy.contains('button', 'Luo joukkue').click();
+      cy.createTeam('Testijoukkue');
+      cy.contains('Joukkue luotu');
       cy.get('button[aria-label="HomeButton"]').click();
       cy.contains('Luo joukkue').click();
       cy.url().should('include', '/teamPage');
@@ -229,38 +196,22 @@ describe('VL-Fantasy', () => {
     });
 
     it('different users can create teams', () => {
-      cy.contains('Luo joukkue').click();
-      cy.url().should('include', '/teamPage');
-      cy.contains('luo joukkueesi!');
-      cy.get('input[name="teamName"]').type('Testijoukkue');
-      cy.contains('button', 'Luo joukkue').click();
+      cy.createTeam('Testijoukkue');
       cy.contains('Joukkue luotu');
       cy.wait(6000);
       cy.contains('Kirjaudu ulos').click();
-      cy.contains('Kirjaudu sisään').click();
-      cy.get('input[name="username"]').type('testi2');
-      cy.get('input[name="password"]').type('testi1234');
-      cy.get('button[type="submit"]').click();
+      cy.login('testi2', 'testi1234');
       cy.contains('Kirjautuminen onnistui');
-      cy.contains('Luo joukkue').click();
-      cy.url().should('include', '/teamPage');
-      cy.contains('luo joukkueesi!');
-      cy.get('input[name="teamName"]').type('Testijoukkue2');
-      cy.contains('button', 'Luo joukkue').click();
+      cy.createTeam('Testijoukkue2');
       cy.contains('Joukkue luotu');
     });
   });
 
   describe('runners to team', () => {
     beforeEach(() => {
-      cy.visit('/login');
-      cy.get('input[name="username"]').type('testi');
-      cy.get('input[name="password"]').type('testi123');
-      cy.get('button[type="submit"]').click();
+      cy.login('testi', 'testi123');
       cy.contains('Kirjautuminen onnistui');
-      cy.contains('Luo joukkue').click();
-      cy.get('input[name="teamName"]').type('Testijoukkue');
-      cy.contains('button', 'Luo joukkue').click();
+      cy.createTeam('Testijoukkue');
       cy.contains('Joukkue luotu');
       cy.get('button[aria-label="HomeButton"]').click();
     });
