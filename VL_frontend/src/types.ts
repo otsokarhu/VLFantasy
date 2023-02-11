@@ -58,8 +58,8 @@ export interface LoginFormValues {
 }
 
 export type RegisterFormValues = {
-  username: string;
-  password: string;
+  username2: string;
+  password2: string;
   firstName: string;
   lastName: string;
   email: string;

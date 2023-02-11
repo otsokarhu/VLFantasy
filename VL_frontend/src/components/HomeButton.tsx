@@ -1,6 +1,5 @@
-import { Link as RouterLink } from 'react-router-dom';
 import { IconButton, Link } from '@chakra-ui/react';
-import { ArrowRightIcon } from '@chakra-ui/icons';
+import { ChevronUpIcon } from '@chakra-ui/icons';
 import { useSetRecoilState } from 'recoil';
 import { navBarState } from '../state/navBar';
 
@@ -11,8 +10,12 @@ const ToHome = () => {
   };
 
   return (
-    <Link as={RouterLink} href="/" to="/" onClick={handleHome}>
-      <IconButton aria-label="Close tab" icon={<ArrowRightIcon />} />
+    <Link onClick={handleHome}>
+      <IconButton
+        opacity={0.9}
+        aria-label="Close tab"
+        icon={<ChevronUpIcon boxSize={6} />}
+      />
     </Link>
   );
 };

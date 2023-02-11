@@ -31,7 +31,7 @@ const Loginform = () => {
   const [user, setUser] = useRecoilState(userState);
   const setToken = useSetRecoilState(tokenState);
   const setTeam = useSetRecoilState(teamState);
-  const flexBg = useColorModeValue('gray.50', 'gray.800');
+  const flexBg = useColorModeValue('whitesmoke', 'dimgray');
   const bg = useColorModeValue('white', 'gray.700');
   const setNavBar = useSetRecoilState(navBarState);
   const handleHome = () => {
@@ -103,23 +103,17 @@ const Loginform = () => {
           <Form>
             {user.id !== ''}
             <Flex
-              minH={'100vh'}
               align={'center'}
-              w={'25vw'}
+              w={'20vw'}
               justify={'center'}
               bg={flexBg}
+              opacity={0.9}
+              roundedBottom={'lg'}
+              position={'sticky'}
             >
-              <ToHome />
-              <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+              <Stack spacing={3} mx={'auto'} maxW={'lg'} pt={12} pb={2} px={6}>
                 <Stack align={'center'}>
-                  <Heading
-                    fontSize={'4xl'}
-                    fontFamily={
-                      'Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace'
-                    }
-                  >
-                    Kirjaudu sisään
-                  </Heading>
+                  <Heading fontSize={'4xl'}>Kirjaudu sisään</Heading>
                 </Stack>
                 <Box rounded={'lg'} bg={bg} boxShadow={'lg'} p={8}>
                   <Stack spacing={4}>
@@ -170,6 +164,7 @@ const Loginform = () => {
                       </Stack>
                       <Button
                         type="submit"
+                        name="login"
                         disabled={!isValid}
                         bg={'blue.400'}
                         color={'white'}
@@ -182,6 +177,7 @@ const Loginform = () => {
                     </Stack>
                   </Stack>
                 </Box>
+                <ToHome />
               </Stack>
             </Flex>
           </Form>

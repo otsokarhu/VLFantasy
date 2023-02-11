@@ -5,7 +5,7 @@ Cypress.Commands.add('login', (username, password) => {
   cy.contains('Kirjaudu sisään').click();
   cy.get('input[name="username"]').type(username);
   cy.get('input[name="password"]').type(password);
-  cy.get('button[type="submit"]').click();
+  cy.get('button[name="login"]').click();
 });
 
 Cypress.Commands.add('createTeam', (name) => {
@@ -21,10 +21,10 @@ Cypress.Commands.add(
     cy.contains('Rekisteröidy').click();
     cy.get('input[name="firstName"]').type(firstName);
     cy.get('input[name="lastName"]').type(lastName);
-    cy.get('input[name="username"]').type(username);
+    cy.get('input[name="username2"]').type(username);
     cy.get('input[name="email"]').type(email);
-    cy.get('input[name="password"]').type(password);
-    cy.get('button[type="submit"]').click();
+    cy.get('input[name="password2"]').type(password);
+    cy.get('button[name="signup"]').click();
   }
 );
 

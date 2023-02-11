@@ -9,11 +9,8 @@ import {
   BreadcrumbLink,
 } from '@chakra-ui/react';
 import { ChevronRightIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { userState } from '../state/user';
-import InfoPage from './InfoBox';
-import Loginform from './LoginBox';
-import Signup from './SignUpBox';
 
 import { NavBarHome, NavBarLogOut } from './NavBarComponents';
 import { teamState } from '../state/fantasyTeam';
@@ -27,7 +24,7 @@ const NavigationBar = () => {
   const resetUser = useResetRecoilState(userState);
   const resetTeam = useResetRecoilState(teamState);
   const resetRunner = useResetRecoilState(allRunnersState);
-  const [navBar, setNavBar] = useRecoilState(navBarState);
+  const setNavBar = useSetRecoilState(navBarState);
 
   const handleLogOut = () => {
     window.localStorage.removeItem('loggedVLUser');
@@ -49,18 +46,6 @@ const NavigationBar = () => {
     setNavBar('signup');
   };
 
-  const navBarContent = () => {
-    if (navBar === 'default') {
-      return '';
-    } else if (navBar === 'info') {
-      return <InfoPage />;
-    } else if (navBar === 'login') {
-      return <Loginform />;
-    } else if (navBar === 'signup') {
-      return <Signup />;
-    }
-  };
-
   return (
     <Flex
       pos="sticky"
@@ -69,7 +54,6 @@ const NavigationBar = () => {
       h="50px"
       bgColor={bg}
       opacity={0.9}
-      roundedBottom="lg"
       zIndex={1}
     >
       <Center w="100%">
@@ -128,7 +112,6 @@ const NavigationBar = () => {
           {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
         </Button>
       </Center>
-      {navBarContent()}
     </Flex>
   );
 };

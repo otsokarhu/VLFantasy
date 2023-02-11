@@ -27,7 +27,7 @@ import { navBarState } from '../state/navBar';
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const flexBg = useColorModeValue('gray.50', 'gray.800');
+  const flexBg = useColorModeValue('whitesmoke', 'dimgray');
   const boxBg = useColorModeValue('white', 'gray.700');
   const toast = useToast();
   const setNavBar = useSetRecoilState(navBarState);
@@ -39,11 +39,11 @@ const Signup = () => {
   const handleRegister = async (values: RegisterFormValues): Promise<void> => {
     try {
       await createUser(
-        values.username,
+        values.username2,
         values.firstName,
         values.lastName,
         values.email,
-        values.password
+        values.password2
       );
       handleHome();
       toast({
@@ -70,10 +70,10 @@ const Signup = () => {
     <Formik
       initialValues={{
         email: '',
-        password: '',
+        password2: '',
         firstName: '',
         lastName: '',
-        username: '',
+        username2: '',
       }}
       onSubmit={handleRegister}
       validate={(values) => {
@@ -82,7 +82,7 @@ const Signup = () => {
         if (!values.email) {
           errors.email = requiredError;
         }
-        if (!values.password) {
+        if (!values.password2) {
           errors.password = requiredError;
         }
         if (!values.firstName) {
@@ -91,7 +91,7 @@ const Signup = () => {
         if (!values.lastName) {
           errors.lastName = requiredError;
         }
-        if (!values.username) {
+        if (!values.username2) {
           errors.username = requiredError;
         }
         return errors;
@@ -101,25 +101,18 @@ const Signup = () => {
         return (
           <Form>
             <Flex
-              minH={'100vh'}
-              w={'25vw'}
               align={'center'}
+              w={'20vw'}
               justify={'center'}
               bg={flexBg}
-              fontFamily={
-                'Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace'
-              }
+              opacity={0.9}
+              roundedBottom={'lg'}
+              direction={'column'}
+              position={'sticky'}
             >
-              <ToHome />
-              <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+              <Stack spacing={3} mx={'auto'} maxW={'lg'} pt={12} pb={2} px={6}>
                 <Stack align={'center'}>
-                  <Heading
-                    fontSize={'4xl'}
-                    textAlign={'center'}
-                    fontFamily={
-                      'Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace'
-                    }
-                  >
+                  <Heading fontSize={'4xl'} textAlign={'center'}>
                     Rekisteröidy
                   </Heading>
                 </Stack>
@@ -150,12 +143,12 @@ const Signup = () => {
                       </Box>
                     </HStack>
 
-                    <FormControl id="username" isRequired>
+                    <FormControl id="username2" isRequired>
                       <FormLabel>Käyttäjätunnus</FormLabel>
                       <Input
                         type="text"
-                        name="username"
-                        value={values.username}
+                        name="username2"
+                        value={values.username2}
                         onChange={handleChange}
                       />
                     </FormControl>
@@ -168,13 +161,13 @@ const Signup = () => {
                         onChange={handleChange}
                       />
                     </FormControl>
-                    <FormControl id="password" isRequired>
+                    <FormControl id="password2" isRequired>
                       <FormLabel>Salasana</FormLabel>
                       <InputGroup>
                         <Input
                           type={showPassword ? 'text' : 'password'}
-                          name="password"
-                          value={values.password}
+                          name="password2"
+                          value={values.password2}
                           onChange={handleChange}
                         />
                         <InputRightElement h={'full'}>
@@ -193,6 +186,7 @@ const Signup = () => {
                       <Button
                         loadingText="Submitting"
                         type="submit"
+                        name="signup"
                         isLoading={isSubmitting}
                         disabled={!isValid || isSubmitting}
                         size="lg"
@@ -221,6 +215,7 @@ const Signup = () => {
                     </Stack>
                   </Stack>
                 </Box>
+                <ToHome />
               </Stack>
             </Flex>
           </Form>

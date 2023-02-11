@@ -29,12 +29,12 @@ describe('VL-Fantasy', () => {
     });
 
     it('contains correct content', () => {
-      cy.contains('Tervetuloa ViestiLiigaan-Fantasyyn!');
+      cy.contains('Tervetuloa ViestiLiiga-Fantasyyn!');
     });
 
     it('closing info-page works', () => {
-      cy.get('button[aria-label="Close tab"]').click();
-      cy.contains('Tervetuloa ViestiLiigaan-Fantasyyn!').should('not.exist');
+      cy.get('button[aria-label="Close tab"]').eq(0).click();
+      cy.contains('Tervetuloa ViestiLiiga-Fantasyyn!').should('be.hidden');
     });
   });
 
@@ -73,8 +73,8 @@ describe('VL-Fantasy', () => {
     });
 
     it('closing register-page works', () => {
-      cy.get('button[aria-label="Close tab"]').click();
-      cy.contains('Etunimi').should('not.exist');
+      cy.get('button[aria-label="Close tab"]').eq(2).click();
+      cy.contains('Etunimi').should('be.hidden');
     });
 
     it('registering new user works', () => {
@@ -114,7 +114,7 @@ describe('VL-Fantasy', () => {
     });
 
     it('closing login-page works', () => {
-      cy.get('button[aria-label="Close tab"]').click();
+      cy.get('button[aria-label="Close tab"]').eq(1).click();
       cy.url().should('not.include', '/login');
     });
 
