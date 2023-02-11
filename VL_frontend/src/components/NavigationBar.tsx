@@ -11,9 +11,9 @@ import {
 import { ChevronRightIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { userState } from '../state/user';
-import InfoPage from './InfoPage';
-import Loginform from './Login';
-import Signup from './SignUpForm';
+import InfoPage from './InfoBox';
+import Loginform from './LoginBox';
+import Signup from './SignUpBox';
 
 import { NavBarHome, NavBarLogOut } from './NavBarComponents';
 import { teamState } from '../state/fantasyTeam';

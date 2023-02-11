@@ -13,7 +13,7 @@ import {
   Spinner,
   Select,
 } from '@chakra-ui/react';
-import RunnerPage from './RunnerPage';
+import RunnerPage from './Runners';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { userState } from '../state/user';
 import { teamState } from '../state/fantasyTeam';

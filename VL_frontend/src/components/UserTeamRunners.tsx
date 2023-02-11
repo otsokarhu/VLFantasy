@@ -2,7 +2,7 @@ import { Grid } from '@chakra-ui/react';
 
 import { useRecoilValue } from 'recoil';
 import { teamState } from '../state/fantasyTeam';
-import RunnerCard from './RunnerCard';
+import RunnerCard from './SingleRunner';
 import { allRunnersState } from '../state/runners';
 
 const UserTeam = () => {

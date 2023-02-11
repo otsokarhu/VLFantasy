@@ -1,4 +1,4 @@
-import RunnerCard from './RunnerCard';
+import RunnerCard from './SingleRunner';
 import { Grid } from '@chakra-ui/react';
 import { useRecoilValue } from 'recoil';
 import { allRunnersState, runnerOrderState } from '../state/runners';
