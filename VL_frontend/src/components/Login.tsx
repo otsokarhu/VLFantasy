@@ -13,7 +13,7 @@ import {
   FormLabel,
   useToast,
 } from '@chakra-ui/react';
-import { Link as RouterLink, Navigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import ToHome from './HomeButton';
 import { Formik, Form } from 'formik';
 import { useState } from 'react';
@@ -24,6 +24,7 @@ import { login } from '../services/loginService';
 import { userState } from '../state/user';
 import { tokenState } from '../state/user';
 import { teamState } from '../state/fantasyTeam';
+import { navBarState } from '../state/navBar';
 
 const Loginform = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,6 +33,10 @@ const Loginform = () => {
   const setTeam = useSetRecoilState(teamState);
   const flexBg = useColorModeValue('gray.50', 'gray.800');
   const bg = useColorModeValue('white', 'gray.700');
+  const setNavBar = useSetRecoilState(navBarState);
+  const handleHome = () => {
+    setNavBar('default');
+  };
 
   const toast = useToast();
 
@@ -61,6 +66,7 @@ const Loginform = () => {
         isClosable: true,
         position: 'top',
       });
+      handleHome();
     } catch (error) {
       toast({
         title: 'Kirjautuminen epäonnistui',
@@ -95,7 +101,7 @@ const Loginform = () => {
       {({ isValid, values, handleChange }) => {
         return (
           <Form>
-            {user.id !== '' && <Navigate to="/" />}
+            {user.id !== ''}
             <Flex
               minH={'100vh'}
               align={'center'}

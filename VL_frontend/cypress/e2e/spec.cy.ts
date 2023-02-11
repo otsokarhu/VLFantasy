@@ -23,21 +23,18 @@ describe('VL-Fantasy', () => {
   });
 
   describe('info-page', () => {
-    it('info-page has correct url', () => {
+    beforeEach(() => {
       cy.visit('/');
       cy.contains('Tietoja').click();
-      cy.url().should('include', '/info');
     });
 
     it('contains correct content', () => {
-      cy.visit('/info');
       cy.contains('Tervetuloa ViestiLiigaan-Fantasyyn!');
     });
 
     it('closing info-page works', () => {
-      cy.visit('/info');
       cy.get('button[aria-label="Close tab"]').click();
-      cy.url().should('not.include', '/info');
+      cy.contains('Tervetuloa ViestiLiigaan-Fantasyyn!').should('not.exist');
     });
   });
 
@@ -61,14 +58,12 @@ describe('VL-Fantasy', () => {
   });
 
   describe('register-page', () => {
-    it('register-page has correct url', () => {
+    beforeEach(() => {
       cy.visit('/');
       cy.contains('Rekisteröidy').click();
-      cy.url().should('include', '/signup');
     });
 
     it('contains correct content', () => {
-      cy.visit('/signup');
       cy.contains('Rekisteröidy');
       cy.contains('Etunimi');
       cy.contains('Sukunimi');
@@ -78,9 +73,8 @@ describe('VL-Fantasy', () => {
     });
 
     it('closing register-page works', () => {
-      cy.visit('/signup');
       cy.get('button[aria-label="Close tab"]').click();
-      cy.url().should('not.include', '/signup');
+      cy.contains('Etunimi').should('not.exist');
     });
 
     it('registering new user works', () => {
@@ -107,14 +101,12 @@ describe('VL-Fantasy', () => {
   });
 
   describe('login-page', () => {
-    it('login-page has correct url', () => {
+    beforeEach(() => {
       cy.visit('/');
       cy.contains('Kirjaudu sisään').click();
-      cy.url().should('include', '/login');
     });
 
     it('contains correct content', () => {
-      cy.visit('/login');
       cy.contains('Kirjaudu sisään');
       cy.contains('Rekisteröidy');
       cy.contains('button', 'Kirjaudu sisään');
@@ -122,7 +114,6 @@ describe('VL-Fantasy', () => {
     });
 
     it('closing login-page works', () => {
-      cy.visit('/login');
       cy.get('button[aria-label="Close tab"]').click();
       cy.url().should('not.include', '/login');
     });

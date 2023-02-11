@@ -6,21 +6,19 @@ import {
   useColorMode,
   useColorModeValue,
   Button,
+  BreadcrumbLink,
 } from '@chakra-ui/react';
 import { ChevronRightIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { userState } from '../state/user';
+import InfoPage from './InfoPage';
+import Loginform from './Login';
+import Signup from './SignUpForm';
 
-import {
-  NavBarHome,
-  NavBarInfo,
-  NavBarLogin,
-  NavBarSignUp,
-  NavBarRoutes,
-  NavBarLogOut,
-} from './NavBarComponents';
+import { NavBarHome, NavBarLogOut } from './NavBarComponents';
 import { teamState } from '../state/fantasyTeam';
 import { allRunnersState } from '../state/runners';
+import { navBarState } from '../state/navBar';
 
 const NavigationBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -29,6 +27,7 @@ const NavigationBar = () => {
   const resetUser = useResetRecoilState(userState);
   const resetTeam = useResetRecoilState(teamState);
   const resetRunner = useResetRecoilState(allRunnersState);
+  const [navBar, setNavBar] = useRecoilState(navBarState);
 
   const handleLogOut = () => {
     window.localStorage.removeItem('loggedVLUser');
@@ -36,6 +35,30 @@ const NavigationBar = () => {
     resetUser();
     resetTeam();
     resetRunner();
+  };
+
+  const handleInfo = () => {
+    setNavBar('info');
+  };
+
+  const handleToLogin = () => {
+    setNavBar('login');
+  };
+
+  const handleToSignUp = () => {
+    setNavBar('signup');
+  };
+
+  const navBarContent = () => {
+    if (navBar === 'default') {
+      return '';
+    } else if (navBar === 'info') {
+      return <InfoPage />;
+    } else if (navBar === 'login') {
+      return <Loginform />;
+    } else if (navBar === 'signup') {
+      return <Signup />;
+    }
   };
 
   return (
@@ -61,7 +84,7 @@ const NavigationBar = () => {
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <NavBarInfo />
+              <BreadcrumbLink onClick={handleInfo}>Tietoja</BreadcrumbLink>
             </BreadcrumbItem>
 
             <BreadcrumbItem>
@@ -79,15 +102,19 @@ const NavigationBar = () => {
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <NavBarInfo />
+              <BreadcrumbLink onClick={handleInfo}>Tietoja</BreadcrumbLink>
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <NavBarSignUp />
+              <BreadcrumbLink onClick={handleToSignUp}>
+                Rekisteröidy
+              </BreadcrumbLink>
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <NavBarLogin />
+              <BreadcrumbLink onClick={handleToLogin}>
+                Kirjaudu sisään
+              </BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
         )}
@@ -101,7 +128,7 @@ const NavigationBar = () => {
           {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
         </Button>
       </Center>
-      <NavBarRoutes />
+      {navBarContent()}
     </Flex>
   );
 };

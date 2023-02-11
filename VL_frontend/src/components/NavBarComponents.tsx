@@ -1,9 +1,6 @@
 import { BreadcrumbLink, Button, Icon } from '@chakra-ui/react';
 import { HomeRounded } from '@mui/icons-material';
-import { Link, Route, Routes } from 'react-router-dom';
-import InfoPage from './InfoPage';
-import Loginform from './Login';
-import Signup from './SignUpForm';
+import { Link } from 'react-router-dom';
 
 export const NavBarHome = () => {
   return (
@@ -11,14 +8,6 @@ export const NavBarHome = () => {
       <Button aria-label="HomeButton" variant={'icon'}>
         <Icon as={HomeRounded} boxSize={31} />
       </Button>
-    </BreadcrumbLink>
-  );
-};
-
-export const NavBarInfo = () => {
-  return (
-    <BreadcrumbLink as={Link} href="/info" to="/info">
-      Tietoja
     </BreadcrumbLink>
   );
 };
@@ -32,33 +21,5 @@ export const NavBarLogOut = ({ handleLogOut }: NavBarLogOutProps) => {
     <BreadcrumbLink onClick={handleLogOut} as={Link} href="/" to="/">
       Kirjaudu ulos
     </BreadcrumbLink>
-  );
-};
-
-export const NavBarLogin = () => {
-  return (
-    <BreadcrumbLink as={Link} href="/login" to="/login">
-      Kirjaudu sisään
-    </BreadcrumbLink>
-  );
-};
-
-export const NavBarSignUp = () => {
-  return (
-    <BreadcrumbLink as={Link} href="/signup" to="/signup">
-      Rekisteröidy
-    </BreadcrumbLink>
-  );
-};
-
-export const NavBarRoutes = () => {
-  return (
-    <Routes>
-      <Route path="/login" element={<Loginform />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/" element={''} />
-      <Route path="/info" element={<InfoPage />} />
-      <Route path="/teamPage" element={''} />
-    </Routes>
   );
 };

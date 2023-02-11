@@ -1,7 +1,8 @@
 import { Chainable } from 'cypress';
 
 Cypress.Commands.add('login', (username, password) => {
-  cy.visit('/login');
+  cy.visit('/');
+  cy.contains('Kirjaudu sisään').click();
   cy.get('input[name="username"]').type(username);
   cy.get('input[name="password"]').type(password);
   cy.get('button[type="submit"]').click();
@@ -16,7 +17,8 @@ Cypress.Commands.add('createTeam', (name) => {
 Cypress.Commands.add(
   'register',
   (firstName, lastName, username, email, password) => {
-    cy.visit('/signup');
+    cy.visit('/');
+    cy.contains('Rekisteröidy').click();
     cy.get('input[name="firstName"]').type(firstName);
     cy.get('input[name="lastName"]').type(lastName);
     cy.get('input[name="username"]').type(username);

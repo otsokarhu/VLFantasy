@@ -18,17 +18,23 @@ import {
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Formik, Form } from 'formik';
-import { Link as RouterLink, Navigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import ToHome from './HomeButton';
 import { RegisterFormValues } from '../types';
 import { createUser } from '../services/userService';
+import { useSetRecoilState } from 'recoil';
+import { navBarState } from '../state/navBar';
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [registered, setRegistered] = useState(false);
   const flexBg = useColorModeValue('gray.50', 'gray.800');
   const boxBg = useColorModeValue('white', 'gray.700');
   const toast = useToast();
+  const setNavBar = useSetRecoilState(navBarState);
+
+  const handleHome = () => {
+    setNavBar('default');
+  };
 
   const handleRegister = async (values: RegisterFormValues): Promise<void> => {
     try {
@@ -39,7 +45,7 @@ const Signup = () => {
         values.email,
         values.password
       );
-      setRegistered(true);
+      handleHome();
       toast({
         title: 'Rekisteröityminen onnistui',
         description: 'Voit nyt kirjautua sisään',
@@ -94,7 +100,6 @@ const Signup = () => {
       {({ values, isSubmitting, isValid, handleChange }) => {
         return (
           <Form>
-            {registered && <Navigate to="/" />}
             <Flex
               minH={'100vh'}
               w={'25vw'}
