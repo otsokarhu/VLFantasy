@@ -14,6 +14,7 @@ const InfoPage = () => {
       bg={flexBg}
       position={'sticky'}
       height={'auto'}
+      zIndex={1}
     >
       <Heading alignContent={'center'} fontSize={'2xl'} color={textColor}>
         Tervetuloa ViestiLiiga-Fantasyyn!

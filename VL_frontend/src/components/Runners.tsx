@@ -22,7 +22,7 @@ const RunnerPage = () => {
     });
   }
   return (
-    <Grid templateColumns="repeat(6, 1fr)" gap={6}>
+    <Grid templateColumns="repeat(auto-fit, minmax(300px, 1fr))" gap={6}>
       {sortedRunners.map((runner) => (
         <RunnerCard
           key={runner.id}

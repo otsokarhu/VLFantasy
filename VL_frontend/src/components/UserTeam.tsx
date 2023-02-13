@@ -1,17 +1,22 @@
 import { Grid } from '@chakra-ui/react';
-
 import { useRecoilValue } from 'recoil';
 import { teamState } from '../state/fantasyTeam';
 import RunnerCard from './SingleRunner';
 import { allRunnersState } from '../state/runners';
+import EmptyRunnerCard from './EmptyRunner';
 
 const UserTeam = () => {
   const allRunners = useRecoilValue(allRunnersState);
 
   const team = useRecoilValue(teamState);
 
+  const emptySlots = Array.from(
+    { length: 5 - team.runners.length },
+    (i) => i as number
+  );
+
   return (
-    <Grid templateColumns="repeat(5, 1fr)" gap={6}>
+    <Grid templateColumns="repeat(auto-fit, minmax(300px, 1fr))" gap={6}>
       {team.runners.map(
         (runner) =>
           allRunners.find((r) => r.id === runner) && (
@@ -30,6 +35,9 @@ const UserTeam = () => {
             />
           )
       )}
+      {emptySlots.map((i) => (
+        <EmptyRunnerCard key={i} />
+      ))}
     </Grid>
   );
 };

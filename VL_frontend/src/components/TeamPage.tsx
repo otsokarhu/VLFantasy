@@ -12,6 +12,7 @@ import {
   Text,
   Spinner,
   Select,
+  Flex,
 } from '@chakra-ui/react';
 import RunnerPage from './Runners';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
@@ -23,7 +24,7 @@ import {
   getFantasyTeam,
 } from '../services/fantasyTeamService';
 import { tokenState } from '../state/user';
-import UserTeam from './UserTeamRunners';
+import UserTeam from './UserTeam';
 import { allRunnersState, runnerOrderState } from '../state/runners';
 import { getAllRunners } from '../services/runnerService';
 
@@ -181,7 +182,7 @@ const TeamPage = () => {
       );
     } else
       return (
-        <Box alignContent={'center'}>
+        <Flex alignContent={'center'} flexDirection={'column'} maxW="100vw">
           <Center p={2}>
             <Box p={2} rounded={'md'} bg={wd}>
               <Heading color={gw}>{team.name}:</Heading>
@@ -212,7 +213,7 @@ const TeamPage = () => {
             </Box>
           </Center>
           <RunnerPage />
-        </Box>
+        </Flex>
       );
   }
 };

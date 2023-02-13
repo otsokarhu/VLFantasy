@@ -11,6 +11,7 @@ import { teamState } from './state/fantasyTeam';
 import { getFantasyTeam } from './services/fantasyTeamService';
 import { getAllRunners } from './services/runnerService';
 import { allRunnersState } from './state/runners';
+import DropDown from './components/DropDown';
 
 const App = () => {
   const [user, setUser] = useRecoilState(userState);
@@ -70,11 +71,11 @@ const App = () => {
         minH="100vh"
         bgImg="url(VLfantasyBG.jpg)"
         bgSize="cover"
-        bgRepeat="no-repeat"
         bg-attachment="fixed"
         opacity={0.95}
       >
         <NavigationBar />
+        <DropDown />
         <Routes>
           <Route path="*" element={<Home />} />
           <Route path="/teamPage" element={<TeamPage />} />

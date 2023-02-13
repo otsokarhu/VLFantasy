@@ -83,3 +83,8 @@ export type NotificationProps = {
   description: string;
   status: 'success' | 'error' | 'info';
 };
+
+export type DropDownProps = {
+  component: JSX.Element;
+  name: string;
+};
