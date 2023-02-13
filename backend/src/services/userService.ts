@@ -1,9 +1,9 @@
 import User from '../models/userModel';
-import { UserZod } from '../utils/utils';
+import { UserZod, NewUserZod } from '../utils/types';
 import bcrypt from 'bcrypt';
 import { HydratedDocument } from 'mongoose';
 
-const createUser = async (body: any): Promise<UserZod> => {
+const createUser = async (body: NewUserZod): Promise<UserZod> => {
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(body.password, saltRounds);
   const existingUser = await User.findOne({ username: body.username });
@@ -42,12 +42,12 @@ const getUser = async (id: string): Promise<HydratedDocument<UserZod>> => {
 const deleteUser = async (id: string): Promise<void> => {
   try {
     await User.findByIdAndRemove(id);
-  } catch (error: any) {
+  } catch (error) {
     throw new Error('User not found');
   }
 };
 
-const editUser = async (id: string, body: any): Promise<UserZod> => {
+const editUser = async (id: string, body: NewUserZod): Promise<UserZod> => {
   const user = await getUser(id);
   if (!user) {
     throw new Error('User not found');

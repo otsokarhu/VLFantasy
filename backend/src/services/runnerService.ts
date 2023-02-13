@@ -1,8 +1,8 @@
 import Runner from '../models/runnerModel';
-import { RunnerZod } from '../utils/utils';
+import { RunnerZod } from '../utils/types';
 import { HydratedDocument } from 'mongoose';
 
-const createRunner = async (body: any): Promise<RunnerZod> => {
+const createRunner = async (body: RunnerZod): Promise<RunnerZod> => {
   const runner = new Runner({
     ...body,
   });
@@ -29,7 +29,7 @@ const deleteRunner = async (id: string): Promise<void> => {
   await Runner.findByIdAndRemove(id);
 };
 
-const updateRunner = async (id: string, body: any): Promise<RunnerZod> => {
+const updateRunner = async (id: string, body: number): Promise<RunnerZod> => {
   const runner = await getRunner(id);
   if (!runner) {
     throw new Error('Runner not found');

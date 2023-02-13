@@ -1,6 +1,6 @@
 import FantasyTeam from '../models/fantasyTeamModel';
 import runnerService from './runnerService';
-import { FantasyTeamZod } from '../utils/utils';
+import { FantasyTeamZod, CreateTeamProps } from '../utils/types';
 import { HydratedDocument } from 'mongoose';
 import userService from './userService';
 
@@ -20,7 +20,9 @@ const getFantasyTeam = async (
   }
   return fantasyTeam;
 };
-const createFantasyTeam = async (body: any): Promise<FantasyTeamZod> => {
+const createFantasyTeam = async (
+  body: CreateTeamProps
+): Promise<FantasyTeamZod> => {
   const fantasyTeam = new FantasyTeam({
     ...body,
   });
@@ -79,7 +81,6 @@ const addRunnerToFantasyTeam = async (
   fantasyTeam.runners = fantasyTeam.runners.concat(runnerToAdd);
   fantasyTeam.points += runnerToAdd.points;
   await fantasyTeam.save();
-
   return fantasyTeam;
 };
 
@@ -112,8 +113,6 @@ const removeRunnerFromFantasyTeam = async (
   await fantasyTeam.save();
   return fantasyTeam;
 };
-
-
 
 export default {
   getAllFantasyTeams,

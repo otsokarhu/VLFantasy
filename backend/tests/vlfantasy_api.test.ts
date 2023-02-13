@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import mongoose from 'mongoose';
 import supertest from 'supertest';
 import app from '../src/index';
@@ -400,13 +405,11 @@ describe('fantasy team tests', () => {
       .send({ runner: runnerToAdd.id })
       .expect(200);
 
-    //const afterTeam = await api.get(`/api/fantasyTeams/${team.id}`);
-
     await api
       .put(`/api/fantasyTeams/${team.id}`)
       .set('Authorization', `bearer ${token.body.token}`)
-      .send({ runner: runnerToAdd.id });
-    //.expect(400);
+      .send({ runner: runnerToAdd.id })
+      .expect(400);
 
     const response = await api.get(`/api/fantasyTeams/${team.id}`);
     expect(response.body.runners).toHaveLength(1);

@@ -66,9 +66,16 @@ const requestLogger = (
   return null;
 };
 
+export const getError = (error: unknown) => {
+  if (error instanceof Error) return error.message;
+  if (!error) return 'Unknown error';
+  return String(error);
+};
+
 export default {
   unknownEndpoint,
   errorHandler,
   requestLogger,
   authorization,
+  getError,
 };

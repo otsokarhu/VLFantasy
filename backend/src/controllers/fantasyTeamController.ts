@@ -1,35 +1,37 @@
 import { Request, Response } from 'express';
 import express from 'express';
-import { authorization } from '../utils/middleware';
+import { authorization, getError } from '../utils/middleware';
 import fantasyteamService from '../services/fantasyteamService';
-import utils from '../utils/utils';
+import utils from '../utils/types';
+import { CreateTeamProps } from '../utils/types';
 const fantasyTeamRouter = express.Router();
 
-fantasyTeamRouter.get('/', async (_request: Request, response: Response) => {
-  try {
-    const fantasyTeams = await fantasyteamService.getAllFantasyTeams();
-    response.json(fantasyTeams);
-  } catch (error: any) {
-    response.status(400).json({ error: error.message });
+fantasyTeamRouter.get(
+  '/',
+  async (_request: Request, response: Response): Promise<void> => {
+    try {
+      const fantasyTeams = await fantasyteamService.getAllFantasyTeams();
+      response.json(fantasyTeams);
+    } catch (error) {
+      response.status(400).json({ error: getError(error) });
+    }
   }
-});
+);
 
 fantasyTeamRouter.post(
   '/',
   authorization,
   async (request: Request, response: Response) => {
     try {
-      const validatedBody = utils.toNewFantasyTeam(request.body);
+      const validatedBody = utils.toNewFantasyTeam(
+        request.body as CreateTeamProps
+      );
       const fantasyTeam = await fantasyteamService.createFantasyTeam(
         validatedBody
       );
       response.status(201).json(fantasyTeam);
-    } catch (error: any) {
-      if (!error.issues) {
-        response.status(400).json({ error: error.message });
-      } else {
-        response.status(400).json({ error: error.issues[0].message });
-      }
+    } catch (error) {
+      response.status(400).json({ error: getError(error) });
     }
   }
 );
@@ -40,8 +42,8 @@ fantasyTeamRouter.get('/:id', async (request: Request, response: Response) => {
       request.params.id
     );
     response.json(fantasyTeam);
-  } catch (error: any) {
-    response.status(400).json({ error: error.message });
+  } catch (error) {
+    response.status(400).json({ error: getError(error) });
   }
 });
 
@@ -52,8 +54,8 @@ fantasyTeamRouter.delete(
     try {
       await fantasyteamService.deleteFantasyTeam(request.params.id);
       response.status(204).json({ message: 'fantasy team deleted' });
-    } catch (error: any) {
-      response.status(400).json({ error: error.message });
+    } catch (error) {
+      response.status(400).json({ error: getError(error) });
     }
   }
 );
@@ -62,15 +64,15 @@ fantasyTeamRouter.put(
   '/:id',
   authorization,
   async (request: Request, response: Response) => {
-    const body = request.body;
+    const runner = request.body.runner as string;
     try {
       const team = await fantasyteamService.addRunnerToFantasyTeam(
         request.params.id,
-        body.runner
+        runner
       );
       response.status(200).json(team);
-    } catch (error: any) {
-      response.status(400).json({ error: error.message });
+    } catch (error) {
+      response.status(400).json({ error: getError(error) });
     }
   }
 );
@@ -87,8 +89,8 @@ fantasyTeamRouter.delete(
       response
         .status(204)
         .json({ message: 'runner deleted from fantasy team' });
-    } catch (error: any) {
-      response.status(400).json({ error: error.message });
+    } catch (error) {
+      response.status(400).json({ error: getError(error) });
     }
   }
 );

@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { RunnerZod } from '../utils/utils';
+import { RunnerZod } from '../utils/types';
 
 const runnerSchema: Schema = new Schema({
   name: {
@@ -26,6 +26,7 @@ const runnerSchema: Schema = new Schema({
 
 runnerSchema.set('toJSON', {
   transform: (_document, returnedObject) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
     delete returnedObject.__v;

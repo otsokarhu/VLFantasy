@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { FantasyTeamZod } from '../utils/utils';
+import { FantasyTeamZod } from '../utils/types';
 
 const fantasyTeamSchema: Schema = new Schema({
   name: {
@@ -27,6 +27,7 @@ const fantasyTeamSchema: Schema = new Schema({
 
 fantasyTeamSchema.set('toJSON', {
   transform: (_document, returnedObject) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
     delete returnedObject.__v;

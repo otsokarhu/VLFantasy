@@ -53,7 +53,7 @@ const NewUserZod = z.object({
     .optional(),
 });
 
-type NewUserZod = z.infer<typeof NewUserZod>;
+export type NewUserZod = z.infer<typeof NewUserZod>;
 type NewFantasyTeamZod = z.infer<typeof NewFantasyTeamZod>;
 export type RunnerZod = z.infer<typeof RunnerZod>;
 export type FantasyTeamZod = z.infer<typeof FantasyTeamZod>;
@@ -132,9 +132,24 @@ type UserFields = {
   username: unknown;
   name: unknown;
   password: unknown;
-  fantasyTeam: unknown;
+  fantasyTeam?: unknown;
   email: unknown;
   newpassword?: unknown;
+};
+
+export type AddRunnerToTeamProps = {
+  id: string;
+  runnerId: string;
+};
+
+export type CreateTeamProps = {
+  name: string;
+  user: string;
+};
+
+export type LoginProps = {
+  username: string;
+  password: string;
 };
 
 export default {
