@@ -9,9 +9,6 @@ import {
   Link,
 } from '@chakra-ui/react';
 
-const IMAGE =
-  'https://www.viestiliiga.fi/wp-content/uploads/2019/11/suunnistus_viestiliiga_logo_pieni.jpg';
-
 const ViestiLiigaCard = () => {
   const wd = useColorModeValue('whitesmoke', 'dimgray');
   const buttonBg = useColorModeValue('green.400', 'blue.900');
@@ -40,7 +37,7 @@ const ViestiLiigaCard = () => {
             pos: 'absolute',
             top: 5,
             left: 0,
-            backgroundImage: `url(${IMAGE})`,
+            backgroundImage: `viestiliiga.jpg`,
             filter: 'blur(15px)',
             zIndex: -1,
           }}
@@ -55,7 +52,7 @@ const ViestiLiigaCard = () => {
             height={230}
             width={282}
             objectFit={'cover'}
-            src={IMAGE}
+            src={'viestiliiga.jpg'}
           />
         </Box>
         <Stack pt={10} align={'center'}>

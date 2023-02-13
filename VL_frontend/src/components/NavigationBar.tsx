@@ -9,7 +9,7 @@ import {
   BreadcrumbLink,
 } from '@chakra-ui/react';
 import { ChevronRightIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { userState } from '../state/user';
 
 import { NavBarHome, NavBarLogOut } from './NavBarComponents';
@@ -24,7 +24,7 @@ const NavigationBar = () => {
   const resetUser = useResetRecoilState(userState);
   const resetTeam = useResetRecoilState(teamState);
   const resetRunner = useResetRecoilState(allRunnersState);
-  const setNavBar = useSetRecoilState(navBarState);
+  const [navBar, setNavBar] = useRecoilState(navBarState);
 
   const handleLogOut = () => {
     window.localStorage.removeItem('loggedVLUser');
@@ -35,15 +35,27 @@ const NavigationBar = () => {
   };
 
   const handleInfo = () => {
-    setNavBar('info');
+    if (navBar === 'info') {
+      setNavBar('default');
+    } else {
+      setNavBar('info');
+    }
   };
 
   const handleToLogin = () => {
-    setNavBar('login');
+    if (navBar === 'login') {
+      setNavBar('default');
+    } else {
+      setNavBar('login');
+    }
   };
 
   const handleToSignUp = () => {
-    setNavBar('signup');
+    if (navBar === 'signup') {
+      setNavBar('default');
+    } else {
+      setNavBar('signup');
+    }
   };
 
   return (

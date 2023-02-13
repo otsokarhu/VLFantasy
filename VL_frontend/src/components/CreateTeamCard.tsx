@@ -14,9 +14,6 @@ import TeamPage from './TeamPage';
 import { userState } from '../state/user';
 import { useRecoilValue } from 'recoil';
 
-const IMAGE =
-  'https://img.freepik.com/free-photo/outdoor-team-orienteering-activity_53876-48899.jpg';
-
 const CreateTeamCard = () => {
   const boxBg = useColorModeValue('whitesmoke', 'dimgray');
   const buttonBg = useColorModeValue('green.400', 'blue.900');
@@ -48,7 +45,7 @@ const CreateTeamCard = () => {
             pos: 'absolute',
             top: 5,
             left: 0,
-            backgroundImage: `url(${IMAGE})`,
+            backgroundImage: `createTeam.jpg`,
             filter: 'blur(15px)',
             zIndex: -1,
           }}
@@ -63,7 +60,7 @@ const CreateTeamCard = () => {
             height={230}
             width={282}
             objectFit={'cover'}
-            src={IMAGE}
+            src={'createTeam.jpg'}
           />
         </Box>
         <Stack pt={10} align={'center'}>
