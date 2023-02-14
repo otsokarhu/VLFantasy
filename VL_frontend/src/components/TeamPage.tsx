@@ -92,7 +92,7 @@ const TeamPage = () => {
 
   if (!user.id) {
     return (
-      <Center p={2} h="90vh">
+      <Center p={2} h={'90vh'}>
         <Box
           maxW={'270px'}
           w={'270px'}
@@ -114,7 +114,7 @@ const TeamPage = () => {
   }
   if (isLoading || isRunnersLoading) {
     return (
-      <Center p={2} h="90vh">
+      <Center p={2} h={'90vh'}>
         <Spinner />
       </Center>
     );
@@ -135,7 +135,7 @@ const TeamPage = () => {
           {({ isValid, values, handleChange }) => {
             return (
               <Form>
-                <Center p={2} h="90vh">
+                <Center p={2} h={'90vh'}>
                   <Box
                     maxW={'270px'}
                     w={'270px'}

@@ -67,11 +67,11 @@ const App = () => {
   return (
     <Router>
       <Box
-        pos="relative"
-        minH="100vh"
-        bgImg="url(VLfantasyBG.jpg)"
-        bgSize="cover"
-        bg-attachment="fixed"
+        pos={'relative'}
+        minH={'100vh'}
+        bgImg={'url(VLfantasyBG.jpg)'}
+        bgSize={'cover'}
+        bg-attachment={'fixed'}
         opacity={0.95}
       >
         <NavigationBar />

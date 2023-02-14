@@ -62,18 +62,18 @@ const NavigationBar = () => {
     <Flex
       pos="sticky"
       top={0}
-      w="100%"
-      h="50px"
+      w={'100%'}
+      h={'50px'}
       bgColor={bg}
       opacity={0.9}
       zIndex={1}
     >
-      <Center w="100%">
+      <Center w={'100%'}>
         {user.id !== '' ? (
           <Breadcrumb
             fontSize={25}
-            spacing="8px"
-            separator={<ChevronRightIcon color="gray.500" />}
+            spacing={'8px'}
+            separator={<ChevronRightIcon color={'gray.500'} />}
           >
             <BreadcrumbItem>
               <NavBarHome />
@@ -90,8 +90,8 @@ const NavigationBar = () => {
         ) : (
           <Breadcrumb
             fontSize={25}
-            spacing="8px"
-            separator={<ChevronRightIcon color="gray.500" />}
+            spacing={'8px'}
+            separator={<ChevronRightIcon color={'gray.500'} />}
           >
             <BreadcrumbItem>
               <NavBarHome />
@@ -115,9 +115,9 @@ const NavigationBar = () => {
           </Breadcrumb>
         )}
       </Center>
-      <Center w="3%">
+      <Center w={'3%'}>
         <Button
-          aria-label="DarkMode-Button"
+          aria-label={'DarkMode-Button'}
           onClick={toggleColorMode}
           variant={'icon'}
         >
