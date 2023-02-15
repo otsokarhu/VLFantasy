@@ -1,18 +1,19 @@
 import { Grid } from '@chakra-ui/react';
 import { useRecoilValue } from 'recoil';
-import { teamState } from '../state/fantasyTeam';
+import { teamState } from '../../state/fantasyTeam';
 import RunnerCard from './SingleRunner';
-import { allRunnersState } from '../state/runners';
+import { allRunnersState } from '../../state/runners';
 import EmptyRunnerCard from './EmptyRunner';
 
 const UserTeam = () => {
   const allRunners = useRecoilValue(allRunnersState);
 
   const team = useRecoilValue(teamState);
+  console.log(team);
 
   const emptySlots = Array.from(
     { length: 5 - team.runners.length },
-    (i) => i as number
+    (v, i) => i
   );
 
   return (

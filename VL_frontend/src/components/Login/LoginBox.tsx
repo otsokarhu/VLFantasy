@@ -14,17 +14,17 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import ToHome from './HomeButton';
+import ToHome from '../Miscellaneous/CloseTab';
 import { Formik, Form } from 'formik';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { LoginFormValues } from '../types';
+import { LoginFormValues } from '../../types';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { login } from '../services/loginService';
-import { userState } from '../state/user';
-import { tokenState } from '../state/user';
-import { teamState } from '../state/fantasyTeam';
-import { navBarState } from '../state/navBar';
+import { login } from '../../services/loginService';
+import { userState } from '../../state/user';
+import { tokenState } from '../../state/user';
+import { teamState } from '../../state/fantasyTeam';
+import { navBarState } from '../../state/navBar';
 
 const Loginform = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -62,7 +62,7 @@ const Loginform = () => {
         title: 'Kirjautuminen onnistui',
         description: 'Tervetuloa takaisin',
         status: 'success',
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
         position: 'top',
       });

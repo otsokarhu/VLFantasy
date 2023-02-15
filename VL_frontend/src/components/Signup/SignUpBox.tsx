@@ -19,11 +19,11 @@ import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Formik, Form } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
-import ToHome from './HomeButton';
-import { RegisterFormValues } from '../types';
-import { createUser } from '../services/userService';
+import ToHome from '../Miscellaneous/CloseTab';
+import { RegisterFormValues } from '../../types';
+import { createUser } from '../../services/userService';
 import { useSetRecoilState } from 'recoil';
-import { navBarState } from '../state/navBar';
+import { navBarState } from '../../state/navBar';
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -50,7 +50,7 @@ const Signup = () => {
         title: 'Rekisteröityminen onnistui',
         description: 'Voit nyt kirjautua sisään',
         status: 'success',
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
         position: 'top',
       });

@@ -10,8 +10,8 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { Link as RouterLink, Route, Routes } from 'react-router-dom';
-import TeamPage from './TeamPage';
-import { userState } from '../state/user';
+import TeamPage from '../TeamPage';
+import { userState } from '../../state/user';
 import { useRecoilValue } from 'recoil';
 
 const CreateTeamCard = () => {
@@ -90,7 +90,7 @@ const CreateTeamCard = () => {
                 onClick={() =>
                   toast({
                     title: 'Kirjaudu sisään',
-                    description: 'Kirjaudu sisään luodaksesi joukkueen',
+                    description: 'Kirjaudu sisään päästäksesi joukkue-sivulle',
                     status: 'info',
                     duration: 5000,
                     isClosable: true,

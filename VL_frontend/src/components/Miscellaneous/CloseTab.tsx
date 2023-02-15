@@ -1,9 +1,9 @@
 import { IconButton, Link } from '@chakra-ui/react';
 import { ChevronUpIcon } from '@chakra-ui/icons';
 import { useSetRecoilState } from 'recoil';
-import { navBarState } from '../state/navBar';
+import { navBarState } from '../../state/navBar';
 
-const ToHome = () => {
+const CloseTab = () => {
   const setNavBar = useSetRecoilState(navBarState);
   const handleHome = () => {
     setNavBar('default');
@@ -20,4 +20,4 @@ const ToHome = () => {
   );
 };
 
-export default ToHome;
+export default CloseTab;

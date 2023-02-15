@@ -21,12 +21,12 @@ import {
 import {
   addRunnerToTeam,
   removeRunnerFromTeam,
-} from '../services/fantasyTeamService';
-import { teamState } from '../state/fantasyTeam';
-import { allRunnersState } from '../state/runners';
-import { tokenState, userState } from '../state/user';
-import { RunnerProps } from '../types';
-import { getError } from '../utils/utils';
+} from '../../services/fantasyTeamService';
+import { teamState } from '../../state/fantasyTeam';
+import { allRunnersState } from '../../state/runners';
+import { tokenState, userState } from '../../state/user';
+import { RunnerProps } from '../../types';
+import { getError } from '../../utils/utils';
 
 const RunnerCard = (props: RunnerProps) => {
   const {

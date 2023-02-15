@@ -7,19 +7,20 @@ import {
   useColorModeValue,
   Button,
   BreadcrumbLink,
+  useToast,
 } from '@chakra-ui/react';
 import { ChevronRightIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import { userState } from '../state/user';
-
-import { NavBarHome, NavBarLogOut } from './NavBarComponents';
-import { teamState } from '../state/fantasyTeam';
-import { allRunnersState } from '../state/runners';
-import { navBarState } from '../state/navBar';
+import { userState } from '../../state/user';
+import { NavBarHome, NavBarLogOut } from './components';
+import { teamState } from '../../state/fantasyTeam';
+import { allRunnersState } from '../../state/runners';
+import { navBarState } from '../../state/navBar';
 
 const NavigationBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const user = useRecoilValue(userState);
+  const toast = useToast();
   const bg = useColorModeValue('whitesmoke', 'dimgray');
   const resetUser = useResetRecoilState(userState);
   const resetTeam = useResetRecoilState(teamState);
@@ -32,6 +33,14 @@ const NavigationBar = () => {
     resetUser();
     resetTeam();
     resetRunner();
+    toast({
+      title: 'Uloskirjautuminen onnistui',
+      description: 'Nähdään taas pian!',
+      status: 'info',
+      duration: 3000,
+      position: 'top',
+      isClosable: true,
+    });
   };
 
   const handleInfo = () => {

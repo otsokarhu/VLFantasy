@@ -1,7 +1,7 @@
 import { Box, Heading, useColorModeValue } from '@chakra-ui/react';
-import ToHome from './HomeButton';
+import ToHome from '../Miscellaneous/CloseTab';
 
-const InfoPage = () => {
+const Info = () => {
   const flexBg = useColorModeValue('whitesmoke', 'dimgray');
   const textColor = useColorModeValue('gray.500', 'whitesmoke');
   return (
@@ -29,4 +29,4 @@ const InfoPage = () => {
   );
 };
 
-export default InfoPage;
+export default Info;

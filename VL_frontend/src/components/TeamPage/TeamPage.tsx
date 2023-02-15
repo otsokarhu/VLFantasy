@@ -16,17 +16,17 @@ import {
 } from '@chakra-ui/react';
 import RunnerPage from './Runners';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { userState } from '../state/user';
-import { teamState } from '../state/fantasyTeam';
+import { userState } from '../../state/user';
+import { teamState } from '../../state/fantasyTeam';
 import { Formik, Form } from 'formik';
 import {
   createFantasyTeam,
   getFantasyTeam,
-} from '../services/fantasyTeamService';
-import { tokenState } from '../state/user';
+} from '../../services/fantasyTeamService';
+import { tokenState } from '../../state/user';
 import UserTeam from './UserTeam';
-import { allRunnersState, runnerOrderState } from '../state/runners';
-import { getAllRunners } from '../services/runnerService';
+import { allRunnersState, runnerOrderState } from '../../state/runners';
+import { getAllRunners } from '../../services/runnerService';
 
 const TeamPage = () => {
   const [user, setUser] = useRecoilState(userState);
