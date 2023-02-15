@@ -9,28 +9,32 @@ const UserTeam = () => {
   const allRunners = useRecoilValue(allRunnersState);
 
   const team = useRecoilValue(teamState);
-  console.log(team);
 
   const emptySlots = Array.from(
     { length: 5 - team.runners.length },
     (v, i) => i
   );
 
+  const fullTeam = team.runners.map((runner) => {
+    const foundRunner = allRunners.find((r) => r.id === runner);
+    return foundRunner;
+  });
+
   return (
     <Grid templateColumns="repeat(auto-fit, minmax(300px, 1fr))" gap={6}>
-      {team.runners.map(
+      {fullTeam.map(
         (runner) =>
-          allRunners.find((r) => r.id === runner) && (
+          runner && (
             <RunnerCard
-              key={runner}
+              key={runner.id}
               blur={false}
-              runner={allRunners.find((r) => r.id === runner)?.name}
-              runnerPhoto={allRunners.find((r) => r.id === runner)?.runnerPhoto}
-              price={allRunners.find((r) => r.id === runner)?.price}
-              points={allRunners.find((r) => r.id === runner)?.points}
-              team={allRunners.find((r) => r.id === runner)?.team}
-              teamPhoto={`${allRunners.find((r) => r.id === runner)?.team}.png`}
-              id={runner}
+              runner={runner.name}
+              runnerPhoto={runner.runnerPhoto}
+              price={runner.price}
+              points={runner.points}
+              team={runner.team}
+              teamPhoto={`${runner.team}.png`}
+              id={runner.id}
               displayDelete={true}
               dbRunners={allRunners}
             />
