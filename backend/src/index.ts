@@ -11,9 +11,6 @@ import testRouter from './controllers/testController';
 
 export const app = express();
 
-app.get('/api/testing', (_req, res) => {
-  res.send('This works');
-});
 app.use(express.json());
 app.use(cors());
 app.use(middleware.requestLogger);

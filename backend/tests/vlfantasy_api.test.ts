@@ -105,7 +105,7 @@ describe('runner tests', () => {
     const runnerToUpdate = response.body[0];
     const newPoints = 10;
     const updateRunner = await api
-      .put(`/api/runners/${runnerToUpdate.id}`)
+      .put(`/api/runners/points/${runnerToUpdate.id}`)
       .send({ points: newPoints })
       .expect(200);
 

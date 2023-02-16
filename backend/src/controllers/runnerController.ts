@@ -43,15 +43,28 @@ runnerRouter.delete('/:id', async (request: Request, response: Response) => {
   }
 });
 
-runnerRouter.put('/:id', async (request: Request, response: Response) => {
+runnerRouter.put(
+  '/points/:id',
+  async (request: Request, response: Response) => {
+    try {
+      const validatedPoints = utils.toValidateNumber(
+        request.body.points as number
+      );
+      const runner = await runnerService.updateRunnerPoints(
+        request.params.id,
+        validatedPoints
+      );
+      response.json(runner);
+    } catch (error) {
+      response.status(400).json({ error: getError(error) });
+    }
+  }
+);
+
+runnerRouter.put('/price', async (request: Request, response: Response) => {
   try {
-    const validatedPoints = utils.toValidateNumber(
-      request.body.points as number
-    );
-    const runner = await runnerService.updateRunner(
-      request.params.id,
-      validatedPoints
-    );
+    const validatedId = utils.toValidateIdString(request.body.id as string);
+    const runner = await runnerService.updateRunnerPrice(validatedId);
     response.json(runner);
   } catch (error) {
     response.status(400).json({ error: getError(error) });

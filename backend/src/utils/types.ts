@@ -89,9 +89,18 @@ const toValidateString = (param: string): string => {
   return z
     .string({
       required_error: 'Input must be given',
-      invalid_type_error: 'Input must be a number',
+      invalid_type_error: 'Input must be a string',
     })
     .max(50)
+    .parse(param);
+};
+
+const toValidateIdString = (param: string): string => {
+  return z
+    .string({
+      required_error: 'Input must be given',
+      invalid_type_error: 'Input must be a string',
+    })
     .parse(param);
 };
 
@@ -152,6 +161,13 @@ export type LoginProps = {
   password: string;
 };
 
+export interface RunnerJSON {
+  'Suunnistuksen loppuranki 2022': string;
+  SUUNNISTUS: string;
+  '5': string;
+  FIELD15: string;
+}
+
 export default {
   toNewFantasyTeam,
   toNewRunner,
@@ -161,4 +177,5 @@ export default {
   FantasyTeamZod,
   RunnerZod,
   UserZodSchema,
+  toValidateIdString,
 };

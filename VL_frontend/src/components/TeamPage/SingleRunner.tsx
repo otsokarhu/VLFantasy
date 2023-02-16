@@ -69,7 +69,7 @@ const RunnerCard = (props: RunnerProps) => {
     if (!runnerToUpdate) {
       return;
     }
-    if (totalPrice + runnerToUpdate.price > 200) {
+    if (totalPrice + runnerToUpdate.price > 35) {
       toast({
         title: 'Virhe',
         description: 'Joukkueen kokonaisbudjetti ylittyy',
@@ -237,7 +237,7 @@ const RunnerCard = (props: RunnerProps) => {
                 </Text>
               </Stack>
               <Stack spacing={0} align={'center'}>
-                <Text fontWeight={600}>{price}</Text>
+                <Text fontWeight={600}>{price} M</Text>
                 <Text fontSize={'sm'} color={textBg}>
                   Hinta
                 </Text>

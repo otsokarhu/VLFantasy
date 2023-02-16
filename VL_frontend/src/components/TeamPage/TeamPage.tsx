@@ -44,6 +44,7 @@ const TeamPage = () => {
   const setFilterRunner = useSetRecoilState(runnerFilterState);
   const wd = useColorModeValue('whitesmoke', 'dimgray');
   const gw = useColorModeValue('gray.500', 'whitesmoke');
+  const budgetColor = useColorModeValue('#168118', '#084f09');
   const toast = useToast();
 
   const handleOrderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -192,13 +193,18 @@ const TeamPage = () => {
       );
     } else
       return (
-        <Flex alignContent={'center'} flexDirection={'column'} maxW="100vw">
+        <Flex flexDirection={'column'} maxW="100vw">
           <Center p={2}>
-            <Box p={2} rounded={'md'} bg={wd}>
-              <Heading color={gw}>{team.name}:</Heading>
-              <Text color={gw} align={'center'} fontSize={'xl'}>
-                budjettia jäljellä: {200 - totalPrice}
+            <Box p={2} rounded={'md'} bg={wd} textAlign={'center'}>
+              <Text
+                color={budgetColor}
+                align={'center'}
+                fontSize={'xl'}
+                fontWeight={600}
+              >
+                budjettia jäljellä: {35 - totalPrice} miljoonaa
               </Text>
+              <Heading color={gw}>{team.name}:</Heading>
             </Box>
           </Center>
           <UserTeam />
