@@ -25,8 +25,13 @@ import {
 } from '../../services/fantasyTeamService';
 import { tokenState } from '../../state/user';
 import UserTeam from './UserTeam';
-import { allRunnersState, runnerOrderState } from '../../state/runners';
+import {
+  allRunnersState,
+  runnerFilterState,
+  runnerOrderState,
+} from '../../state/runners';
 import { getAllRunners } from '../../services/runnerService';
+import React from 'react';
 
 const TeamPage = () => {
   const [user, setUser] = useRecoilState(userState);
@@ -36,12 +41,17 @@ const TeamPage = () => {
   const { isRunnersLoading } = getAllRunners();
   const token = useRecoilValue(tokenState);
   const runnersFromState = useRecoilValue(allRunnersState);
+  const setFilterRunner = useSetRecoilState(runnerFilterState);
   const wd = useColorModeValue('whitesmoke', 'dimgray');
   const gw = useColorModeValue('gray.500', 'whitesmoke');
   const toast = useToast();
 
   const handleOrderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setOrder(e.target.value);
+  };
+
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterRunner(e.target.value);
   };
 
   const handleTeamCreation = async (values: {
@@ -210,6 +220,11 @@ const TeamPage = () => {
                 <option value="points">Pisteiden mukaan</option>
                 <option value="team">Seuran mukaan</option>
               </Select>
+              <Input
+                type="text"
+                placeholder="Hae nimen tai seuran perusteella"
+                onChange={handleFilterChange}
+              />
             </Box>
           </Center>
           <RunnerPage />

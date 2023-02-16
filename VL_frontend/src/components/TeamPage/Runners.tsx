@@ -1,13 +1,29 @@
 import RunnerCard from './SingleRunner';
 import { Grid } from '@chakra-ui/react';
 import { useRecoilValue } from 'recoil';
-import { allRunnersState, runnerOrderState } from '../../state/runners';
+import {
+  allRunnersState,
+  runnerFilterState,
+  runnerOrderState,
+} from '../../state/runners';
 
 const RunnerPage = () => {
   const allRunners = useRecoilValue(allRunnersState);
   const order = useRecoilValue(runnerOrderState);
+  const filter = useRecoilValue(runnerFilterState);
 
-  const sortedRunners = [...allRunners];
+  const filteredRunners = allRunners.filter((runner) => {
+    if (filter === '') {
+      return [...allRunners];
+    } else {
+      const name = runner.name.toLowerCase();
+      const team = runner.team.toLowerCase();
+      const filterLower = filter.toLowerCase();
+      return name.includes(filterLower) || team.includes(filterLower);
+    }
+  });
+
+  const sortedRunners = [...filteredRunners];
   if (order === 'points') {
     sortedRunners.sort((a, b) => b.points - a.points);
   } else if (order === 'price') {

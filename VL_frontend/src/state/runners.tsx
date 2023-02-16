@@ -10,3 +10,8 @@ export const runnerOrderState = atom<string>({
   key: 'runnerOrderState',
   default: 'points',
 });
+
+export const runnerFilterState = atom<string>({
+  key: 'runnerFilterState',
+  default: '',
+});

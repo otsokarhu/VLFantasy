@@ -180,7 +180,7 @@ describe('VL-Fantasy', () => {
       cy.createTeam('Testijoukkue');
       cy.contains('Joukkue luotu');
       cy.get('button[aria-label="HomeButton"]').click();
-      cy.contains('Luo joukkue').click();
+      cy.contains('Muokkaa joukkuettasi').click();
       cy.url().should('include', '/teamPage');
       cy.contains('Juoksijoita valittavana');
       cy.contains('Testijoukkue:');
@@ -207,7 +207,7 @@ describe('VL-Fantasy', () => {
       cy.get('button[aria-label="HomeButton"]').click();
     });
     it('adding runners to team', () => {
-      cy.contains('Luo joukkue').click();
+      cy.contains('Muokkaa joukkuettasi').click();
       cy.url().should('include', '/teamPage');
       cy.contains('Testijoukkue:');
       cy.contains('Juoksijoita valittavana');
@@ -215,7 +215,7 @@ describe('VL-Fantasy', () => {
       cy.contains('lisätty joukkueeseen');
     });
     it('adding runners to team and removing them', () => {
-      cy.contains('Luo joukkue').click();
+      cy.contains('Muokkaa joukkuettasi').click();
       cy.url().should('include', '/teamPage');
       cy.contains('Testijoukkue:');
       cy.contains('Juoksijoita valittavana');
@@ -225,7 +225,7 @@ describe('VL-Fantasy', () => {
       cy.contains('poistettu joukkueesta');
     });
     it('can not add existing team runner to team', () => {
-      cy.contains('Luo joukkue').click();
+      cy.contains('Muokkaa joukkuettasi').click();
       cy.url().should('include', '/teamPage');
       cy.contains('Testijoukkue:');
       cy.contains('Juoksijoita valittavana');
@@ -234,7 +234,7 @@ describe('VL-Fantasy', () => {
       cy.should('not.contain', 'Lisää joukkueeseen');
     });
     it('can not add more than 5 runners to team', () => {
-      cy.contains('Luo joukkue').click();
+      cy.contains('Muokkaa joukkuettasi').click();
       cy.url().should('include', '/teamPage');
       cy.contains('Testijoukkue:');
       cy.contains('Juoksijoita valittavana');
@@ -252,7 +252,7 @@ describe('VL-Fantasy', () => {
       cy.contains('Joukkueessasi on jo 5 juoksijaa');
     });
     it('can not add more than your budget', () => {
-      cy.contains('Luo joukkue').click();
+      cy.contains('Muokkaa joukkuettasi').click();
       cy.url().should('include', '/teamPage');
       cy.contains('Testijoukkue:');
       cy.contains('Juoksijoita valittavana');

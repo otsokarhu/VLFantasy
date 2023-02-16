@@ -71,7 +71,7 @@ const App = () => {
         minH={'100vh'}
         bgImg={'url(VLfantasyBG.jpg)'}
         bgSize={'cover'}
-        bg-attachment={'fixed'}
+        bgAttachment={'fixed'}
         opacity={0.95}
       >
         <NavigationBar />

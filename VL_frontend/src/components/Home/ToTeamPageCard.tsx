@@ -27,7 +27,7 @@ const CreateTeamCard = () => {
     if (user.fantasyTeam !== '') {
       return {
         title: 'Tee muutoksia joukkueeseesi!',
-        button: 'Muokkaa joukkuetta',
+        button: 'Muokkaa joukkuettasi',
       };
     } else {
       return {
