@@ -21,6 +21,20 @@ const CreateTeamCard = () => {
   const user = useRecoilValue(userState);
   const toast = useToast();
 
+  const content = () => {
+    if (user.fantasyTeam !== '') {
+      return {
+        title: 'Tee muutoksia joukkueeseesi!',
+        button: 'Muokkaa joukkuetta',
+      };
+    } else {
+      return {
+        title: 'Luo oma VL-Fantasy-joukkueesi!',
+        button: 'Luo joukkue',
+      };
+    }
+  };
+
   return (
     <Center py={12}>
       <Box
@@ -65,7 +79,7 @@ const CreateTeamCard = () => {
         </Box>
         <Stack pt={10} align={'center'}>
           <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
-            Luo oma VL-Fantasy-joukkueesi!
+            {content().title}
           </Heading>
           {user.id !== '' ? (
             <Link as={RouterLink} to="teamPage" href="teamPage">
@@ -76,7 +90,7 @@ const CreateTeamCard = () => {
                   bg: hoverBg,
                 }}
               >
-                Luo joukkue
+                {content().button}
               </Button>
             </Link>
           ) : (
@@ -98,7 +112,7 @@ const CreateTeamCard = () => {
                   })
                 }
               >
-                Luo joukkue
+                {content().button}
               </Button>
             </Link>
           )}
