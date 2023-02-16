@@ -54,6 +54,7 @@ const Signup = () => {
         isClosable: true,
         position: 'top',
       });
+      setNavBar('login');
     } catch (error) {
       toast({
         title: 'Rekisteröityminen epäonnistui',

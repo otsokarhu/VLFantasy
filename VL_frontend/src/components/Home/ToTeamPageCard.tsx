@@ -12,13 +12,15 @@ import {
 import { Link as RouterLink, Route, Routes } from 'react-router-dom';
 import TeamPage from '../TeamPage';
 import { userState } from '../../state/user';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { navBarState } from '../../state/navBar';
 
 const CreateTeamCard = () => {
   const boxBg = useColorModeValue('whitesmoke', 'dimgray');
   const buttonBg = useColorModeValue('green.400', 'blue.900');
   const hoverBg = useColorModeValue('green.500', 'blue.800');
   const user = useRecoilValue(userState);
+  const setNavBar = useSetRecoilState(navBarState);
   const toast = useToast();
 
   const content = () => {
@@ -33,6 +35,18 @@ const CreateTeamCard = () => {
         button: 'Luo joukkue',
       };
     }
+  };
+
+  const hanleNotLoggedIn = () => {
+    toast({
+      title: 'Kirjaudu sisään',
+      description: 'Kirjaudu sisään päästäksesi joukkue-sivulle',
+      status: 'info',
+      duration: 5000,
+      isClosable: true,
+      position: 'top',
+    });
+    setNavBar('login');
   };
 
   return (
@@ -101,16 +115,7 @@ const CreateTeamCard = () => {
                 _hover={{
                   bg: hoverBg,
                 }}
-                onClick={() =>
-                  toast({
-                    title: 'Kirjaudu sisään',
-                    description: 'Kirjaudu sisään päästäksesi joukkue-sivulle',
-                    status: 'info',
-                    duration: 5000,
-                    isClosable: true,
-                    position: 'top',
-                  })
-                }
+                onClick={hanleNotLoggedIn}
               >
                 {content().button}
               </Button>
