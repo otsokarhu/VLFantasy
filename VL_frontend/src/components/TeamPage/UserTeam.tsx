@@ -7,7 +7,6 @@ import EmptyRunnerCard from './EmptyRunner';
 
 const UserTeam = () => {
   const allRunners = useRecoilValue(allRunnersState);
-
   const team = useRecoilValue(teamState);
 
   const emptySlots = Array.from(

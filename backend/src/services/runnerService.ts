@@ -72,14 +72,16 @@ const getRunnerRanking = (name: string): number => {
 
   if (runnerIof) {
     pointsIof = parseFloat(runnerIof['WRS points']);
-    pointsIof = (pointsIof / 7025) * 100;
+    pointsIof = (pointsIof / 7025) * 101;
   }
 
   return max([pointsRanki, pointsIof]) || 0;
 };
 
 const definePrice = (rankingPoints: number): number => {
-  if (rankingPoints <= 100 && rankingPoints >= 95) {
+  if (rankingPoints >= 97) {
+    return 10.5;
+  } else if (rankingPoints < 97 && rankingPoints >= 95) {
     return 10;
   } else if (rankingPoints < 95 && rankingPoints >= 94) {
     return 9.5;

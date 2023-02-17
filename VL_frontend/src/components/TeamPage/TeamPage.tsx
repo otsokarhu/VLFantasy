@@ -44,7 +44,10 @@ const TeamPage = () => {
   const setFilterRunner = useSetRecoilState(runnerFilterState);
   const wd = useColorModeValue('whitesmoke', 'dimgray');
   const gw = useColorModeValue('gray.500', 'whitesmoke');
-  const budgetColor = useColorModeValue('#168118', '#084f09');
+  const budgetGreen = useColorModeValue('#168118', '#084f09');
+  const budgetYellow = useColorModeValue('#FFEA00', '#FFBF00');
+  const budgetRed = useColorModeValue('#FF2400', '#C21807');
+
   const toast = useToast();
 
   const handleOrderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -100,6 +103,16 @@ const TeamPage = () => {
       }
     });
   }
+
+  const budgetColor = () => {
+    if (totalPrice >= 37) {
+      return budgetRed;
+    } else if (totalPrice > 30 && totalPrice < 37) {
+      return budgetYellow;
+    } else {
+      return budgetGreen;
+    }
+  };
 
   if (!user.id) {
     return (
@@ -197,12 +210,12 @@ const TeamPage = () => {
           <Center p={2}>
             <Box p={2} rounded={'md'} bg={wd} textAlign={'center'}>
               <Text
-                color={budgetColor}
+                color={budgetColor()}
                 align={'center'}
                 fontSize={'xl'}
                 fontWeight={600}
               >
-                budjettia jäljellä: {35 - totalPrice} miljoonaa
+                budjettia jäljellä: {40 - totalPrice} miljoonaa
               </Text>
               <Heading color={gw}>{team.name}:</Heading>
             </Box>

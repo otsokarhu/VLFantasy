@@ -69,7 +69,7 @@ const RunnerCard = (props: RunnerProps) => {
     if (!runnerToUpdate) {
       return;
     }
-    if (totalPrice + runnerToUpdate.price > 35) {
+    if (totalPrice + runnerToUpdate.price > 40) {
       toast({
         title: 'Virhe',
         description: 'Joukkueen kokonaisbudjetti ylittyy',
