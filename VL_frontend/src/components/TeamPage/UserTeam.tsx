@@ -33,7 +33,7 @@ const UserTeam = () => {
               price={runner.price}
               points={runner.points}
               team={runner.team}
-              teamPhoto={`${runner.team}.png`}
+              teamPhoto={`${runner.team}.webp`}
               id={runner.id}
               displayDelete={true}
               dbRunners={allRunners}

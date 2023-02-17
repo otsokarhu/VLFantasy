@@ -6,6 +6,7 @@ const RunnerZod = z.object({
   points: z.number({ required_error: 'Points are required' }),
   price: z.number({ required_error: 'Price is required' }),
   runnerPhoto: z.string({ required_error: 'Runner photo is required' }),
+  id: z.string().optional(),
 });
 
 const FantasyTeamZod = z.object({

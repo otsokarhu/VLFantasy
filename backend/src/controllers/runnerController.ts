@@ -71,4 +71,28 @@ runnerRouter.put('/price', async (request: Request, response: Response) => {
   }
 });
 
+runnerRouter.put(
+  '/price/all',
+  async (_request: Request, response: Response) => {
+    try {
+      await runnerService.updateAllRunnerPrices();
+      response.status(204).json({ message: 'all runner prices updated' });
+    } catch (error) {
+      response.status(400).json({ error: getError(error) });
+    }
+  }
+);
+
+runnerRouter.post('/add', async (request: Request, response: Response) => {
+  try {
+    const validatedNumber = utils.toValidateNumber(
+      request.body.amount as number
+    );
+    await runnerService.addRunners(validatedNumber);
+    response.status(204).json({ message: 'runners added' });
+  } catch (error) {
+    response.status(400).json({ error: getError(error) });
+  }
+});
+
 export default runnerRouter;

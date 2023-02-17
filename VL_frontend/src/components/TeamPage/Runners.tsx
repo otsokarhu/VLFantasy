@@ -48,7 +48,7 @@ const RunnerPage = () => {
           price={runner.price}
           points={runner.points}
           team={runner.team}
-          teamPhoto={`${runner.team}.png`}
+          teamPhoto={`${runner.team}.webp`}
           id={runner.id}
           displayDelete={false}
           dbRunners={allRunners}

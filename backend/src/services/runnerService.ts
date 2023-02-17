@@ -80,13 +80,25 @@ const getRunnerRanking = (name: string): number => {
 
 const definePrice = (rankingPoints: number): number => {
   if (rankingPoints <= 100 && rankingPoints >= 95) {
+    return 10;
+  } else if (rankingPoints < 95 && rankingPoints >= 94) {
+    return 9.5;
+  } else if (rankingPoints < 94 && rankingPoints >= 93) {
+    return 9;
+  } else if (rankingPoints < 93 && rankingPoints >= 92) {
+    return 8.5;
+  } else if (rankingPoints < 92 && rankingPoints >= 91) {
     return 8;
-  } else if (rankingPoints < 95 && rankingPoints >= 92) {
+  } else if (rankingPoints < 91 && rankingPoints >= 90) {
     return 7.5;
-  } else if (rankingPoints < 92 && rankingPoints >= 89) {
+  } else if (rankingPoints < 90 && rankingPoints >= 89) {
     return 7;
-  } else if (rankingPoints < 89 && rankingPoints >= 86) {
+  } else if (rankingPoints < 89 && rankingPoints >= 88) {
     return 6.5;
+  } else if (rankingPoints < 88 && rankingPoints >= 87) {
+    return 6;
+  } else if (rankingPoints < 87 && rankingPoints >= 86) {
+    return 5.5;
   } else if (rankingPoints < 86 && rankingPoints >= 83) {
     return 5;
   } else if (rankingPoints < 83 && rankingPoints >= 80) {
@@ -139,6 +151,55 @@ const updateRunnerPrice = async (id: string): Promise<RunnerZod> => {
   return runner;
 };
 
+const updateAllRunnerPrices = async (): Promise<void> => {
+  const runners = await getAllRunners();
+  runners.forEach(async (runner) => {
+    if (runner.id) {
+      await updateRunnerPrice(runner.id);
+    }
+  });
+};
+
+const addRunners = async (n: number): Promise<void> => {
+  for (let i = 1; i < n; i++) {
+    const allRunners = await getAllRunners();
+    const filePath_ranki = path.join(
+      __dirname,
+      '..',
+      'constants',
+      'rankipisteet.json'
+    );
+    const jsonStringRanki = fs.readFileSync(filePath_ranki, 'utf-8');
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const ranki: RunnerRanki[] = JSON.parse(jsonStringRanki);
+
+    const nameFromRanki = ranki[i].SUUNNISTUS;
+    const [lastName, firstName] = nameFromRanki.split(' ');
+    const runnerName = [firstName, lastName].join(' ');
+    const runnerTeam = ranki[i]['5'];
+
+    const alreadyExists = allRunners.find(
+      (runner) => runner.name === runnerName
+    );
+
+    if (!alreadyExists) {
+      const rankingPoints = getRunnerRanking(nameFromRanki);
+      let price = 2.5;
+      if (rankingPoints) {
+        price += definePrice(rankingPoints);
+      }
+      const runner = new Runner({
+        name: runnerName,
+        team: runnerTeam,
+        points: 0,
+        price: price,
+        runnerPhoto: 'none',
+      });
+      await runner.save();
+    }
+  }
+};
+
 export default {
   createRunner,
   getAllRunners,
@@ -147,4 +208,6 @@ export default {
   updateRunnerPoints,
   getRunnerRanking,
   updateRunnerPrice,
+  updateAllRunnerPrices,
+  addRunners,
 };

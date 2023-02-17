@@ -52,7 +52,7 @@ export const initialRunners = [
     name: 'Markus Kaihola',
     team: 'Luolamiehet',
     points: 0,
-    price: 200,
+    price: 35,
     runnerPhoto: 'test',
     _id: '5f9f1b9b9c9d440000a1b0f6',
     __v: 0,
