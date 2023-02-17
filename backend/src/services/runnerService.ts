@@ -1,8 +1,9 @@
 import Runner from '../models/runnerModel';
-import { RunnerZod, RunnerJSON } from '../utils/types';
+import { RunnerZod, RunnerIof, RunnerRanki } from '../utils/types';
 import { HydratedDocument } from 'mongoose';
 import fs from 'fs';
 import path from 'path';
+import { max } from 'lodash';
 
 const getAllRunners = async (): Promise<RunnerZod[]> => {
   return await Runner.find({});
@@ -37,18 +38,44 @@ const updateRunnerPoints = async (
   return runner;
 };
 
-const getRunnerRanking = (name: string): number | null => {
-  const filePath = path.join(__dirname, '..', 'constants', 'rankipisteet.json');
-  const jsonString = fs.readFileSync(filePath, 'utf-8');
+const getRunnerRanking = (name: string): number => {
+  const filePath_ranki = path.join(
+    __dirname,
+    '..',
+    'constants',
+    'rankipisteet.json'
+  );
+  const filePath_iof = path.join(
+    __dirname,
+    '..',
+    'constants',
+    'iof_ranking.json'
+  );
+  let pointsRanki = 0;
+  let pointsIof = 0;
+
+  const jsonStringRanki = fs.readFileSync(filePath_ranki, 'utf-8');
+  const jsonStringIof = fs.readFileSync(filePath_iof, 'utf-8');
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const ranki: RunnerJSON[] = JSON.parse(jsonString);
+  const ranki: RunnerRanki[] = JSON.parse(jsonStringRanki);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const iofRanking: RunnerIof[] = JSON.parse(jsonStringIof);
+
   const runner = ranki.find((runner) => runner.SUUNNISTUS === name);
+  const runnerIof = iofRanking.find(
+    (runner) => runner['Last Name'] + ' ' + runner['First Name'] === name
+  );
 
   if (runner) {
-    return parseFloat(runner.FIELD15);
-  } else {
-    return null;
+    pointsRanki = parseFloat(runner.FIELD15);
   }
+
+  if (runnerIof) {
+    pointsIof = parseFloat(runnerIof['WRS points']);
+    pointsIof = (pointsIof / 7025) * 100;
+  }
+
+  return max([pointsRanki, pointsIof]) || 0;
 };
 
 const definePrice = (rankingPoints: number): number => {

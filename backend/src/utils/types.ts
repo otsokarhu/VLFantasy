@@ -161,11 +161,17 @@ export type LoginProps = {
   password: string;
 };
 
-export interface RunnerJSON {
+export interface RunnerRanki {
   'Suunnistuksen loppuranki 2022': string;
   SUUNNISTUS: string;
   '5': string;
   FIELD15: string;
+}
+
+export interface RunnerIof {
+  'First Name': string;
+  'Last Name': string;
+  'WRS points': string;
 }
 
 export default {
