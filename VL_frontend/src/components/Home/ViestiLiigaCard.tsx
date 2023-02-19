@@ -37,7 +37,7 @@ const ViestiLiigaCard = () => {
             pos: 'absolute',
             top: 5,
             left: 0,
-            backgroundImage: `viestiliiga.jpg`,
+            backgroundImage: `viestiLiiga.webp`,
             filter: 'blur(15px)',
             zIndex: -1,
           }}
@@ -52,7 +52,7 @@ const ViestiLiigaCard = () => {
             height={230}
             width={282}
             objectFit={'cover'}
-            src={'viestiliiga.jpg'}
+            src={'viestiLiiga.webp'}
           />
         </Box>
         <Stack pt={10} align={'center'}>

@@ -235,7 +235,8 @@ const TeamPage = () => {
                 id="orderBy"
                 onChange={handleOrderChange}
               >
-                <option value="price">Hinnan mukaan</option>
+                <option value="price">Hinnan mukaan, Kallein ensin</option>
+                <option value="priceAsc">Hinnan mukaan, Halvin ensin</option>
                 <option value="points">Pisteiden mukaan</option>
                 <option value="team">Seuran mukaan</option>
               </Select>

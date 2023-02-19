@@ -32,6 +32,8 @@ const RunnerPage = () => {
       sorted.sort((a, b) => b.points - a.points);
     } else if (order === 'price') {
       sorted.sort((a, b) => b.price - a.price);
+    } else if (order === 'priceAsc') {
+      sorted.sort((a, b) => a.price - b.price);
     } else if (order === 'team') {
       sorted.sort((a, b) => a.team.localeCompare(b.team));
     } else {

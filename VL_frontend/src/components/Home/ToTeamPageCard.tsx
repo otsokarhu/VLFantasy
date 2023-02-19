@@ -73,7 +73,7 @@ const CreateTeamCard = () => {
             pos: 'absolute',
             top: 5,
             left: 0,
-            backgroundImage: `createTeam.jpg`,
+            backgroundImage: `createTeam.webp`,
             filter: 'blur(15px)',
             zIndex: -1,
           }}
@@ -88,7 +88,7 @@ const CreateTeamCard = () => {
             height={230}
             width={282}
             objectFit={'cover'}
-            src={'createTeam.jpg'}
+            src={'createTeam.webp'}
           />
         </Box>
         <Stack pt={10} align={'center'}>

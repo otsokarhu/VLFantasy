@@ -69,7 +69,7 @@ const App = () => {
       <Box
         pos={'relative'}
         minH={'100vh'}
-        bgImg={'url(VLfantasyBG.jpg)'}
+        bgImg={'url(bgImage.webp)'}
         bgSize={'cover'}
         bgAttachment={'fixed'}
         opacity={0.95}
