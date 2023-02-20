@@ -5,6 +5,7 @@ import {
   allRunnersState,
   runnerFilterState,
   runnerOrderState,
+  renderAllRunnersState,
 } from '../../state/runners';
 import { useMemo } from 'react';
 
@@ -12,6 +13,7 @@ const RunnerPage = () => {
   const allRunners = useRecoilValue(allRunnersState);
   const order = useRecoilValue(runnerOrderState);
   const filter = useRecoilValue(runnerFilterState);
+  const renderAll = useRecoilValue(renderAllRunnersState);
 
   const filteredRunners = useMemo(() => {
     if (filter === '') {
@@ -43,8 +45,8 @@ const RunnerPage = () => {
         return lastNameA.localeCompare(lastNameB);
       });
     }
-    return sorted;
-  }, [filteredRunners, order]);
+    return renderAll ? sorted : sorted.slice(0, 20);
+  }, [filteredRunners, order, renderAll]);
 
   return (
     <Grid templateColumns="repeat(auto-fit, minmax(300px, 1fr))" gap={6}>

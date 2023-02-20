@@ -13,6 +13,9 @@ import {
   Spinner,
   Select,
   Flex,
+  InputGroup,
+  InputRightElement,
+  IconButton,
 } from '@chakra-ui/react';
 import RunnerPage from './Runners';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
@@ -27,21 +30,26 @@ import { tokenState } from '../../state/user';
 import UserTeam from './UserTeam';
 import {
   allRunnersState,
+  renderAllRunnersState,
   runnerFilterState,
   runnerOrderState,
 } from '../../state/runners';
 import { getAllRunners } from '../../services/runnerService';
 import React from 'react';
+import { CloseIcon } from '@chakra-ui/icons';
 
 const TeamPage = () => {
   const [user, setUser] = useRecoilState(userState);
   const [team, setTeam] = useRecoilState(teamState);
   const setOrder = useSetRecoilState(runnerOrderState);
+  const [renderAll, setRenderAllRunners] = useRecoilState(
+    renderAllRunnersState
+  );
   const { isLoading } = getFantasyTeam(user.fantasyTeam);
   const { isRunnersLoading } = getAllRunners();
   const token = useRecoilValue(tokenState);
   const runnersFromState = useRecoilValue(allRunnersState);
-  const setFilterRunner = useSetRecoilState(runnerFilterState);
+  const [filter, setFilter] = useRecoilState(runnerFilterState);
   const wd = useColorModeValue('whitesmoke', 'dimgray');
   const gw = useColorModeValue('gray.500', 'whitesmoke');
   const budgetGreen = useColorModeValue('#168118', '#084f09');
@@ -55,7 +63,32 @@ const TeamPage = () => {
   };
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilterRunner(e.target.value);
+    setFilter(e.target.value);
+  };
+
+  const handleClearFilter = () => {
+    setFilter('');
+  };
+
+  const handleRenderAllRunners = () => {
+    setRenderAllRunners(!renderAll);
+    if (renderAll) {
+      toast({
+        title: 'Ainoastaan 20 juoksijaa näkyvillä',
+        status: 'info',
+        duration: 3000,
+        isClosable: true,
+        position: 'top',
+      });
+    } else {
+      toast({
+        title: 'Kaikki juoksijat näkyvillä',
+        status: 'info',
+        duration: 3000,
+        isClosable: true,
+        position: 'top',
+      });
+    }
   };
 
   const handleTeamCreation = async (values: {
@@ -240,11 +273,31 @@ const TeamPage = () => {
                 <option value="points">Pisteiden mukaan</option>
                 <option value="team">Seuran mukaan</option>
               </Select>
-              <Input
-                type="text"
-                placeholder="Hae nimen tai seuran perusteella"
-                onChange={handleFilterChange}
-              />
+              <InputGroup>
+                <Input
+                  type="text"
+                  placeholder="Hae nimen tai seuran perusteella"
+                  value={filter}
+                  onChange={handleFilterChange}
+                />
+                {filter && (
+                  <InputRightElement width="4.5rem">
+                    <IconButton
+                      variant={'icon'}
+                      aria-label="Clear filter"
+                      icon={<CloseIcon />}
+                      onClick={handleClearFilter}
+                    />
+                  </InputRightElement>
+                )}
+              </InputGroup>
+              <Button onClick={handleRenderAllRunners} variant={'icon'}>
+                {!renderAll ? (
+                  <Text>Näytä kaikki juoksijat</Text>
+                ) : (
+                  <Text>Näytä vain 20 juoksijaa</Text>
+                )}
+              </Button>
             </Box>
           </Center>
           <RunnerPage />

@@ -15,3 +15,8 @@ export const runnerFilterState = atom<string>({
   key: 'runnerFilterState',
   default: '',
 });
+
+export const renderAllRunnersState = atom<boolean>({
+  key: 'renderAllRunnersState',
+  default: false,
+});
