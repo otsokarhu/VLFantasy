@@ -41,6 +41,20 @@ export const getFantasyTeam = (id: string) => {
   };
 };
 
+export const getAllTeams = () => {
+  const { data, error, isLoading } = useSWR<FantasyTeam[]>(
+    `${apiBaseUrl}/fantasyTeams`,
+    fetcher
+  );
+
+  const isAllTeamsLoading = isLoading;
+  return {
+    allTeams: data,
+    isError: error,
+    isAllTeamsLoading,
+  };
+};
+
 export const addRunnerToTeam = async (
   runner: string,
   teamId: string,

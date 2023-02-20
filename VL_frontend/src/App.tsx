@@ -7,8 +7,8 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { tokenState, userState } from './state/user';
 import { useEffect } from 'react';
 import { LoginResponse } from './types';
-import { teamState } from './state/fantasyTeam';
-import { getFantasyTeam } from './services/fantasyTeamService';
+import { teamState, allTeamsState } from './state/fantasyTeam';
+import { getFantasyTeam, getAllTeams } from './services/fantasyTeamService';
 import { getAllRunners } from './services/runnerService';
 import { allRunnersState } from './state/runners';
 import DropDown from './components/DropDown';
@@ -17,9 +17,11 @@ const App = () => {
   const [user, setUser] = useRecoilState(userState);
   const setToken = useSetRecoilState(tokenState);
   const setTeam = useSetRecoilState(teamState);
+  const setAllTeams = useSetRecoilState(allTeamsState);
   const [allRunners, setAllRunners] = useRecoilState(allRunnersState);
   const { dbTeam, isLoading } = getFantasyTeam(user.fantasyTeam);
   const { runners, isRunnersLoading } = getAllRunners();
+  const { allTeams, isAllTeamsLoading } = getAllTeams();
 
   useEffect(() => {
     const loggedInUser = window.localStorage.getItem('loggedVLUser');
@@ -40,6 +42,14 @@ const App = () => {
       }
     }
   }, [dbTeam, setTeam, isLoading]);
+
+  useEffect(() => {
+    if (!isAllTeamsLoading) {
+      if (allTeams) {
+        setAllTeams(allTeams);
+      }
+    }
+  }, [allTeams, setAllTeams, isAllTeamsLoading]);
 
   useEffect(() => {
     if (!isRunnersLoading && !isLoading) {

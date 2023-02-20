@@ -10,3 +10,8 @@ export const teamState = atom<Omit<FantasyTeam, 'user'>>({
     points: 0,
   },
 });
+
+export const allTeamsState = atom<FantasyTeam[]>({
+  key: 'allTeamsState',
+  default: [],
+});

@@ -67,6 +67,14 @@ const NavigationBar = () => {
     }
   };
 
+  const handleToLeaderboard = () => {
+    if (navBar === 'leaderboard') {
+      setNavBar('default');
+    } else {
+      setNavBar('leaderboard');
+    }
+  };
+
   return (
     <Flex
       pos="sticky"
@@ -93,6 +101,12 @@ const NavigationBar = () => {
             </BreadcrumbItem>
 
             <BreadcrumbItem>
+              <BreadcrumbLink onClick={handleToLeaderboard}>
+                Ranki
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbItem>
               <NavBarLogOut handleLogOut={handleLogOut} />
             </BreadcrumbItem>
           </Breadcrumb>
@@ -108,6 +122,12 @@ const NavigationBar = () => {
 
             <BreadcrumbItem>
               <BreadcrumbLink onClick={handleInfo}>Tietoja</BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbItem>
+              <BreadcrumbLink onClick={handleToLeaderboard}>
+                Ranki
+              </BreadcrumbLink>
             </BreadcrumbItem>
 
             <BreadcrumbItem>
