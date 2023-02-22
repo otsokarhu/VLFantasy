@@ -7,7 +7,7 @@ import DropDownElement from './DropDownElement';
 
 const DropDown = () => {
   return (
-    <Box right={0} position={'absolute'}>
+    <Box right={0} position={'absolute'} zIndex={10}>
       <DropDownElement component={<InfoPage />} name={'info'} />
       <DropDownElement component={<Login />} name={'login'} />
       <DropDownElement component={<Signup />} name={'signup'} />

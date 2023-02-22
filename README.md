@@ -40,6 +40,8 @@ Database:
 
 ## To do
 
-Implement the fantasy game functionality and get the app ready for Viestiliiga 2023.
-Add more runners
 Mobile integration
+
+## Hours for FullStackOpen-project
+
+[Timesheet](https://github.com/otsokarhu/VLFantasy/blob/main/Timesheet.md)

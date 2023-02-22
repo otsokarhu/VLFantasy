@@ -10,7 +10,7 @@ const Leaderboard = () => {
   const allTeams = useRecoilValue(allTeamsState);
   const { isAllTeamsLoading } = getAllTeams();
 
-  const sortedTeams = allTeams.slice().sort((a, b) => b.points - a.points);
+  const sortedTeams = [...allTeams].sort((a, b) => b.points - a.points);
   const topTeams = sortedTeams.slice(0, 5);
 
   return (
@@ -38,7 +38,7 @@ const Leaderboard = () => {
             {index + 1}. {team.name}
           </Heading>
           <Box fontSize={'sm'} color={textColor}>
-            {team.points} points
+            {team.points} pistettä
           </Box>
         </Box>
       ))}

@@ -81,41 +81,41 @@ const getRunnerRanking = (name: string): number => {
 const definePrice = (rankingPoints: number): number => {
   if (rankingPoints >= 97) {
     return 10.5;
-  } else if (rankingPoints < 97 && rankingPoints >= 95) {
+  } else if (rankingPoints >= 95) {
     return 10;
-  } else if (rankingPoints < 95 && rankingPoints >= 94) {
+  } else if (rankingPoints >= 94) {
     return 9.5;
-  } else if (rankingPoints < 94 && rankingPoints >= 93) {
+  } else if (rankingPoints >= 93) {
     return 9;
-  } else if (rankingPoints < 93 && rankingPoints >= 92) {
+  } else if (rankingPoints >= 92) {
     return 8.5;
-  } else if (rankingPoints < 92 && rankingPoints >= 91) {
+  } else if (rankingPoints >= 91) {
     return 8;
-  } else if (rankingPoints < 91 && rankingPoints >= 90) {
+  } else if (rankingPoints >= 90) {
     return 7.5;
-  } else if (rankingPoints < 90 && rankingPoints >= 89) {
+  } else if (rankingPoints >= 89) {
     return 7;
-  } else if (rankingPoints < 89 && rankingPoints >= 88) {
+  } else if (rankingPoints >= 88) {
     return 6.5;
-  } else if (rankingPoints < 88 && rankingPoints >= 87) {
+  } else if (rankingPoints >= 87) {
     return 6;
-  } else if (rankingPoints < 87 && rankingPoints >= 86) {
+  } else if (rankingPoints >= 86) {
     return 5.5;
-  } else if (rankingPoints < 86 && rankingPoints >= 83) {
+  } else if (rankingPoints >= 83) {
     return 5;
-  } else if (rankingPoints < 83 && rankingPoints >= 80) {
+  } else if (rankingPoints >= 80) {
     return 4.5;
-  } else if (rankingPoints < 80 && rankingPoints >= 77) {
+  } else if (rankingPoints >= 77) {
     return 4;
-  } else if (rankingPoints < 77 && rankingPoints >= 74) {
+  } else if (rankingPoints >= 74) {
     return 3.5;
-  } else if (rankingPoints < 74 && rankingPoints >= 71) {
+  } else if (rankingPoints >= 71) {
     return 3;
-  } else if (rankingPoints < 71 && rankingPoints >= 68) {
+  } else if (rankingPoints >= 68) {
     return 2.5;
-  } else if (rankingPoints < 68 && rankingPoints >= 65) {
+  } else if (rankingPoints >= 65) {
     return 2;
-  } else if (rankingPoints < 65 && rankingPoints >= 62) {
+  } else if (rankingPoints >= 62) {
     return 1;
   } else {
     return 0.5;

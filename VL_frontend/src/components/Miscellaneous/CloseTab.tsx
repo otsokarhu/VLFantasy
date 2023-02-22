@@ -15,6 +15,7 @@ const CloseTab = () => {
         opacity={0.9}
         aria-label="Close tab"
         icon={<ChevronUpIcon boxSize={6} />}
+        zIndex={1}
       />
     </Link>
   );
