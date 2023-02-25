@@ -59,6 +59,14 @@ const NavigationBar = () => {
     }
   };
 
+  const handleToScoring = () => {
+    if (navBar === 'scoring') {
+      setNavBar('default');
+    } else {
+      setNavBar('scoring');
+    }
+  };
+
   const handleToSignUp = () => {
     if (navBar === 'signup') {
       setNavBar('default');
@@ -101,6 +109,12 @@ const NavigationBar = () => {
             </BreadcrumbItem>
 
             <BreadcrumbItem>
+              <BreadcrumbLink onClick={handleToScoring}>
+                Pisteytys
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbItem>
               <BreadcrumbLink onClick={handleToLeaderboard}>
                 Ranki
               </BreadcrumbLink>
@@ -122,6 +136,12 @@ const NavigationBar = () => {
 
             <BreadcrumbItem>
               <BreadcrumbLink onClick={handleInfo}>Tietoja</BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbItem>
+              <BreadcrumbLink onClick={handleToScoring}>
+                Pisteytys
+              </BreadcrumbLink>
             </BreadcrumbItem>
 
             <BreadcrumbItem>

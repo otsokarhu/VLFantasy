@@ -73,7 +73,7 @@ describe('VL-Fantasy', () => {
     });
 
     it('closing register-page works', () => {
-      cy.get('button[aria-label="Close tab"]').eq(2).click();
+      cy.get('button[aria-label="Close tab"]').eq(3).click();
       cy.contains('Etunimi').should('be.hidden');
     });
 
@@ -114,8 +114,8 @@ describe('VL-Fantasy', () => {
     });
 
     it('closing login-page works', () => {
-      cy.get('button[aria-label="Close tab"]').eq(1).click();
-      cy.url().should('not.include', '/login');
+      cy.get('button[aria-label="Close tab"]').eq(2).click();
+      cy.get('button[name="login"]').should('be.hidden');
     });
 
     it('logging in works', () => {
