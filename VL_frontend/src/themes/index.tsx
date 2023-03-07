@@ -22,6 +22,12 @@ const customTheme = extendTheme({
         icon: {
           mt: 0,
         },
+        outline: {
+          mt: 0,
+        },
+        ghost: {
+          mt: 6,
+        },
       },
     },
   },

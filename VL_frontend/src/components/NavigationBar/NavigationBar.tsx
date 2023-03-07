@@ -6,13 +6,12 @@ import {
   useColorMode,
   useColorModeValue,
   Button,
-  BreadcrumbLink,
   useToast,
 } from '@chakra-ui/react';
 import { ChevronRightIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { userState } from '../../state/user';
-import { NavBarHome, NavBarLogOut } from './components';
+import { NavBarHome, NavBarLogOut, NavBarElement } from './components';
 import { teamState } from '../../state/fantasyTeam';
 import { allRunnersState } from '../../state/runners';
 import { navBarState } from '../../state/navBar';
@@ -43,43 +42,11 @@ const NavigationBar = () => {
     });
   };
 
-  const handleInfo = () => {
-    if (navBar === 'info') {
+  const handleToClick = (prop: string) => {
+    if (navBar === prop) {
       setNavBar('default');
     } else {
-      setNavBar('info');
-    }
-  };
-
-  const handleToLogin = () => {
-    if (navBar === 'login') {
-      setNavBar('default');
-    } else {
-      setNavBar('login');
-    }
-  };
-
-  const handleToScoring = () => {
-    if (navBar === 'scoring') {
-      setNavBar('default');
-    } else {
-      setNavBar('scoring');
-    }
-  };
-
-  const handleToSignUp = () => {
-    if (navBar === 'signup') {
-      setNavBar('default');
-    } else {
-      setNavBar('signup');
-    }
-  };
-
-  const handleToLeaderboard = () => {
-    if (navBar === 'leaderboard') {
-      setNavBar('default');
-    } else {
-      setNavBar('leaderboard');
+      setNavBar(prop);
     }
   };
 
@@ -105,19 +72,27 @@ const NavigationBar = () => {
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <BreadcrumbLink onClick={handleInfo}>Tietoja</BreadcrumbLink>
+              <NavBarElement
+                handleToClick={handleToClick}
+                to={'info'}
+                text={'Tietoja'}
+              />
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <BreadcrumbLink onClick={handleToScoring}>
-                Pisteytys
-              </BreadcrumbLink>
+              <NavBarElement
+                handleToClick={handleToClick}
+                to={'scoring'}
+                text={'Pisteytys'}
+              />
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <BreadcrumbLink onClick={handleToLeaderboard}>
-                Ranki
-              </BreadcrumbLink>
+              <NavBarElement
+                handleToClick={handleToClick}
+                to={'leaderboard'}
+                text={'Ranki'}
+              />
             </BreadcrumbItem>
 
             <BreadcrumbItem>
@@ -135,31 +110,43 @@ const NavigationBar = () => {
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <BreadcrumbLink onClick={handleInfo}>Tietoja</BreadcrumbLink>
+              <NavBarElement
+                handleToClick={handleToClick}
+                to={'info'}
+                text={'Tietoja'}
+              />
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <BreadcrumbLink onClick={handleToScoring}>
-                Pisteytys
-              </BreadcrumbLink>
+              <NavBarElement
+                handleToClick={handleToClick}
+                to={'scoring'}
+                text={'Pisteytys'}
+              />
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <BreadcrumbLink onClick={handleToLeaderboard}>
-                Ranki
-              </BreadcrumbLink>
+              <NavBarElement
+                handleToClick={handleToClick}
+                to={'leaderboard'}
+                text={'Ranki'}
+              />
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <BreadcrumbLink onClick={handleToSignUp}>
-                Rekisteröidy
-              </BreadcrumbLink>
+              <NavBarElement
+                handleToClick={handleToClick}
+                to={'signup'}
+                text={'Rekisteröidy'}
+              />
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <BreadcrumbLink onClick={handleToLogin}>
-                Kirjaudu sisään
-              </BreadcrumbLink>
+              <NavBarElement
+                handleToClick={handleToClick}
+                to={'login'}
+                text={'Kirjaudu'}
+              />
             </BreadcrumbItem>
           </Breadcrumb>
         )}

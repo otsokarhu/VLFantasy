@@ -1,5 +1,5 @@
-import { Box } from '@chakra-ui/react';
-import NavigationBar from './components/NavigationBar';
+import { Box, useMediaQuery } from '@chakra-ui/react';
+import { NavigationBar, NavigationBarMobile } from './components/NavigationBar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import TeamPage from './components/TeamPage';
@@ -74,6 +74,8 @@ const App = () => {
     }
   }, [dbTeam, setAllRunners, isRunnersLoading, isLoading]);
 
+  const [isLargerThanMobile] = useMediaQuery('(min-width: 950px)');
+
   return (
     <Router>
       <Box
@@ -84,7 +86,7 @@ const App = () => {
         bgAttachment={'fixed'}
         opacity={0.95}
       >
-        <NavigationBar />
+        {isLargerThanMobile ? <NavigationBar /> : <NavigationBarMobile />}
         <DropDown />
         <Routes>
           <Route path="*" element={<Home />} />

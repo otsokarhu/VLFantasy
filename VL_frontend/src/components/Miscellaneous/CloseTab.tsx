@@ -1,5 +1,5 @@
-import { IconButton, Link } from '@chakra-ui/react';
-import { ChevronUpIcon } from '@chakra-ui/icons';
+import { IconButton, Link, useMediaQuery } from '@chakra-ui/react';
+import { ChevronUpIcon, CloseIcon } from '@chakra-ui/icons';
 import { useSetRecoilState } from 'recoil';
 import { navBarState } from '../../state/navBar';
 
@@ -9,12 +9,17 @@ const CloseTab = () => {
     setNavBar('default');
   };
 
+  const [isLargerThanMobile] = useMediaQuery('(min-width: 950px)');
+
   return (
     <Link onClick={handleHome}>
       <IconButton
         opacity={0.9}
         aria-label="Close tab"
-        icon={<ChevronUpIcon boxSize={6} />}
+        variant={'icon'}
+        icon={
+          isLargerThanMobile ? <ChevronUpIcon boxSize={6} /> : <CloseIcon />
+        }
         zIndex={1}
       />
     </Link>

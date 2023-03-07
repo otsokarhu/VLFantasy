@@ -1,3 +1,4 @@
 import NavigationBar from './NavigationBar';
+import NavigationBarMobile from './NavigationBarMobile';
 
-export default NavigationBar;
+export { NavigationBar, NavigationBarMobile };
