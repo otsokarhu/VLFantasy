@@ -14,6 +14,7 @@ import {
   useColorModeValue,
   Link,
   useToast,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
@@ -31,6 +32,7 @@ const Signup = () => {
   const boxBg = useColorModeValue('white', 'gray.700');
   const toast = useToast();
   const setNavBar = useSetRecoilState(navBarState);
+  const [isLargerThanMobile] = useMediaQuery('(min-width: 950px)');
 
   const handleHome = () => {
     setNavBar('default');
@@ -103,11 +105,12 @@ const Signup = () => {
           <Form>
             <Flex
               align={'center'}
-              w={'20vw'}
+              w={isLargerThanMobile ? '20vw' : '100vw'}
               justify={'center'}
               bg={flexBg}
-              opacity={0.9}
+              opacity={isLargerThanMobile ? 0.9 : 1}
               roundedBottom={'lg'}
+              roundedTop={isLargerThanMobile ? 'none' : 'lg'}
               direction={'column'}
               position={'sticky'}
             >

@@ -6,6 +6,7 @@ import {
   Button,
   ButtonGroup,
   Flex,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import ToHome from '../Miscellaneous/CloseTab';
 import LegBasedPoints from './LegBasedPoints';
@@ -17,6 +18,8 @@ const Scoring = () => {
   const flexBg = useColorModeValue('whitesmoke', 'dimgray');
   const textColor = useColorModeValue('gray.500', 'whitesmoke');
   const [pointsView, setPointsView] = useState('team');
+  const [isLargerThanMobile] = useMediaQuery('(min-width: 950px)');
+
   const handleClick = (str: string) => {
     setPointsView(str);
   };
@@ -36,11 +39,12 @@ const Scoring = () => {
 
   return (
     <Flex
-      w={'31vw'}
+      w={isLargerThanMobile ? '31vw' : '100vw'}
       roundedBottom={'lg'}
+      roundedTop={isLargerThanMobile ? 'none' : 'lg'}
       h={'270px'}
       p={4}
-      opacity={0.9}
+      opacity={isLargerThanMobile ? 0.9 : 1}
       bg={flexBg}
       position={'sticky'}
       height={'auto'}
@@ -48,6 +52,7 @@ const Scoring = () => {
       direction={'column'}
       textAlign={'center'}
     >
+      {isLargerThanMobile ? null : <ToHome />}
       <Grid gap={4}>
         <GridItem>
           <Heading fontSize={'2xl'} color={textColor}>
@@ -87,7 +92,7 @@ const Scoring = () => {
 
         {renderPoints()}
       </Grid>
-      <ToHome />
+      {isLargerThanMobile ? <ToHome /> : null}
     </Flex>
   );
 };

@@ -1,4 +1,10 @@
-import { Box, Heading, Spinner, useColorModeValue } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  Spinner,
+  useColorModeValue,
+  useMediaQuery,
+} from '@chakra-ui/react';
 import { useRecoilValue } from 'recoil';
 import { getAllTeams } from '../../services/fantasyTeamService';
 import { allTeamsState } from '../../state/fantasyTeam';
@@ -12,26 +18,31 @@ const Leaderboard = () => {
 
   const sortedTeams = [...allTeams].sort((a, b) => b.points - a.points);
   const topTeams = sortedTeams.slice(0, 5);
+  const [isLargerThanMobile] = useMediaQuery('(min-width: 950px)');
 
   return (
     <Box
-      w={'20vw'}
+      w={isLargerThanMobile ? '20vw' : '100vw'}
       roundedBottom={'lg'}
+      roundedTop={isLargerThanMobile ? 'none' : 'lg'}
       h={'270px'}
       p={2}
-      opacity={0.9}
+      opacity={isLargerThanMobile ? 0.9 : 1}
       bg={flexBg}
       position={'sticky'}
       height={'auto'}
       zIndex={1}
     >
-      {isAllTeamsLoading ? (
-        <Spinner />
-      ) : (
-        <Heading size={'md'} mb={2} color={textColor}>
-          Parhaat joukkueet
-        </Heading>
-      )}
+      {isLargerThanMobile ? null : <ToHome />}
+      <Box textAlign={isLargerThanMobile ? 'left' : 'center'}>
+        {isAllTeamsLoading ? (
+          <Spinner />
+        ) : (
+          <Heading size={'md'} mb={2} color={textColor}>
+            Parhaat joukkueet
+          </Heading>
+        )}
+      </Box>
       {topTeams.map((team, index) => (
         <Box key={team.id} mb={2}>
           <Heading size={'sm'} color={textColor}>
@@ -42,7 +53,7 @@ const Leaderboard = () => {
           </Box>
         </Box>
       ))}
-      <ToHome />
+      {isLargerThanMobile ? <ToHome /> : null}
     </Box>
   );
 };

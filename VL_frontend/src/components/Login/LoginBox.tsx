@@ -12,6 +12,7 @@ import {
   FormControl,
   FormLabel,
   useToast,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import ToHome from '../Miscellaneous/CloseTab';
@@ -19,7 +20,7 @@ import { Formik, Form } from 'formik';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { LoginFormValues } from '../../types';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { login } from '../../services/loginService';
 import { userState } from '../../state/user';
 import { tokenState } from '../../state/user';
@@ -28,12 +29,13 @@ import { navBarState } from '../../state/navBar';
 
 const Loginform = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [user, setUser] = useRecoilState(userState);
+  const setUser = useSetRecoilState(userState);
   const setToken = useSetRecoilState(tokenState);
   const setTeam = useSetRecoilState(teamState);
   const flexBg = useColorModeValue('whitesmoke', 'dimgray');
   const bg = useColorModeValue('white', 'gray.700');
   const setNavBar = useSetRecoilState(navBarState);
+  const [isLargerThanMobile] = useMediaQuery('(min-width: 950px)');
   const handleHome = () => {
     setNavBar('default');
   };
@@ -101,14 +103,14 @@ const Loginform = () => {
       {({ isValid, values, handleChange }) => {
         return (
           <Form>
-            {user.id !== ''}
             <Flex
               align={'center'}
-              w={'20vw'}
+              w={isLargerThanMobile ? '20vw' : '100vw'}
               justify={'center'}
               bg={flexBg}
-              opacity={0.9}
+              opacity={isLargerThanMobile ? 0.9 : 1}
               roundedBottom={'lg'}
+              roundedTop={isLargerThanMobile ? 'none' : 'lg'}
               position={'sticky'}
             >
               <Stack spacing={3} mx={'auto'} maxW={'lg'} pt={12} pb={2} px={6}>
