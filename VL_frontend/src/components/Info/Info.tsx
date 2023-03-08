@@ -13,7 +13,7 @@ const Info = () => {
 
   return (
     <Box
-      w={isDesktop ? '20vw' : '100vw'}
+      w={isDesktop ? '20vw' : '90vw'}
       roundedBottom={'lg'}
       roundedTop={isDesktop ? 'none' : 'lg'}
       h={'270px'}
@@ -25,12 +25,20 @@ const Info = () => {
       zIndex={1}
     >
       {isDesktop ? null : <ToHome />}
-      <Heading alignContent={'center'} fontSize={'2xl'} color={textColor}>
+      <Heading
+        textAlign={'center'}
+        fontSize={isDesktop ? '1.8rem' : '2.5rem'}
+        color={textColor}
+      >
         Tervetuloa ViestiLiiga-Fantasyyn!
       </Heading>
-      <Heading alignContent={'center'} fontSize={'1xl'} color={textColor}>
+      <Heading
+        textAlign={'center'}
+        fontSize={isDesktop ? '1.2rem' : '1.9rem'}
+        color={textColor}
+      >
         Täällä voit luoda joukkueen ViestiLiigaFantasyyn ja valita joukkueesi
-        pelaajat. Valitsemasi joukkue kerää pisteitä perustuen suunnistajiensa
+        juoksijat. Valitsemasi joukkue kerää pisteitä perustuen suunnistajiensa
         suorituksiin kesän 2023 ViestiLiiga-kilpailuissa.
       </Heading>
       {isDesktop ? <ToHome /> : null}

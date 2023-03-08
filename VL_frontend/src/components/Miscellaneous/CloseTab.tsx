@@ -17,7 +17,9 @@ const CloseTab = () => {
         opacity={0.9}
         aria-label="Close tab"
         variant={'icon'}
-        icon={isDesktop ? <ChevronUpIcon boxSize={6} /> : <CloseIcon />}
+        icon={
+          isDesktop ? <ChevronUpIcon boxSize={6} /> : <CloseIcon boxSize={9} />
+        }
         zIndex={1}
       />
     </Link>

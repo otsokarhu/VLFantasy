@@ -23,7 +23,13 @@ const DropDown = () => {
           </Box>
         </Box>
       ) : (
-        <Box zIndex={10} top={'60px'} position={'absolute'} left={'0'}>
+        <Box
+          zIndex={10}
+          top={'10vh'}
+          position={'absolute'}
+          left={'5vw'}
+          boxShadow={'dark-lg'}
+        >
           <DropDownElementMobile component={<InfoPage />} name={'info'} />
           <DropDownElementMobile component={<Scoring />} name={'scoring'} />
           <DropDownElementMobile component={<Login />} name={'login'} />

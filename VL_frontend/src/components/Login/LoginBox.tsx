@@ -106,7 +106,7 @@ const Loginform = () => {
           <Form>
             <Flex
               align={'center'}
-              w={isDesktop ? '20vw' : '100vw'}
+              w={isDesktop ? '20vw' : '90vw'}
               justify={'center'}
               bg={flexBg}
               opacity={isDesktop ? 0.9 : 1}
@@ -114,73 +114,90 @@ const Loginform = () => {
               roundedTop={isDesktop ? 'none' : 'lg'}
               position={'sticky'}
             >
-              <Stack spacing={3} mx={'auto'} maxW={'lg'} pt={12} pb={2} px={6}>
-                <Stack align={'center'}>
-                  <Heading fontSize={'4xl'}>Kirjaudu sisään</Heading>
-                </Stack>
-                <Box rounded={'lg'} bg={bg} boxShadow={'lg'} p={8}>
-                  <Stack spacing={4}>
-                    <FormControl id="username">
-                      <FormLabel>Käyttäjätunnus</FormLabel>
-                      <Input
-                        type="username"
-                        name="username"
-                        value={values.username}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
-                    <FormControl id="password">
-                      <FormLabel>Salasana</FormLabel>
-                      <InputGroup>
+              <Stack pt={5}>
+                {isDesktop ? null : <ToHome />}
+                <Stack spacing={3} mx={'auto'} maxW={'lg'} pt={2} pb={4} px={6}>
+                  <Stack align={'center'}>
+                    <Heading fontSize={isDesktop ? '1.8rem' : '2.7rem'}>
+                      Kirjaudu sisään
+                    </Heading>
+                  </Stack>
+                  <Box rounded={'lg'} bg={bg} boxShadow={'lg'} p={8}>
+                    <Stack spacing={4}>
+                      <FormControl id="username">
+                        <FormLabel
+                          fontSize={isDesktop ? '1.2rem' : '1.9rem'}
+                          fontWeight={isDesktop ? 'hairline' : 'bold'}
+                        >
+                          Käyttäjätunnus
+                        </FormLabel>
                         <Input
-                          type={showPassword ? 'text' : 'password'}
-                          name="password"
-                          value={values.password}
+                          type="username"
+                          name="username"
+                          value={values.username}
                           onChange={handleChange}
                         />
-                        <InputRightElement h={'full'}>
-                          <Button
-                            variant={'icon'}
-                            onClick={() =>
-                              setShowPassword((showPassword) => !showPassword)
-                            }
-                          >
-                            {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                          </Button>
-                        </InputRightElement>
-                      </InputGroup>
-                    </FormControl>
-                    <Stack spacing={10}>
-                      <Stack
-                        direction={{ base: 'column' }}
-                        align={'start'}
-                        justify={'space-between'}
-                      >
-                        <Link
-                          as={RouterLink}
-                          href="/signup"
-                          to="/signup"
-                          color={'blue.400'}
+                      </FormControl>
+                      <FormControl id="password">
+                        <FormLabel
+                          fontSize={isDesktop ? '1.2rem' : '1.9rem'}
+                          fontWeight={isDesktop ? 'hairline' : 'bold'}
                         >
-                          Rekisteröidy
-                        </Link>
+                          Salasana
+                        </FormLabel>
+                        <InputGroup>
+                          <Input
+                            type={showPassword ? 'text' : 'password'}
+                            name="password"
+                            value={values.password}
+                            onChange={handleChange}
+                          />
+                          <InputRightElement h={'full'}>
+                            <Button
+                              variant={'icon'}
+                              onClick={() =>
+                                setShowPassword((showPassword) => !showPassword)
+                              }
+                            >
+                              {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                            </Button>
+                          </InputRightElement>
+                        </InputGroup>
+                      </FormControl>
+                      <Stack spacing={10} align={'center'}>
+                        <Stack
+                          direction={{ base: 'column' }}
+                          align={'start'}
+                          justify={'space-between'}
+                        >
+                          <Link
+                            as={RouterLink}
+                            href="/signup"
+                            to="/signup"
+                            color={'blue.400'}
+                            fontSize={isDesktop ? '1.2rem' : '1.9rem'}
+                          >
+                            Rekisteröidy
+                          </Link>
+                        </Stack>
+                        <Button
+                          type="submit"
+                          name="login"
+                          disabled={!isValid}
+                          bg={'blue.400'}
+                          color={'white'}
+                          _hover={{
+                            bg: 'blue.500',
+                          }}
+                          fontSize={isDesktop ? '1.2rem' : '1.7rem'}
+                        >
+                          Kirjaudu sisään
+                        </Button>
                       </Stack>
-                      <Button
-                        type="submit"
-                        name="login"
-                        disabled={!isValid}
-                        bg={'blue.400'}
-                        color={'white'}
-                        _hover={{
-                          bg: 'blue.500',
-                        }}
-                      >
-                        Kirjaudu sisään
-                      </Button>
                     </Stack>
-                  </Stack>
-                </Box>
-                <ToHome />
+                  </Box>
+                  {isDesktop ? <ToHome /> : null}
+                </Stack>
               </Stack>
             </Flex>
           </Form>

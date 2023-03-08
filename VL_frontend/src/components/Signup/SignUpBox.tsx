@@ -105,7 +105,7 @@ const Signup = () => {
           <Form>
             <Flex
               align={'center'}
-              w={isDesktop ? '20vw' : '100vw'}
+              w={isDesktop ? '20vw' : '90vw'}
               justify={'center'}
               bg={flexBg}
               opacity={isDesktop ? 0.9 : 1}
@@ -114,112 +114,146 @@ const Signup = () => {
               direction={'column'}
               position={'sticky'}
             >
-              <Stack spacing={3} mx={'auto'} maxW={'lg'} pt={12} pb={2} px={6}>
-                <Stack align={'center'}>
-                  <Heading fontSize={'4xl'} textAlign={'center'}>
-                    Rekisteröidy
-                  </Heading>
-                </Stack>
-                <Box rounded={'lg'} bg={boxBg} boxShadow={'lg'} p={8}>
-                  <Stack spacing={4}>
-                    <HStack>
-                      <Box>
-                        <FormControl id="firstName" isRequired>
-                          <FormLabel>Etunimi</FormLabel>
-                          <Input
-                            type="text"
-                            name="firstName"
-                            value={values.firstName}
-                            onChange={handleChange}
-                          />
-                        </FormControl>
-                      </Box>
-                      <Box>
-                        <FormControl id="lastName" isRequired>
-                          <FormLabel>Sukunimi</FormLabel>
-                          <Input
-                            type="text"
-                            name="lastName"
-                            value={values.lastName}
-                            onChange={handleChange}
-                          />
-                        </FormControl>
-                      </Box>
-                    </HStack>
+              <Stack pt={5}>
+                {isDesktop ? null : <ToHome />}
+                <Stack spacing={3} mx={'auto'} maxW={'lg'} pt={2} pb={4} px={6}>
+                  <Stack align={'center'}>
+                    <Heading fontSize={isDesktop ? '1.8rem' : '2.7rem'}>
+                      Rekisteröidy
+                    </Heading>
+                  </Stack>
+                  <Box rounded={'lg'} bg={boxBg} boxShadow={'lg'} p={8}>
+                    <Stack spacing={4}>
+                      <HStack>
+                        <Box>
+                          <FormControl id="firstName" isRequired>
+                            <FormLabel
+                              fontSize={isDesktop ? '1.2rem' : '1.9rem'}
+                              fontWeight={isDesktop ? 'hairline' : 'bold'}
+                            >
+                              Etunimi
+                            </FormLabel>
+                            <Input
+                              type="text"
+                              name="firstName"
+                              value={values.firstName}
+                              onChange={handleChange}
+                            />
+                          </FormControl>
+                        </Box>
+                        <Box>
+                          <FormControl id="lastName" isRequired>
+                            <FormLabel
+                              fontSize={isDesktop ? '1.2rem' : '1.9rem'}
+                              fontWeight={isDesktop ? 'hairline' : 'bold'}
+                            >
+                              Sukunimi
+                            </FormLabel>
+                            <Input
+                              type="text"
+                              name="lastName"
+                              value={values.lastName}
+                              onChange={handleChange}
+                            />
+                          </FormControl>
+                        </Box>
+                      </HStack>
 
-                    <FormControl id="username2" isRequired>
-                      <FormLabel>Käyttäjätunnus</FormLabel>
-                      <Input
-                        type="text"
-                        name="username2"
-                        value={values.username2}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
-                    <FormControl id="email" isRequired>
-                      <FormLabel>Sähköpostiosoite</FormLabel>
-                      <Input
-                        type="email"
-                        name="email"
-                        value={values.email}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
-                    <FormControl id="password2" isRequired>
-                      <FormLabel>Salasana</FormLabel>
-                      <InputGroup>
+                      <FormControl id="username2" isRequired>
+                        <FormLabel
+                          fontSize={isDesktop ? '1.2rem' : '1.9rem'}
+                          fontWeight={isDesktop ? 'hairline' : 'bold'}
+                        >
+                          Käyttäjätunnus
+                        </FormLabel>
                         <Input
-                          type={showPassword ? 'text' : 'password'}
-                          name="password2"
-                          value={values.password2}
+                          type="text"
+                          name="username2"
+                          value={values.username2}
                           onChange={handleChange}
                         />
-                        <InputRightElement h={'full'}>
-                          <Button
-                            variant={'icon'}
-                            onClick={() =>
-                              setShowPassword((showPassword) => !showPassword)
-                            }
-                          >
-                            {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                          </Button>
-                        </InputRightElement>
-                      </InputGroup>
-                    </FormControl>
-                    <Stack spacing={10} pt={2}>
-                      <Button
-                        loadingText="Submitting"
-                        type="submit"
-                        name="signup"
-                        isLoading={isSubmitting}
-                        disabled={!isValid || isSubmitting}
-                        size="lg"
-                        bg={'blue.400'}
-                        color={'white'}
-                        _hover={{
-                          bg: 'blue.500',
-                        }}
-                      >
-                        Rekisteröidy
-                      </Button>
-                    </Stack>
-                    <Stack pt={6}>
-                      <Text align={'center'}>
-                        Rekisteröitynyt jo?{' '}
-                        <Link
-                          aria-label="toLogin"
-                          as={RouterLink}
-                          href="/login"
-                          to="/login"
-                          color={'blue.400'}
+                      </FormControl>
+                      <FormControl id="email" isRequired>
+                        <FormLabel
+                          fontSize={isDesktop ? '1.2rem' : '1.9rem'}
+                          fontWeight={isDesktop ? 'hairline' : 'bold'}
                         >
-                          Kirjaudu
-                        </Link>
-                      </Text>
+                          Sähköpostiosoite
+                        </FormLabel>
+                        <Input
+                          type="email"
+                          name="email"
+                          value={values.email}
+                          onChange={handleChange}
+                        />
+                      </FormControl>
+                      <FormControl id="password2" isRequired>
+                        <FormLabel
+                          fontSize={isDesktop ? '1.2rem' : '1.9rem'}
+                          fontWeight={isDesktop ? 'hairline' : 'bold'}
+                        >
+                          Salasana
+                        </FormLabel>
+                        <InputGroup>
+                          <Input
+                            type={showPassword ? 'text' : 'password'}
+                            name="password2"
+                            value={values.password2}
+                            onChange={handleChange}
+                          />
+                          <InputRightElement h={'full'}>
+                            <Button
+                              variant={'icon'}
+                              onClick={() =>
+                                setShowPassword((showPassword) => !showPassword)
+                              }
+                            >
+                              {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                            </Button>
+                          </InputRightElement>
+                        </InputGroup>
+                      </FormControl>
+                      <Stack spacing={10} pt={2}>
+                        <Button
+                          loadingText="Submitting"
+                          type="submit"
+                          name="signup"
+                          isLoading={isSubmitting}
+                          disabled={!isValid || isSubmitting}
+                          size="lg"
+                          bg={'blue.400'}
+                          fontSize={isDesktop ? '1.2rem' : '1.9rem'}
+                          fontWeight={isDesktop ? 'hairline' : 'bold'}
+                          color={'white'}
+                          _hover={{
+                            bg: 'blue.500',
+                          }}
+                        >
+                          Rekisteröidy
+                        </Button>
+                      </Stack>
+                      <Stack pt={6}>
+                        <Text
+                          align={'center'}
+                          fontSize={isDesktop ? '1.2rem' : '1.9rem'}
+                          fontWeight={isDesktop ? 'hairline' : 'bold'}
+                        >
+                          Rekisteröitynyt jo?{' '}
+                          <Link
+                            aria-label="toLogin"
+                            as={RouterLink}
+                            href="/login"
+                            to="/login"
+                            color={'blue.400'}
+                          >
+                            Kirjaudu
+                          </Link>
+                        </Text>
+                      </Stack>
                     </Stack>
-                  </Stack>
-                </Box>
-                <ToHome />
+                  </Box>
+                  {isDesktop ? <ToHome /> : null}
+                </Stack>
               </Stack>
             </Flex>
           </Form>

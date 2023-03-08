@@ -8,14 +8,16 @@ import {
   Td,
   Box,
   useColorModeValue,
+  useMediaQuery,
 } from '@chakra-ui/react';
 
 const LegBasedPoints = () => {
+  const [isDesktop] = useMediaQuery('(min-width: 62em)');
   const textColor = useColorModeValue('gray.500', 'whitesmoke');
   return (
     <Box py={2}>
       <Heading
-        fontSize={'xl'}
+        fontSize={isDesktop ? '1.8rem' : '2.5rem'}
         color={textColor}
         textAlign={'center'}
         fontWeight={'bold'}
@@ -26,38 +28,40 @@ const LegBasedPoints = () => {
       <Table variant="simple">
         <Thead>
           <Tr>
-            <Th>Juoksijan osuussijoitus</Th>
-            <Th>Pisteet</Th>
+            <Th fontSize={isDesktop ? '0.8rem' : '1.6rem'}>
+              Juoksijan osuussijoitus
+            </Th>
+            <Th fontSize={isDesktop ? '0.8rem' : '1.6rem'}>Pisteet</Th>
           </Tr>
         </Thead>
         <Tbody>
           <Tr>
-            <Td>1.</Td>
-            <Td>8</Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>1.</Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>8</Td>
           </Tr>
           <Tr>
-            <Td>2.</Td>
-            <Td>6</Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>2.</Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>6</Td>
           </Tr>
           <Tr>
-            <Td>3.</Td>
-            <Td>5</Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>3.</Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>5</Td>
           </Tr>
           <Tr>
-            <Td>4.</Td>
-            <Td>4</Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>4.</Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>4</Td>
           </Tr>
           <Tr>
-            <Td>5.</Td>
-            <Td>3</Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>5.</Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>3</Td>
           </Tr>
           <Tr>
-            <Td>6.</Td>
-            <Td>2</Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>6.</Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>2</Td>
           </Tr>
           <Tr>
-            <Td>7-10.</Td>
-            <Td>1</Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>7-10.</Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>1</Td>
           </Tr>
         </Tbody>
       </Table>

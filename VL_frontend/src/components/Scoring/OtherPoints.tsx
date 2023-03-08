@@ -8,14 +8,16 @@ import {
   Td,
   Box,
   useColorModeValue,
+  useMediaQuery,
 } from '@chakra-ui/react';
 
 const OtherPoints = () => {
+  const [isDesktop] = useMediaQuery('(min-width: 62em)');
   const textColor = useColorModeValue('gray.500', 'whitesmoke');
   return (
     <Box py={2}>
       <Heading
-        fontSize={'xl'}
+        fontSize={isDesktop ? '1.8rem' : '2.5rem'}
         color={textColor}
         textAlign={'center'}
         fontWeight={'bold'}
@@ -26,18 +28,24 @@ const OtherPoints = () => {
       <Table variant="simple">
         <Thead>
           <Tr>
-            <Th>Juoksijan suoritus</Th>
-            <Th>Pisteet</Th>
+            <Th fontSize={isDesktop ? '0.8rem' : '1.6rem'}>
+              Juoksijan suoritus
+            </Th>
+            <Th fontSize={isDesktop ? '0.8rem' : '1.6rem'}>Pisteet</Th>
           </Tr>
         </Thead>
         <Tbody>
           <Tr>
-            <Td>Kisan nopein loppusuora</Td>
-            <Td>2</Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>
+              Kisan nopein loppusuora
+            </Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>2</Td>
           </Tr>
           <Tr>
-            <Td>Hylkäys/Keskeytys</Td>
-            <Td>-3</Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>
+              Hylkäys/Keskeytys
+            </Td>
+            <Td fontSize={isDesktop ? '1.4rem' : '2.3rem'}>-3</Td>
           </Tr>
         </Tbody>
       </Table>

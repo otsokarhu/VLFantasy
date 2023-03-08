@@ -22,7 +22,7 @@ const Leaderboard = () => {
 
   return (
     <Box
-      w={isDesktop ? '20vw' : '100vw'}
+      w={isDesktop ? '20vw' : '90vw'}
       roundedBottom={'lg'}
       roundedTop={isDesktop ? 'none' : 'lg'}
       h={'270px'}
@@ -38,17 +38,21 @@ const Leaderboard = () => {
         {isAllTeamsLoading ? (
           <Spinner />
         ) : (
-          <Heading size={'md'} mb={2} color={textColor}>
+          <Heading
+            fontSize={isDesktop ? '1.8rem' : '2.5rem'}
+            mb={2}
+            color={textColor}
+          >
             Parhaat joukkueet
           </Heading>
         )}
       </Box>
       {topTeams.map((team, index) => (
         <Box key={team.id} mb={2}>
-          <Heading size={'sm'} color={textColor}>
+          <Heading fontSize={isDesktop ? '1.2rem' : '1.9rem'} color={textColor}>
             {index + 1}. {team.name}
           </Heading>
-          <Box fontSize={'sm'} color={textColor}>
+          <Box fontSize={isDesktop ? '1.2rem' : '1.9rem'} color={textColor}>
             {team.points} pistettä
           </Box>
         </Box>

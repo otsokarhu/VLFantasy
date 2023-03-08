@@ -8,6 +8,7 @@ import {
   Image,
   Link,
   useToast,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import { Link as RouterLink, Route, Routes } from 'react-router-dom';
 import TeamPage from '../TeamPage';
@@ -22,6 +23,7 @@ const CreateTeamCard = () => {
   const user = useRecoilValue(userState);
   const setNavBar = useSetRecoilState(navBarState);
   const toast = useToast();
+  const [isDesktop] = useMediaQuery('(min-width: 62em)');
 
   const content = () => {
     if (user.fantasyTeam !== '') {
@@ -54,17 +56,18 @@ const CreateTeamCard = () => {
       <Box
         role={'group'}
         p={6}
-        maxW={'330px'}
+        maxW={isDesktop ? '330px' : '495px'}
         bg={boxBg}
         boxShadow={'2xl'}
         rounded={'lg'}
         pos={'relative'}
+        textAlign={'center'}
       >
         <Box
           rounded={'lg'}
           mt={-12}
           pos={'relative'}
-          height={'230px'}
+          height={isDesktop ? '230px' : '345px'}
           _after={{
             transition: 'all .3s ease',
             content: '""',
@@ -85,14 +88,18 @@ const CreateTeamCard = () => {
         >
           <Image
             rounded={'lg'}
-            height={230}
-            width={282}
+            height={isDesktop ? 230 : 345}
+            width={isDesktop ? 282 : 423}
             objectFit={'cover'}
             src={'createTeam.webp'}
           />
         </Box>
         <Stack pt={10} align={'center'}>
-          <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
+          <Heading
+            fontSize={isDesktop ? '1.8rem' : '2.5rem'}
+            fontFamily={'body'}
+            fontWeight={isDesktop ? 'hairline' : 'bold'}
+          >
             {content().title}
           </Heading>
           {user.id !== '' ? (
@@ -103,6 +110,8 @@ const CreateTeamCard = () => {
                 _hover={{
                   bg: hoverBg,
                 }}
+                fontSize={isDesktop ? '1.2rem' : '1.9rem'}
+                size={isDesktop ? 'md' : 'lg'}
               >
                 {content().button}
               </Button>
@@ -116,6 +125,8 @@ const CreateTeamCard = () => {
                   bg: hoverBg,
                 }}
                 onClick={hanleNotLoggedIn}
+                fontSize={isDesktop ? '1.2rem' : '1.9rem'}
+                size={isDesktop ? 'md' : 'lg'}
               >
                 {content().button}
               </Button>
