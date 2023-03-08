@@ -9,20 +9,13 @@ import {
   useColorModeValue,
   Flex,
   useColorMode,
-  Breadcrumb,
-  BreadcrumbItem,
   useToast,
 } from '@chakra-ui/react';
+import { HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 import {
-  ChevronRightIcon,
-  HamburgerIcon,
-  MoonIcon,
-  SunIcon,
-} from '@chakra-ui/icons';
-import {
-  NavBarHome,
   NavBarElementMobile,
   NavBarLogOutMobile,
+  NavBarHomeMobile,
 } from './components';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { navBarState } from '../../state/navBar';
@@ -69,44 +62,40 @@ const NavigationBarMobile = () => {
 
   return (
     <Flex
-      pos="sticky"
+      pos="absolute"
       top={0}
       w={'100%'}
-      h={'50px'}
+      h={'8%'}
       bgColor={bg}
       opacity={0.9}
       zIndex={1}
-      justifyContent={'center'}
+      justifyContent={'space-between'}
+      alignItems={'center'}
     >
-      <Breadcrumb
-        spacing={'8px'}
-        separator={<ChevronRightIcon color={'gray.500'} />}
+      <Button
+        variant={'icon'}
+        p={0}
+        onClick={onOpen}
+        size={'lg'}
+        aria-label="Open Menu"
       >
-        <BreadcrumbItem>
-          <Button
-            variant={'icon'}
-            p={0}
-            onClick={onOpen}
-            size={'lg'}
-            aria-label="Open Menu"
-          >
-            <HamburgerIcon />
-          </Button>
-        </BreadcrumbItem>
-        <BreadcrumbItem>
-          <NavBarHome />
-        </BreadcrumbItem>
-        <BreadcrumbItem>
-          <Button
-            aria-label={'DarkMode-Button'}
-            onClick={toggleColorMode}
-            variant={'icon'}
-            size={'lg'}
-          >
-            {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-          </Button>
-        </BreadcrumbItem>
-      </Breadcrumb>
+        <HamburgerIcon boxSize={'60px'} />
+      </Button>
+
+      <NavBarHomeMobile />
+
+      <Button
+        aria-label={'DarkMode-Button'}
+        onClick={toggleColorMode}
+        variant={'icon'}
+        size={'lg'}
+      >
+        {colorMode === 'light' ? (
+          <MoonIcon boxSize={'60px'} />
+        ) : (
+          <SunIcon boxSize={'60px'} />
+        )}
+      </Button>
 
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />

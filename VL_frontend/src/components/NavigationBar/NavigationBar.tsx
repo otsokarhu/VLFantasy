@@ -68,7 +68,7 @@ const NavigationBar = () => {
             separator={<ChevronRightIcon color={'gray.500'} />}
           >
             <BreadcrumbItem>
-              <NavBarHome />
+              <NavBarHome size={'30px'} />
             </BreadcrumbItem>
 
             <BreadcrumbItem>
@@ -106,7 +106,7 @@ const NavigationBar = () => {
             separator={<ChevronRightIcon color={'gray.500'} />}
           >
             <BreadcrumbItem>
-              <NavBarHome />
+              <NavBarHome size={'30px'} />
             </BreadcrumbItem>
 
             <BreadcrumbItem>
