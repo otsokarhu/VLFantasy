@@ -50,7 +50,13 @@ export const NavBarLogOut = ({ handleLogOut }: NavBarLogOutProps) => {
 
 export const NavBarLogOutMobile = ({ handleLogOut }: NavBarLogOutProps) => {
   return (
-    <Button onClick={handleLogOut} variant={'ghost'} as={Link} to="/">
+    <Button
+      fontSize={'2rem'}
+      onClick={handleLogOut}
+      variant={'ghost'}
+      as={Link}
+      to="/"
+    >
       Kirjaudu ulos
     </Button>
   );
@@ -68,7 +74,12 @@ export const NavBarElementMobile = ({
   to,
 }: NavBarToProps) => {
   return (
-    <Button onClick={() => handleToClick(to)} variant={'ghost'}>
+    <Button
+      fontSize={'2rem'}
+      onClick={() => handleToClick(to)}
+      variant={'ghost'}
+      p={10}
+    >
       {text}
     </Button>
   );

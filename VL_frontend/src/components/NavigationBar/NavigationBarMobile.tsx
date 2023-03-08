@@ -100,9 +100,9 @@ const NavigationBarMobile = () => {
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent opacity={0.95}>
-          <DrawerCloseButton />
+          <DrawerCloseButton size={'lg'} />
           {user.id !== '' ? (
-            <Box p="4" bg={bg} h={'100vh'}>
+            <Box p="10" bg={bg} h={'100vh'}>
               <NavBarElementMobile
                 handleToClick={handleToClick}
                 text={'Tietoa'}
@@ -121,7 +121,7 @@ const NavigationBarMobile = () => {
               <NavBarLogOutMobile handleLogOut={handleLogOut} />
             </Box>
           ) : (
-            <Box p="4" bg={bg} h={'100vh'}>
+            <Box p="10" bg={bg} h={'100vh'}>
               <NavBarElementMobile
                 handleToClick={handleToClick}
                 text={'Tietoa'}
