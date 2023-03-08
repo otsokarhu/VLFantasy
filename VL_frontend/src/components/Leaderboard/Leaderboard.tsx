@@ -18,23 +18,23 @@ const Leaderboard = () => {
 
   const sortedTeams = [...allTeams].sort((a, b) => b.points - a.points);
   const topTeams = sortedTeams.slice(0, 5);
-  const [isLargerThanMobile] = useMediaQuery('(min-width: 950px)');
+  const [isDesktop] = useMediaQuery('(min-width: 62em)');
 
   return (
     <Box
-      w={isLargerThanMobile ? '20vw' : '100vw'}
+      w={isDesktop ? '20vw' : '100vw'}
       roundedBottom={'lg'}
-      roundedTop={isLargerThanMobile ? 'none' : 'lg'}
+      roundedTop={isDesktop ? 'none' : 'lg'}
       h={'270px'}
       p={2}
-      opacity={isLargerThanMobile ? 0.9 : 1}
+      opacity={isDesktop ? 0.9 : 1}
       bg={flexBg}
       position={'sticky'}
       height={'auto'}
       zIndex={1}
     >
-      {isLargerThanMobile ? null : <ToHome />}
-      <Box textAlign={isLargerThanMobile ? 'left' : 'center'}>
+      {isDesktop ? null : <ToHome />}
+      <Box textAlign={isDesktop ? 'left' : 'center'}>
         {isAllTeamsLoading ? (
           <Spinner />
         ) : (
@@ -53,7 +53,7 @@ const Leaderboard = () => {
           </Box>
         </Box>
       ))}
-      {isLargerThanMobile ? <ToHome /> : null}
+      {isDesktop ? <ToHome /> : null}
     </Box>
   );
 };

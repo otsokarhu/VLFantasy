@@ -18,7 +18,7 @@ const Scoring = () => {
   const flexBg = useColorModeValue('whitesmoke', 'dimgray');
   const textColor = useColorModeValue('gray.500', 'whitesmoke');
   const [pointsView, setPointsView] = useState('team');
-  const [isLargerThanMobile] = useMediaQuery('(min-width: 950px)');
+  const [isDesktop] = useMediaQuery('(min-width: 62em)');
 
   const handleClick = (str: string) => {
     setPointsView(str);
@@ -39,12 +39,12 @@ const Scoring = () => {
 
   return (
     <Flex
-      w={isLargerThanMobile ? '31vw' : '100vw'}
+      w={isDesktop ? '31vw' : '100vw'}
       roundedBottom={'lg'}
-      roundedTop={isLargerThanMobile ? 'none' : 'lg'}
+      roundedTop={isDesktop ? 'none' : 'lg'}
       h={'270px'}
       p={4}
-      opacity={isLargerThanMobile ? 0.9 : 1}
+      opacity={isDesktop ? 0.9 : 1}
       bg={flexBg}
       position={'sticky'}
       height={'auto'}
@@ -52,7 +52,7 @@ const Scoring = () => {
       direction={'column'}
       textAlign={'center'}
     >
-      {isLargerThanMobile ? null : <ToHome />}
+      {isDesktop ? null : <ToHome />}
       <Grid gap={4}>
         <GridItem>
           <Heading fontSize={'2xl'} color={textColor}>
@@ -92,7 +92,7 @@ const Scoring = () => {
 
         {renderPoints()}
       </Grid>
-      {isLargerThanMobile ? <ToHome /> : null}
+      {isDesktop ? <ToHome /> : null}
     </Flex>
   );
 };

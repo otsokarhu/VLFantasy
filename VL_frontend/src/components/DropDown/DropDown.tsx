@@ -8,10 +8,11 @@ import DropDownElementMobile from './DropDownElementMobile';
 import Scoring from '../Scoring';
 
 const DropDown = () => {
-  const [isLargerThanMobile] = useMediaQuery('(min-width: 950px)');
+  const [isDesktop] = useMediaQuery('(min-width: 62em)');
+
   return (
     <>
-      {isLargerThanMobile ? (
+      {isDesktop ? (
         <Box zIndex={10} top={'50px'} position={'sticky'}>
           <Box right={0} position={'absolute'}>
             <DropDownElement component={<InfoPage />} name={'info'} />

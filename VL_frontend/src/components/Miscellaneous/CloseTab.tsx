@@ -9,7 +9,7 @@ const CloseTab = () => {
     setNavBar('default');
   };
 
-  const [isLargerThanMobile] = useMediaQuery('(min-width: 950px)');
+  const [isDesktop] = useMediaQuery('(min-width: 62em)');
 
   return (
     <Link onClick={handleHome}>
@@ -17,9 +17,7 @@ const CloseTab = () => {
         opacity={0.9}
         aria-label="Close tab"
         variant={'icon'}
-        icon={
-          isLargerThanMobile ? <ChevronUpIcon boxSize={6} /> : <CloseIcon />
-        }
+        icon={isDesktop ? <ChevronUpIcon boxSize={6} /> : <CloseIcon />}
         zIndex={1}
       />
     </Link>

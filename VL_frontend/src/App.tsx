@@ -74,7 +74,7 @@ const App = () => {
     }
   }, [dbTeam, setAllRunners, isRunnersLoading, isLoading]);
 
-  const [isLargerThanMobile] = useMediaQuery('(min-width: 950px)');
+  const [isDesktop] = useMediaQuery('(min-width: 62em)');
 
   return (
     <Router>
@@ -86,7 +86,7 @@ const App = () => {
         bgAttachment={'fixed'}
         opacity={0.95}
       >
-        {isLargerThanMobile ? <NavigationBar /> : <NavigationBarMobile />}
+        {isDesktop ? <NavigationBar /> : <NavigationBarMobile />}
         <DropDown />
         <Routes>
           <Route path="*" element={<Home />} />

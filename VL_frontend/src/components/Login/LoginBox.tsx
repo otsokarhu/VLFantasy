@@ -35,7 +35,8 @@ const Loginform = () => {
   const flexBg = useColorModeValue('whitesmoke', 'dimgray');
   const bg = useColorModeValue('white', 'gray.700');
   const setNavBar = useSetRecoilState(navBarState);
-  const [isLargerThanMobile] = useMediaQuery('(min-width: 950px)');
+  const [isDesktop] = useMediaQuery('(min-width: 62em)');
+
   const handleHome = () => {
     setNavBar('default');
   };
@@ -105,12 +106,12 @@ const Loginform = () => {
           <Form>
             <Flex
               align={'center'}
-              w={isLargerThanMobile ? '20vw' : '100vw'}
+              w={isDesktop ? '20vw' : '100vw'}
               justify={'center'}
               bg={flexBg}
-              opacity={isLargerThanMobile ? 0.9 : 1}
+              opacity={isDesktop ? 0.9 : 1}
               roundedBottom={'lg'}
-              roundedTop={isLargerThanMobile ? 'none' : 'lg'}
+              roundedTop={isDesktop ? 'none' : 'lg'}
               position={'sticky'}
             >
               <Stack spacing={3} mx={'auto'} maxW={'lg'} pt={12} pb={2} px={6}>

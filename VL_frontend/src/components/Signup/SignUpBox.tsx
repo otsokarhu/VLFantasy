@@ -32,7 +32,7 @@ const Signup = () => {
   const boxBg = useColorModeValue('white', 'gray.700');
   const toast = useToast();
   const setNavBar = useSetRecoilState(navBarState);
-  const [isLargerThanMobile] = useMediaQuery('(min-width: 950px)');
+  const [isDesktop] = useMediaQuery('(min-width: 62em)');
 
   const handleHome = () => {
     setNavBar('default');
@@ -105,12 +105,12 @@ const Signup = () => {
           <Form>
             <Flex
               align={'center'}
-              w={isLargerThanMobile ? '20vw' : '100vw'}
+              w={isDesktop ? '20vw' : '100vw'}
               justify={'center'}
               bg={flexBg}
-              opacity={isLargerThanMobile ? 0.9 : 1}
+              opacity={isDesktop ? 0.9 : 1}
               roundedBottom={'lg'}
-              roundedTop={isLargerThanMobile ? 'none' : 'lg'}
+              roundedTop={isDesktop ? 'none' : 'lg'}
               direction={'column'}
               position={'sticky'}
             >
