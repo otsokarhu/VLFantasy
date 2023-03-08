@@ -1,17 +1,20 @@
 import {
-  Box,
   Button,
   Drawer,
   DrawerOverlay,
   DrawerContent,
-  DrawerCloseButton,
   useDisclosure,
   useColorModeValue,
   Flex,
   useColorMode,
   useToast,
 } from '@chakra-ui/react';
-import { HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
+import {
+  HamburgerIcon,
+  MoonIcon,
+  SunIcon,
+  ArrowLeftIcon,
+} from '@chakra-ui/icons';
 import {
   NavBarElementMobile,
   NavBarLogOutMobile,
@@ -100,55 +103,66 @@ const NavigationBarMobile = () => {
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent opacity={0.95}>
-          <DrawerCloseButton size={'lg'} />
-          {user.id !== '' ? (
-            <Box p="10" bg={bg} h={'100vh'}>
-              <NavBarElementMobile
-                handleToClick={handleToClick}
-                text={'Tietoa'}
-                to={'info'}
-              />
-              <NavBarElementMobile
-                handleToClick={handleToClick}
-                text={'Pisteytys'}
-                to={'scoring'}
-              />
-              <NavBarElementMobile
-                handleToClick={handleToClick}
-                text={'Ranki'}
-                to={'leaderboard'}
-              />
-              <NavBarLogOutMobile handleLogOut={handleLogOut} />
-            </Box>
-          ) : (
-            <Box p="10" bg={bg} h={'100vh'}>
-              <NavBarElementMobile
-                handleToClick={handleToClick}
-                text={'Tietoa'}
-                to={'info'}
-              />
-              <NavBarElementMobile
-                handleToClick={handleToClick}
-                text={'Pisteytys'}
-                to={'scoring'}
-              />
-              <NavBarElementMobile
-                handleToClick={handleToClick}
-                text={'Ranki'}
-                to={'leaderboard'}
-              />
-              <NavBarElementMobile
-                handleToClick={handleToClick}
-                text={'Kirjaudu'}
-                to={'login'}
-              />
-              <NavBarElementMobile
-                handleToClick={handleToClick}
-                text={'Rekisteröidy'}
-                to={'signup'}
-              />
-            </Box>
-          )}
+          <Flex
+            bg={bg}
+            h={'100vh'}
+            w={'20vh'}
+            flexDir={'column'}
+            justifyContent={'center'}
+            flexWrap={'wrap'}
+          >
+            {user.id !== '' ? (
+              <>
+                <NavBarElementMobile
+                  handleToClick={handleToClick}
+                  text={'Tietoa'}
+                  to={'info'}
+                />
+                <NavBarElementMobile
+                  handleToClick={handleToClick}
+                  text={'Pisteytys'}
+                  to={'scoring'}
+                />
+                <NavBarElementMobile
+                  handleToClick={handleToClick}
+                  text={'Ranki'}
+                  to={'leaderboard'}
+                />
+                <NavBarLogOutMobile handleLogOut={handleLogOut} />
+              </>
+            ) : (
+              <>
+                <NavBarElementMobile
+                  handleToClick={handleToClick}
+                  text={'Tietoa'}
+                  to={'info'}
+                />
+                <NavBarElementMobile
+                  handleToClick={handleToClick}
+                  text={'Pisteytys'}
+                  to={'scoring'}
+                />
+                <NavBarElementMobile
+                  handleToClick={handleToClick}
+                  text={'Ranki'}
+                  to={'leaderboard'}
+                />
+                <NavBarElementMobile
+                  handleToClick={handleToClick}
+                  text={'Kirjaudu'}
+                  to={'login'}
+                />
+                <NavBarElementMobile
+                  handleToClick={handleToClick}
+                  text={'Rekisteröidy'}
+                  to={'signup'}
+                />
+              </>
+            )}
+            <Button variant={'icon'} onClick={onClose} p={20}>
+              <ArrowLeftIcon boxSize={'60px'} />
+            </Button>
+          </Flex>
         </DrawerContent>
       </Drawer>
     </Flex>

@@ -51,13 +51,15 @@ export const NavBarLogOut = ({ handleLogOut }: NavBarLogOutProps) => {
 export const NavBarLogOutMobile = ({ handleLogOut }: NavBarLogOutProps) => {
   return (
     <Button
-      fontSize={'2rem'}
+      fontSize={'3rem'}
       onClick={handleLogOut}
       variant={'ghost'}
       as={Link}
       to="/"
+      p={10}
+      textAlign={'center'}
     >
-      Kirjaudu ulos
+      Kirjaudu <br /> ulos
     </Button>
   );
 };
@@ -75,7 +77,7 @@ export const NavBarElementMobile = ({
 }: NavBarToProps) => {
   return (
     <Button
-      fontSize={'2rem'}
+      fontSize={'3rem'}
       onClick={() => handleToClick(to)}
       variant={'ghost'}
       p={10}
