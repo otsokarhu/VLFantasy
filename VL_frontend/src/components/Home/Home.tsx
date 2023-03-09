@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <Box>
-      <Center h={isDesktop ? '90vh' : '100vh'}>
+      <Center h={'90vh'}>
         <Stack direction={isDesktop ? 'row' : 'column'} align={'center'}>
           <CreateTeamCard />
           <ViestiLiigaCard />

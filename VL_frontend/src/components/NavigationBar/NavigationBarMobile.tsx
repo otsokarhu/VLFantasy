@@ -65,10 +65,10 @@ const NavigationBarMobile = () => {
 
   return (
     <Flex
-      pos="absolute"
+      pos="sticky"
       top={0}
-      w={'100%'}
-      h={'8%'}
+      w={'100vw'}
+      h={'9vh'}
       bgColor={bg}
       opacity={0.9}
       zIndex={1}

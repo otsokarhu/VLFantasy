@@ -22,6 +22,7 @@ const App = () => {
   const { dbTeam, isLoading } = getFantasyTeam(user.fantasyTeam);
   const { runners, isRunnersLoading } = getAllRunners();
   const { allTeams, isAllTeamsLoading } = getAllTeams();
+  const [isDesktop] = useMediaQuery('(min-width: 62em)');
 
   useEffect(() => {
     const loggedInUser = window.localStorage.getItem('loggedVLUser');
@@ -73,8 +74,6 @@ const App = () => {
       }
     }
   }, [dbTeam, setAllRunners, isRunnersLoading, isLoading]);
-
-  const [isDesktop] = useMediaQuery('(min-width: 62em)');
 
   return (
     <Router>

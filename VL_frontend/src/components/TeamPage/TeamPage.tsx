@@ -16,6 +16,7 @@ import {
   InputGroup,
   InputRightElement,
   IconButton,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import RunnerPage from './Runners';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
@@ -53,8 +54,9 @@ const TeamPage = () => {
   const wd = useColorModeValue('whitesmoke', 'dimgray');
   const gw = useColorModeValue('gray.500', 'whitesmoke');
   const budgetGreen = useColorModeValue('#168118', '#084f09');
-  const budgetYellow = useColorModeValue('#FFEA00', '#FFBF00');
+  const budgetYellow = useColorModeValue('#f9f906', '#FFBF00');
   const budgetRed = useColorModeValue('#FF2400', '#C21807');
+  const [isDesktop] = useMediaQuery('(min-width: 62em)');
 
   const toast = useToast();
 
@@ -242,42 +244,57 @@ const TeamPage = () => {
         <Flex flexDirection={'column'} maxW="100vw" paddingBottom={5}>
           <Center p={2}>
             <Box p={2} rounded={'md'} bg={wd} textAlign={'center'}>
-              <Text
-                color={budgetColor()}
-                align={'center'}
-                fontSize={'xl'}
-                fontWeight={600}
-              >
-                budjettia jäljellä: {40 - totalPrice} miljoonaa
-              </Text>
-              <Heading color={gw}>{team.name}:</Heading>
+              <Heading color={gw} fontSize={isDesktop ? '1.4rem' : '3rem'}>
+                {team.name}:
+              </Heading>
             </Box>
           </Center>
           <UserTeam />
           <Center p={2}>
-            <Box p={2} rounded={'md'} bg={wd}>
+            <Box p={2} rounded={'md'} bg={wd} textAlign={'center'}>
+              <Flex flexDirection={'row'} justifyContent={'center'}>
+                <Text
+                  color={gw}
+                  fontSize={isDesktop ? '1.5rem' : '2.8rem'}
+                  fontWeight={600}
+                >
+                  budjettia käytettävissä:
+                </Text>
+                <Text
+                  color={budgetColor()}
+                  fontSize={isDesktop ? '1.5rem' : '2.8rem'}
+                  fontWeight={600}
+                >
+                  {40 - totalPrice} milj.
+                </Text>
+              </Flex>
               {team.runners.length === 5 ? (
-                <Heading color={gw}>Joukkue valmis!</Heading>
+                <Heading color={gw} fontSize={isDesktop ? '2rem' : '3.2rem'}>
+                  Joukkue valmis!
+                </Heading>
               ) : (
-                <Heading color={gw}>
+                <Heading color={gw} fontSize={isDesktop ? '2rem' : '3.2rem'}>
                   Juoksijoita valittavana: {5 - team.runners.length}
                 </Heading>
               )}
+
               <Select
                 placeholder="Aakkosjärjestys"
                 id="orderBy"
                 onChange={handleOrderChange}
+                fontSize={isDesktop ? '1.2rem' : '2rem'}
               >
                 <option value="price">Hinnan mukaan, Kallein ensin</option>
                 <option value="priceAsc">Hinnan mukaan, Halvin ensin</option>
                 <option value="points">Pisteiden mukaan</option>
                 <option value="team">Seuran mukaan</option>
               </Select>
-              <InputGroup>
+              <InputGroup paddingBottom={2}>
                 <Input
                   type="text"
                   placeholder="Hae nimen tai seuran perusteella"
                   value={filter}
+                  fontSize={isDesktop ? '1.2rem' : '2rem'}
                   onChange={handleFilterChange}
                 />
                 {filter && (
@@ -291,11 +308,21 @@ const TeamPage = () => {
                   </InputRightElement>
                 )}
               </InputGroup>
-              <Button onClick={handleRenderAllRunners} variant={'icon'}>
+              <Button onClick={handleRenderAllRunners} variant={'outline'}>
                 {!renderAll ? (
-                  <Text>Näytä kaikki juoksijat</Text>
+                  <Text
+                    fontSize={isDesktop ? '1.2rem' : '1.9rem'}
+                    fontWeight={'hairline'}
+                  >
+                    Näytä kaikki juoksijat
+                  </Text>
                 ) : (
-                  <Text>Näytä vain 20 juoksijaa</Text>
+                  <Text
+                    fontSize={isDesktop ? '1.2rem' : '1.9rem'}
+                    fontWeight={'hairline'}
+                  >
+                    Näytä vain 20 juoksijaa
+                  </Text>
                 )}
               </Button>
             </Box>
