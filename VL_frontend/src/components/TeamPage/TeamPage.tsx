@@ -36,7 +36,7 @@ import {
 } from '../../state/runners';
 import { getAllRunners } from '../../services/runnerService';
 import React from 'react';
-import { CloseIcon } from '@chakra-ui/icons';
+import { CloseIcon, ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
 
 const TeamPage = () => {
   const [user, setUser] = useRecoilState(userState);
@@ -239,7 +239,7 @@ const TeamPage = () => {
       );
     } else
       return (
-        <Flex flexDirection={'column'} maxW="100vw">
+        <Flex flexDirection={'column'} maxW="100vw" paddingBottom={5}>
           <Center p={2}>
             <Box p={2} rounded={'md'} bg={wd} textAlign={'center'}>
               <Text
@@ -301,6 +301,26 @@ const TeamPage = () => {
             </Box>
           </Center>
           <RunnerPage />
+          <Button
+            onClick={handleRenderAllRunners}
+            variant={'solid'}
+            w={'90vw'}
+            left={'5vw'}
+          >
+            {!renderAll ? (
+              <Text>
+                <ArrowDownIcon />
+                Näytä lisää juoksijoita
+                <ArrowDownIcon />
+              </Text>
+            ) : (
+              <Text>
+                <ArrowUpIcon />
+                Näytä vain 20 juoksijaa
+                <ArrowUpIcon />
+              </Text>
+            )}
+          </Button>
         </Flex>
       );
   }
