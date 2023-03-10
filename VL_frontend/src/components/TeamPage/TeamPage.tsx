@@ -38,6 +38,7 @@ import {
 import { getAllRunners } from '../../services/runnerService';
 import React from 'react';
 import { CloseIcon, ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
+import { MobileToast } from '../Miscellaneous/MobileComponents';
 
 const TeamPage = () => {
   const [user, setUser] = useRecoilState(userState);
@@ -57,7 +58,6 @@ const TeamPage = () => {
   const budgetYellow = useColorModeValue('#f9f906', '#FFBF00');
   const budgetRed = useColorModeValue('#FF2400', '#C21807');
   const [isDesktop] = useMediaQuery('(min-width: 62em)');
-
   const toast = useToast();
 
   const handleOrderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -75,21 +75,49 @@ const TeamPage = () => {
   const handleRenderAllRunners = () => {
     setRenderAllRunners(!renderAll);
     if (renderAll) {
-      toast({
-        title: 'Ainoastaan 20 juoksijaa näkyvillä',
-        status: 'info',
-        duration: 3000,
-        isClosable: true,
-        position: 'top',
-      });
+      toast(
+        isDesktop
+          ? {
+              title: 'Ainoastaan 20 juoksijaa näkyvillä',
+              status: 'info',
+              duration: 3000,
+              isClosable: true,
+              position: 'top',
+            }
+          : {
+              position: 'top',
+              duration: 3000,
+              render: () => (
+                <MobileToast
+                  fontsize="3rem"
+                  status="info"
+                  text="Ainoastaan 20 juoksijaa näkyvillä"
+                />
+              ),
+            }
+      );
     } else {
-      toast({
-        title: 'Kaikki juoksijat näkyvillä',
-        status: 'info',
-        duration: 3000,
-        isClosable: true,
-        position: 'top',
-      });
+      toast(
+        isDesktop
+          ? {
+              title: 'Kaikki juoksijat näkyvillä',
+              status: 'info',
+              duration: 3000,
+              isClosable: true,
+              position: 'top',
+            }
+          : {
+              position: 'top',
+              duration: 3000,
+              render: () => (
+                <MobileToast
+                  fontsize="3rem"
+                  status="info"
+                  text="Kaikki juoksijat näkyvillä"
+                />
+              ),
+            }
+      );
     }
   };
 
@@ -109,23 +137,51 @@ const TeamPage = () => {
         points: newTeam.points,
       });
 
-      toast({
-        title: 'Joukkue luotu',
-        description: 'Joukkueen nimi on ' + values.teamName,
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-        position: 'top',
-      });
+      toast(
+        isDesktop
+          ? {
+              title: 'Joukkue luotu',
+              description: 'Joukkueen nimi on ' + values.teamName,
+              status: 'success',
+              duration: 5000,
+              isClosable: true,
+              position: 'top',
+            }
+          : {
+              position: 'top',
+              duration: 3000,
+              render: () => (
+                <MobileToast
+                  fontsize="3rem"
+                  status="success"
+                  text={'Joukkue luotu. Joukkueen nimi on ' + values.teamName}
+                />
+              ),
+            }
+      );
     } catch (error) {
-      toast({
-        title: 'Virhe',
-        description: 'Joukkueen luominen epäonnistui',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top',
-      });
+      toast(
+        isDesktop
+          ? {
+              title: 'Virhe',
+              description: 'Joukkueen luominen epäonnistui',
+              status: 'error',
+              duration: 5000,
+              isClosable: true,
+              position: 'top',
+            }
+          : {
+              position: 'top',
+              duration: 3000,
+              render: () => (
+                <MobileToast
+                  fontsize="3rem"
+                  status="error"
+                  text="Joukkueen luominen epäonnistui"
+                />
+              ),
+            }
+      );
     }
   };
 

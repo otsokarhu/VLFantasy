@@ -25,6 +25,7 @@ import { navBarState } from '../../state/navBar';
 import { userState } from '../../state/user';
 import { teamState } from '../../state/fantasyTeam';
 import { allRunnersState } from '../../state/runners';
+import { MobileToast } from '../Miscellaneous/MobileComponents';
 
 const NavigationBarMobile = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -45,12 +46,15 @@ const NavigationBarMobile = () => {
     resetRunner();
     onClose();
     toast({
-      title: 'Uloskirjautuminen onnistui',
-      description: 'Nähdään taas pian!',
-      status: 'info',
-      duration: 3000,
       position: 'top',
-      isClosable: true,
+      duration: 3000,
+      render: () => (
+        <MobileToast
+          fontsize="3rem"
+          status="info"
+          text="Uloskirjautuminen onnistui"
+        />
+      ),
     });
   };
 

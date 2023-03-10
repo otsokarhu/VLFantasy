@@ -10,6 +10,7 @@ import {
   Button,
   useColorModeValue,
   useToast,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -27,6 +28,7 @@ import { allRunnersState } from '../../state/runners';
 import { tokenState, userState } from '../../state/user';
 import { RunnerProps } from '../../types';
 import { getError } from '../../utils/utils';
+import { MobileToast } from '../Miscellaneous/MobileComponents';
 
 const RunnerCard = (props: RunnerProps) => {
   const {
@@ -55,6 +57,7 @@ const RunnerCard = (props: RunnerProps) => {
   const greenButton = useColorModeValue('#17d424', 'green');
   const toast = useToast();
   const navigate = useNavigate();
+  const [isDesktop] = useMediaQuery('(min-width: 62em)');
 
   const totalPrice = userTeam.runners.reduce((acc, runner) => {
     const runnerPrice = dbRunners.find((r) => r.id === runner);
@@ -70,14 +73,28 @@ const RunnerCard = (props: RunnerProps) => {
       return;
     }
     if (totalPrice + runnerToUpdate.price > 40) {
-      toast({
-        title: 'Virhe',
-        description: 'Joukkueen kokonaisbudjetti ylittyy',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top',
-      });
+      toast(
+        isDesktop
+          ? {
+              title: 'Virhe',
+              description: 'Rahasi eivät riitä',
+              status: 'error',
+              duration: 5000,
+              isClosable: true,
+              position: 'top',
+            }
+          : {
+              position: 'top',
+              duration: 3000,
+              render: () => (
+                <MobileToast
+                  fontsize="3rem"
+                  status="error"
+                  text="Rahasi eivät riitä"
+                />
+              ),
+            }
+      );
       return;
     }
     try {
@@ -92,37 +109,81 @@ const RunnerCard = (props: RunnerProps) => {
         setRunners((prev) =>
           prev.map((r) => (r.id === id ? updatedRunner : r))
         );
-        toast({
-          title: 'Lisätty!',
-          description: runnerToUpdate.name + ' lisätty joukkueeseen',
-          status: 'success',
-          duration: 3000,
-          isClosable: true,
-          position: 'top',
-        });
+        toast(
+          isDesktop
+            ? {
+                title: 'Lisätty!',
+                description: runnerToUpdate.name + ' lisätty joukkueeseen',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+              }
+            : {
+                position: 'top',
+                duration: 3000,
+                render: () => (
+                  <MobileToast
+                    fontsize="3rem"
+                    status="success"
+                    text={runnerToUpdate.name + ' lisätty joukkueeseen'}
+                  />
+                ),
+              }
+        );
       }
     } catch (error) {
       const errorMessage = getError(error);
 
       if (errorMessage.includes('400')) {
-        toast({
-          title: 'Virhe',
-          description: 'Joukkueessasi on jo 5 juoksijaa',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-          position: 'top',
-        });
+        toast(
+          isDesktop
+            ? {
+                title: 'Virhe',
+                description: 'Joukkueessasi on jo 5 juoksijaa',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+                position: 'top',
+              }
+            : {
+                position: 'top',
+                duration: 3000,
+                render: () => (
+                  <MobileToast
+                    fontsize="3rem"
+                    status="error"
+                    text="Joukkueessasi on jo 5 juoksijaa"
+                  />
+                ),
+              }
+        );
       }
+
       if (errorMessage.includes('401')) {
-        toast({
-          title: 'Virhe',
-          description: 'Istunto on vanhentunut, kirjaudu uudelleen sisään',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-          position: 'top',
-        });
+        toast(
+          isDesktop
+            ? {
+                title: 'Virhe',
+                description:
+                  'Istunto on vanhentunut, kirjaudu uudelleen sisään',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+                position: 'top',
+              }
+            : {
+                position: 'top',
+                duration: 5000,
+                render: () => (
+                  <MobileToast
+                    fontsize="3rem"
+                    status="error"
+                    text="Istunto on vanhentunut, kirjaudu uudelleen sisään"
+                  />
+                ),
+              }
+        );
         resetUser();
         resetTeam();
         resetRunner();
@@ -154,25 +215,54 @@ const RunnerCard = (props: RunnerProps) => {
         ...prev,
         runners: prev.runners.filter((runner) => runner !== id),
       }));
-      toast({
-        title: 'Poistettu!',
-        description: runnerToUpdate.name + ' poistettu joukkueesta',
-        status: 'info',
-        duration: 3000,
-        isClosable: true,
-        position: 'top',
-      });
+      toast(
+        isDesktop
+          ? {
+              title: 'Poistettu!',
+              description: runnerToUpdate.name + ' poistettu joukkueesta',
+              status: 'info',
+              duration: 3000,
+              isClosable: true,
+              position: 'top',
+            }
+          : {
+              position: 'top',
+              duration: 3000,
+              render: () => (
+                <MobileToast
+                  fontsize="3rem"
+                  status="info"
+                  text={runnerToUpdate.name + ' poistettu joukkueesta'}
+                />
+              ),
+            }
+      );
     } catch (error) {
       const errorMessage = getError(error);
       if (errorMessage.includes('401')) {
-        toast({
-          title: 'Virhe',
-          description: 'Istunto on vanhentunut, kirjaudu uudelleen sisään',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-          position: 'top',
-        });
+        toast(
+          isDesktop
+            ? {
+                title: 'Virhe',
+                description:
+                  'Istunto on vanhentunut, kirjaudu uudelleen sisään',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+                position: 'top',
+              }
+            : {
+                position: 'top',
+                duration: 3000,
+                render: () => (
+                  <MobileToast
+                    fontsize="3rem"
+                    status="error"
+                    text="Istunto on vanhentunut, kirjaudu uudelleen sisään"
+                  />
+                ),
+              }
+        );
         resetUser();
         resetTeam();
         resetRunner();
@@ -180,14 +270,28 @@ const RunnerCard = (props: RunnerProps) => {
         window.localStorage.removeItem('loggedFantasyTeam');
         navigate('/login');
       } else {
-        toast({
-          title: 'Virhe',
-          description: 'Juoksijan poistaminen joukkueesta epäonnistui',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-          position: 'top',
-        });
+        toast(
+          isDesktop
+            ? {
+                title: 'Virhe',
+                description: 'Juoksijan poistaminen joukkueesta epäonnistui',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+                position: 'top',
+              }
+            : {
+                position: 'top',
+                duration: 5000,
+                render: () => (
+                  <MobileToast
+                    fontsize="3rem"
+                    status="error"
+                    text="Juoksijan poistaminen joukkueesta epäonnistui"
+                  />
+                ),
+              }
+        );
       }
     }
   };

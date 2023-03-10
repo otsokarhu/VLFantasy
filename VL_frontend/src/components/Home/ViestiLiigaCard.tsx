@@ -45,11 +45,6 @@ const ViestiLiigaCard = () => {
             filter: 'blur(15px)',
             zIndex: -1,
           }}
-          _groupHover={{
-            _after: {
-              filter: 'blur(20px)',
-            },
-          }}
         >
           <Image
             rounded={'lg'}
@@ -57,11 +52,12 @@ const ViestiLiigaCard = () => {
             width={isDesktop ? 282 : 423}
             objectFit={'cover'}
             src={'viestiLiiga.webp'}
+            boxShadow={'2xl'}
           />
         </Box>
         <Stack pt={10} align={'center'}>
           <Heading
-            fontSize={isDesktop ? '1.8rem' : '2.5rem'}
+            fontSize={isDesktop ? '1.6rem' : '2.5rem'}
             fontFamily={'body'}
             fontWeight={isDesktop ? 'hairline' : 'bold'}
           >

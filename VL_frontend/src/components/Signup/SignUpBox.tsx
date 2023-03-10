@@ -25,6 +25,7 @@ import { RegisterFormValues } from '../../types';
 import { createUser } from '../../services/userService';
 import { useSetRecoilState } from 'recoil';
 import { navBarState } from '../../state/navBar';
+import { MobileToast } from '../Miscellaneous/MobileComponents';
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -48,24 +49,52 @@ const Signup = () => {
         values.password2
       );
       handleHome();
-      toast({
-        title: 'Rekisteröityminen onnistui',
-        description: 'Voit nyt kirjautua sisään',
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-        position: 'top',
-      });
+      toast(
+        isDesktop
+          ? {
+              title: 'Rekisteröityminen onnistui',
+              description: 'Voit nyt kirjautua sisään',
+              status: 'success',
+              duration: 3000,
+              isClosable: true,
+              position: 'top',
+            }
+          : {
+              position: 'top',
+              duration: 3000,
+              render: () => (
+                <MobileToast
+                  fontsize="3rem"
+                  status="success"
+                  text="Rekisteröityminen onnistui, voit nyt kirjautua sisään"
+                />
+              ),
+            }
+      );
       setNavBar('login');
     } catch (error) {
-      toast({
-        title: 'Rekisteröityminen epäonnistui',
-        description: 'Tarkista tiedot ja yritä uudelleen',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top',
-      });
+      toast(
+        isDesktop
+          ? {
+              title: 'Rekisteröityminen epäonnistui',
+              description: 'Tarkista tiedot ja yritä uudelleen',
+              status: 'error',
+              duration: 5000,
+              isClosable: true,
+              position: 'top',
+            }
+          : {
+              position: 'top',
+              duration: 3000,
+              render: () => (
+                <MobileToast
+                  fontsize="3rem"
+                  status="error"
+                  text="Rekisteröityminen epäonnistui, tarkista tiedot ja yritä uudelleen"
+                />
+              ),
+            }
+      );
     }
   };
 

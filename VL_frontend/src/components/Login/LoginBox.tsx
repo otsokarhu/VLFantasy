@@ -26,6 +26,7 @@ import { userState } from '../../state/user';
 import { tokenState } from '../../state/user';
 import { teamState } from '../../state/fantasyTeam';
 import { navBarState } from '../../state/navBar';
+import { MobileToast } from '../Miscellaneous/MobileComponents';
 
 const Loginform = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -61,24 +62,56 @@ const Loginform = () => {
         ...prev,
         id: loggingIn.fantasyTeam,
       }));
-      toast({
-        title: 'Kirjautuminen onnistui',
-        description: 'Tervetuloa takaisin',
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-        position: 'top',
-      });
+
+      toast(
+        isDesktop
+          ? {
+              title: 'Kirjautuminen onnistui',
+              description: 'Tervetuloa takaisin',
+              status: 'success',
+              duration: 3000,
+              isClosable: true,
+              position: 'top',
+            }
+          : {
+              position: 'top',
+              duration: 3000,
+              render: () => (
+                <MobileToast
+                  fontsize="3rem"
+                  status="success"
+                  text="Kirjaudutuminen onnistui!"
+                />
+              ),
+            }
+      );
+
       handleHome();
     } catch (error) {
-      toast({
-        title: 'Kirjautuminen epäonnistui',
-        description: 'Tarkista käyttäjätunnus ja salasana',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top',
-      });
+      toast(
+        isDesktop
+          ? {
+              title: 'Kirjautuminen epäonnistui',
+              description: 'Tarkista käyttäjätunnus ja salasana',
+              status: 'error',
+              duration: 5000,
+              isClosable: true,
+              position: 'top',
+            }
+          : {
+              position: 'top',
+              duration: 3000,
+              render: () => (
+                <MobileToast
+                  fontsize="3rem"
+                  status="success"
+                  text={
+                    'Kirjautuminen epäonnistui, tarkista käyttäjätunnus ja salasana'
+                  }
+                />
+              ),
+            }
+      );
     }
   };
 

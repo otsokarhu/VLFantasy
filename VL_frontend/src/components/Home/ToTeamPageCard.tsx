@@ -15,6 +15,7 @@ import TeamPage from '../TeamPage';
 import { userState } from '../../state/user';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { navBarState } from '../../state/navBar';
+import { MobileToast } from '../Miscellaneous/MobileComponents';
 
 const CreateTeamCard = () => {
   const boxBg = useColorModeValue('whitesmoke', 'dimgray');
@@ -40,14 +41,29 @@ const CreateTeamCard = () => {
   };
 
   const hanleNotLoggedIn = () => {
-    toast({
-      title: 'Kirjaudu sisään',
-      description: 'Kirjaudu sisään päästäksesi joukkue-sivulle',
-      status: 'info',
-      duration: 5000,
-      isClosable: true,
-      position: 'top',
-    });
+    toast(
+      isDesktop
+        ? {
+            title: 'Kirjaudu sisään',
+            description: 'Kirjaudu sisään päästäksesi joukkue-sivulle',
+            status: 'info',
+            duration: 5000,
+            isClosable: true,
+            position: 'top',
+          }
+        : {
+            position: 'top',
+            duration: 3000,
+            render: () => (
+              <MobileToast
+                fontsize="2.4rem"
+                status="info"
+                text="Kirjaudu sisään päästäksesi joukkue-sivulle"
+              />
+            ),
+          }
+    );
+
     setNavBar('login');
   };
 
@@ -80,11 +96,6 @@ const CreateTeamCard = () => {
             filter: 'blur(15px)',
             zIndex: -1,
           }}
-          _groupHover={{
-            _after: {
-              filter: 'blur(20px)',
-            },
-          }}
         >
           <Image
             rounded={'lg'}
@@ -92,11 +103,12 @@ const CreateTeamCard = () => {
             width={isDesktop ? 282 : 423}
             objectFit={'cover'}
             src={'createTeam.webp'}
+            boxShadow={'2xl'}
           />
         </Box>
         <Stack pt={10} align={'center'}>
           <Heading
-            fontSize={isDesktop ? '1.8rem' : '2.5rem'}
+            fontSize={isDesktop ? '1.5rem' : '2.5rem'}
             fontFamily={'body'}
             fontWeight={isDesktop ? 'hairline' : 'bold'}
           >
